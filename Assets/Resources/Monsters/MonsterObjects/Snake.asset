@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1198f578c01194f96c911dc4cc4973, type: 3}
+  m_Name: Snake
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterData
+  MonsterID: 4
+  MonsterName: Snake
+  MonsterDescription: Es una serpiente
+  Type: 2
+  MonsterIcon: {fileID: 2099103414357598586, guid: 4474f6ab20ba588469c194bfed3ddf11, type: 3}
+  MonsterSprite: {fileID: -236891723313064721, guid: c256f76bef1879149a9e65461b3fdaef, type: 3}
+  BaseHP: 5
+  BaseBP: 10
+  BaseLevel: 1
+  MaxLevel: 150
+  BaseAttack: 5
+  BaseDefense: 2
+  BaseSpeed: 2
+  LerneableMoves:
+  - Move: {fileID: 11400000, guid: b263d2e3f6256f44688dbfc3754c9656, type: 2}
+    LevelLearned: 3
+  - Move: {fileID: 11400000, guid: 8da4f4b7d45fb6e44aeb592cac61d9a3, type: 2}
+    LevelLearned: 6

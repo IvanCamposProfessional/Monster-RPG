@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1198f578c01194f96c911dc4cc4973, type: 3}
+  m_Name: Ghost
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterData
+  MonsterID: 1
+  MonsterName: Ghost
+  MonsterDescription: Es un fantasma que asusta
+  Type: 6
+  MonsterIcon: {fileID: 3019456045652292083, guid: ef499fdd944066145b693f205de8a413, type: 3}
+  MonsterSprite: {fileID: -325328004004995507, guid: df673f806fa3b06448a82074ad6a61c5, type: 3}
+  BaseHP: 5
+  BaseBP: 10
+  BaseLevel: 1
+  MaxLevel: 150
+  BaseAttack: 5
+  BaseDefense: 5
+  BaseSpeed: 5
+  LerneableMoves:
+  - Move: {fileID: 11400000, guid: b263d2e3f6256f44688dbfc3754c9656, type: 2}
+    LevelLearned: 3
+  - Move: {fileID: 11400000, guid: 553837b7850d6b446810f2995727b509, type: 2}
+    LevelLearned: 6

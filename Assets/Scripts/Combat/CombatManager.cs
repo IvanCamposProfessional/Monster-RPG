@@ -1,0 +1,424 @@
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public enum BattleState
+{
+    BattleStart,
+    TimelineUpdate,
+    TurnStart,
+    PlayerAction,
+    EnemyAction,
+    TurnEnd,
+    Busy,
+    BattleWon,
+    BattleLost
+}
+
+public class CombatManager : MonoBehaviour
+{
+    private BattleState state;
+    public List<GameObject> AllySpawnAreas;
+    public List<GameObject> EnemySpawnAreas;
+    Enemy enemy;
+    Player player;
+    [SerializeField]
+    private GameObject monsterPrefab;
+    //Variable para almacenar la unidad a la que le corresponde el turno
+    private MonsterUnit currentUnit;
+    //Lista para contener todos los monster units del combate
+    List<MonsterUnit> allMonsters;
+    //Lista para manejar los monsters aliados
+    List<MonsterUnit> allyMonsters = new List<MonsterUnit>();   
+    //Lista para manejar los monsters enemigos
+    List<MonsterUnit> enemyMonsters = new List<MonsterUnit>();  
+    //Variable para definir a que velocidad avanzan las unidades en la TimeLine
+    [SerializeField] 
+    private float timelineSpeed = 20f;
+
+    [Header("TimelineUI")]
+    //Variable para guardar el transform del panel de la timeline
+    [SerializeField]
+    private RectTransform timelinePanel;
+    //Variable para guardar el transform del prefab del icon en la timeline
+    [SerializeField]
+    private Transform iconContainer;
+    //Variable para guardar el prefab del icon
+    [SerializeField]
+    private GameObject timelineIconPrefab;
+    //Variable para guardar el icono Highlited de la unit a la que le corresponde el turno
+    [SerializeField]
+    private TimelineIcon currentHighlightedIcon;
+
+    //Lista para guardar los iconos en la Timeline
+    private List<TimelineIcon> timelineIcons = new List<TimelineIcon>();
+
+    [Header("CombatUI")]
+    //Variable para guardar el Script del Combat Menu
+    [SerializeField]
+    private CombatMenu combatMenu;
+    //Variable para saber si se ha elegido un movimiento
+    [HideInInspector]
+    public bool moveChosen = false;
+    //Variable para saber que movimiento se ha elegido 
+    [HideInInspector]
+    public MoveData chosenMove;
+    //Variable para saber si la coroutine del player se está ejecutando
+    private bool isPlayerActionCoroutineRunning = false;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        //Guardamos el objeto player en la variable
+        player = GameObject.Find("Player").GetComponent<Player>();
+        //Guardamos el objeto enemy en la variable
+        enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
+
+        //Ponemos el estado del combate en Battle Start
+        state = BattleState.BattleStart;
+        Debug.Log(state);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        switch (state)
+        {
+            case BattleState.BattleStart:
+                HandleBattleStart();
+                break;
+            case BattleState.TimelineUpdate:
+                HandleTimelineUpdate();
+                break;
+            case BattleState.TurnStart:
+                HandleTurnStart();
+                break;
+            case BattleState.PlayerAction:
+                //Si no se está ejecutando ya la coroutine
+                if (!isPlayerActionCoroutineRunning)
+                {
+                    //Mostramos el panel del Combat Menu
+                    combatMenu.gameObject.SetActive(true);
+                    //Indicamos que se va a ejecutar
+                    isPlayerActionCoroutineRunning = true;
+                    //Lanzamos la coroutine
+                    StartCoroutine(PlayerActionRoutine());
+                }
+                break;
+            case BattleState.EnemyAction:
+                break;
+            case BattleState.TurnEnd:
+                HandleTurnEnd();
+                break;
+            case BattleState.Busy:
+                break;
+            case BattleState.BattleWon:
+                break;
+            case BattleState.BattleLost:
+                break;
+        }
+    }
+
+    //Funcion para desarrollar el estado BattleStart
+    void HandleBattleStart()
+    {
+        //Hacemos Setup del Battle
+        SetupBattle();
+        //Inicializamos la timeline según la speed de la unidad
+        InitializeTimeline();
+        //Hacemos Setup de la UI de la Timeline
+        SetupTimelineUI();
+        //Ocultamos el Combat Menu
+        combatMenu.HideMenu();
+        //Ponemos el estado del combate en TimeLineUpdate
+        state = BattleState.TimelineUpdate;
+        Debug.Log(state);
+    }
+
+    //Funcion para desarrollar el estado BattleUpdate
+    void HandleTimelineUpdate()
+    {
+        //Llamamos a la función que hace Update de la logica de la Timeline
+        UpdateTimeline();
+    }
+
+    //Funcion para desarrollar el estado BattleUpdate
+    void HandleTurnStart()
+    {
+        //Seguridad por si la currentUnit es nula o no está viva
+        if(currentUnit == null || !currentUnit.IsAlive)
+        {
+            //Volvemos al estado de TimelineUpdate
+            state = BattleState.TimelineUpdate;
+            return;
+        }
+
+        //Resaltamos el icono en la timeline de la unidad activa
+        /*foreach (var icon in timelineIcons)
+        {
+            //Especificamos que sea la currentUnit a la que se hace highlight
+            icon.SetHighlight(icon.unit == currentUnit);
+        }*/
+
+        //Comprobamos si actualmente hay algun icon con Highlight
+        if(currentHighlightedIcon != null)
+        {
+            //Desactivamos el icono que actualmente está resaltado
+            currentHighlightedIcon.SetHighlight(false);
+        }
+
+        //Recorremos los timeline icons en la escena
+        foreach(var icon in timelineIcons)
+        {
+            //Si la unidad actual del bucle es la que tiene el turno
+            if(icon.unit == currentUnit)
+            {
+                //Almacenamos el icono que está actualmente resaltado y salimos del bucle
+                currentHighlightedIcon = icon;
+                break;
+            }
+        }
+
+        //Si el icono actualmente resaltado que hemos almacenado anteriormente no es nulo
+        if(currentHighlightedIcon != null)
+        {
+            //Hacemos que sea visible
+            currentHighlightedIcon.SetHighlight(true);
+        }
+
+        //Comprobamos si la current Unit es Ally o Enemy y cambiamos al estado de accion correspondiente
+        state = currentUnit.IsAlly ? BattleState.PlayerAction : BattleState.EnemyAction;
+
+        Debug.Log(state);
+
+        if (currentUnit.IsAlly)
+        {
+            Debug.Log("Comienza el turno del monstruo aliado " + currentUnit.name);
+
+        }
+        else
+        {
+            Debug.Log("Comienza el turno del monstruo enemigo " + currentUnit.name);
+        }
+    }
+
+    void HandleTurnEnd()
+    {
+        if(currentUnit != null)
+        {
+            //Al terminar el turno reseteamos el timeline progress de la unidad que ha hecho el turno
+            currentUnit.timelineProgress = 0f;
+        }
+
+        //Quitamos el Highlight del icono actual
+        if(currentHighlightedIcon != null)
+        {
+            currentHighlightedIcon.SetHighlight(false);
+            currentHighlightedIcon = null;
+        }
+
+        //Cambiamos al estado Timeline Update
+        state = BattleState.TimelineUpdate;
+        Debug.Log(state);
+    }
+
+    private void SetupBattle()
+    {
+        //Hacemos un bucle que recorra los spawn area para instanciar los allys
+        for(int i = 0; i < AllySpawnAreas.Count; i++)
+        {
+            if(player.party[i] == null)
+                continue; //Slot de la party vacio, no hacemos nada
+                
+            //Instanciamos el GameObject del monster
+            GameObject monsterInstance = Instantiate(monsterPrefab, AllySpawnAreas[i].transform.position, Quaternion.identity, AllySpawnAreas[i].transform.parent);
+
+            //Guardamos la unit
+            MonsterUnit unit = monsterInstance.GetComponent<MonsterUnit>();
+            //Indicamos al prefab que monster de la party del player es
+            unit.Setup(player.party[i]);
+            //Indicamos a la Unit que es Ally
+            unit.SetSide(true);
+            //Guardamos la unidad en la lista de Monster Ally
+            allyMonsters.Add(unit);
+
+            //Cambiamos el nombre al Ally instanciado
+            monsterInstance.name = "Ally " + player.party[i].data.MonsterName;
+        }   
+
+        //Hacemos un bucle que recorra los spawn area para instanciar los enemys
+        for(int i = 0; i < EnemySpawnAreas.Count; i++)
+        {
+            if(enemy.party[i] == null)
+                continue; //Slot de la party vacio, no hacemos nada
+                
+            //Instanciamos el GameObject del monster
+            GameObject monsterInstance = Instantiate(monsterPrefab, EnemySpawnAreas[i].transform.position, Quaternion.identity, EnemySpawnAreas[i].transform.parent);
+
+            //Guardamos la unit
+            MonsterUnit unit = monsterInstance.GetComponent<MonsterUnit>();
+            //Indicamos al prefab que monster de la party del enemy es
+            unit.Setup(enemy.party[i]);
+            //Indicamos a la Unit que es Enemy
+            unit.SetSide(false);
+            //Guardamos la unidad en la lista de Monster Ally
+            enemyMonsters.Add(unit);
+
+            //Cambiamos el nombre al Ally instanciado
+            monsterInstance.name = "Enemy " + enemy.party[i].data.MonsterName;
+        }
+
+        //Inicializamos la lista All Monsters
+        allMonsters = new List<MonsterUnit>();
+        //Añadimos todos los monster units a la lista
+        allMonsters.AddRange(allyMonsters);
+        allMonsters.AddRange(enemyMonsters);
+
+        //CalculateTurnQueue();
+    }
+
+    /*void CalculateTurnQueue()
+    {
+        //Inicializamos la Queue de turnos donde la unidad esté viva y por velocidad
+        turnQueue = new Queue<MonsterUnit>(allMonsters.Where(u => u.IsAlive).OrderByDescending(u => u.monster.currentSpeed));
+    }*/
+
+    void InitializeTimeline()
+    {
+        //Si no hay unidades en combate termina la funcion
+        if (allMonsters == null || allMonsters.Count == 0)
+        {
+            return;
+        }
+
+        //Obtener la speed maxima entre los monsters
+        float maxSpeed = allMonsters.Max(u => u.monster.currentSpeed);
+
+        //Por cada unidad en combate
+        foreach(var unit in allMonsters)
+        {
+            //Normalizamos la velocidad
+            float normalizedSpeed = unit.monster.currentSpeed / maxSpeed;
+
+            // Ajusta 80f si NO quieres que alguien empiece directamente en 100
+            unit.timelineProgress = normalizedSpeed * 80f;
+        }
+    }
+
+    void SetupTimelineUI()
+    {
+        //Limpiamos la lista de iconos
+        timelineIcons.Clear();
+
+        //Hacemos un bucle que recorra todas las monster units
+        foreach(var unit in allMonsters)
+        {
+            //Instanciamos el prefab del icono en la TimeLine
+            GameObject obj = Instantiate(timelineIconPrefab, iconContainer);
+            //Guardammos que icono es
+            TimelineIcon icon = obj.GetComponent<TimelineIcon>();
+            //Hacemos setup del icon con la unidad correspondiente
+            icon.SetupTimelineIcon(unit);
+
+            //Guardamos el icono en la lista
+            timelineIcons.Add(icon);
+        }
+    }
+
+    //Funcion para avanzar en la timeline cada unidad
+    void UpdateTimeline()
+    {
+        //Como ya ha hecho el turno la current unit la dejamos a null
+        currentUnit = null;
+
+        //Vamos a hacer 2 bucles, 1 para la logica del TimelineProgress y otro para actualizar la posicion en la Timeline por el control de frames
+        //Ya que antes el primer bucle tenia un return de la funcion y no se actualizaba correctamente la UI de la Timeline
+        //Asi que ahora hacemos el return despues de los 2 bucles al final del todo
+        //Bucle 1 solo para la logica
+        foreach (var unit in allMonsters)
+        {   //Si la unidad no está viva
+            if (!unit.IsAlive)
+            {
+                //Pasa a la siguiente unidad en combate
+                continue;
+            }
+
+            //Hacemos avanzar la unidad en la timeline
+            unit.timelineProgress += timelineSpeed * Time.deltaTime;
+
+            //Si la unidad ha llegado al maximo quiere decir que es su turno
+            if(unit.timelineProgress >= 100f)
+            {
+                //Dejamos el TimelineProgress de la unidad que ha llegado sin decimales
+                unit.timelineProgress = 100f;
+                
+                //Si Current Unit esta vacio
+                if(currentUnit == null)
+                {
+                    //Asignamos Current Unit a la unidad a la que le correspondera el turno
+                    currentUnit = unit;
+                }
+            }
+        }
+
+        //Bucle 2 para actualizar la UI de la Timeline
+        foreach (var icon in timelineIcons)
+        {
+            //Movemos el icono en el Width del timelinePanel
+            icon.UpdatePosition(timelineIcons);
+        }
+
+        //Si ya hemos asignado a que unidad corresponde el siguiente turno cambia de estado
+        //Si no se seguira ejecutando esta funcion en cada frame por la maquina de estados
+        if(currentUnit != null)
+        {
+            state = BattleState.TurnStart;
+            Debug.Log(state);
+        }
+    }
+
+    //Coroutine para ejecutar la accion del Player
+    private IEnumerator PlayerActionRoutine()
+    {
+        //Por seguridad si no hay current unit o no está viva volvemos al estado Timeline Update
+        if (currentUnit == null || !currentUnit.IsAlive)
+        {
+            state = BattleState.TimelineUpdate;
+            yield break;
+        }
+
+        //Cambiamos el estado a Busy ya que la coroutine termina de ejecutarse y así evitamos volver a lanzar esta coroutine otra vez
+        state = BattleState.Busy;
+        Debug.Log(state);
+
+        //Inicializamos action chosen a false y chosen move a null ya que todavia no hemos seleccionado nada
+        moveChosen = false;
+        chosenMove = null;
+
+        //Mostramos el menu con los ataques del monstruo al cual le corresponde el turno
+        combatMenu.SetCurrentUnit(currentUnit);
+
+        //Esperar hasta que el jugador seleccione un Move
+        while (!moveChosen)
+        {
+            yield return null;
+        }
+
+        //Una vez el player ha seleccionado un Move
+        combatMenu.HideMenu();
+        Debug.Log("Movimiento elegido : " + chosenMove.MoveName);
+
+        //Ejecutar movimiento
+        //yield return StartCoroutine(ExecuteMove());
+
+        //Cambiamos al estado Turn End
+        state = BattleState.TurnEnd;
+        Debug.Log(state);
+
+        //Terminamos la coroutine
+        isPlayerActionCoroutineRunning = false;
+    }
+}

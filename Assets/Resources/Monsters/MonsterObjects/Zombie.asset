@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1198f578c01194f96c911dc4cc4973, type: 3}
+  m_Name: Zombie
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterData
+  MonsterID: 5
+  MonsterName: Zombie
+  MonsterDescription: Es un zombie
+  Type: 5
+  MonsterIcon: {fileID: 3672760022411200171, guid: dd8eccd457004994d909b80c0ddf7667, type: 3}
+  MonsterSprite: {fileID: 2454163601580650797, guid: 27095da26687d124dbef0b7387c4c66b, type: 3}
+  BaseHP: 5
+  BaseBP: 10
+  BaseLevel: 1
+  MaxLevel: 150
+  BaseAttack: 5
+  BaseDefense: 5
+  BaseSpeed: 1
+  LerneableMoves:
+  - Move: {fileID: 11400000, guid: b263d2e3f6256f44688dbfc3754c9656, type: 2}
+    LevelLearned: 3
+  - Move: {fileID: 11400000, guid: c6a92e2b808523743820d22805171d95, type: 2}
+    LevelLearned: 6

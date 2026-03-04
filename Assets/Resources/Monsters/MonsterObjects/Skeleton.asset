@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1198f578c01194f96c911dc4cc4973, type: 3}
+  m_Name: Skeleton
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterData
+  MonsterID: 2
+  MonsterName: Skeleton
+  MonsterDescription: Es un escleto
+  Type: 7
+  MonsterIcon: {fileID: 8545432962758263238, guid: b093f81b25f450f41bf26079e5358a5f, type: 3}
+  MonsterSprite: {fileID: -5318668430520811674, guid: 651514c12131852409947e117a7b996c, type: 3}
+  BaseHP: 5
+  BaseBP: 10
+  BaseLevel: 1
+  MaxLevel: 150
+  BaseAttack: 5
+  BaseDefense: 5
+  BaseSpeed: 4
+  LerneableMoves:
+  - Move: {fileID: 11400000, guid: b263d2e3f6256f44688dbfc3754c9656, type: 2}
+    LevelLearned: 3
+  - Move: {fileID: 11400000, guid: b02399821daf377459d87a1819aa9f6c, type: 2}
+    LevelLearned: 6
