@@ -36,11 +36,13 @@ public class Monster
         return data.BaseBP + level * 5;
     }
 
+    //Funcion para que el Monster reciba daño, utilizamos Mathf.Max para que la vida nunca baje de 0
     public void TakeDamage(int damage)
     {
         currentHP = Mathf.Max(0, currentHP - damage);
     }
 
+    //Funcion para que el Monster reciba curacion, utilizamos Mathf.Min para que la vida nunca suba del maximoq
     public void Heal(int amount)
     {
         currentHP = Mathf.Min(maxHP, currentHP + amount);

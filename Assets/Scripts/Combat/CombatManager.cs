@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.PlasticSCM.Editor.WebApi;
 
 public enum BattleState
 {
@@ -20,6 +21,9 @@ public enum BattleState
 
 public class CombatManager : MonoBehaviour
 {
+    //Singleton para que MonsterUnit pueda comunicarse sin referencia en el inspector
+    public static CombatManager Instance { get; private set; }
+
     private BattleState state;
     public List<GameObject> AllySpawnAreas;
     public List<GameObject> EnemySpawnAreas;
@@ -68,6 +72,18 @@ public class CombatManager : MonoBehaviour
     public MoveData chosenMove;
     //Variable para saber si la coroutine del player se está ejecutando
     private bool isPlayerActionCoroutineRunning = false;
+
+    [Header("Targeting")]
+    //Variable para saber si estamos esperando a que el jugador clicke un target
+    private bool isWaitingForTarget = false;
+    //Lista de Monster Unit donde se acumulan los targets clickados por el jugador
+    private List<MonsterUnit> selectedTargets = new List<MonsterUnit>();
+
+    void Awake()
+    {
+        //Inicializamos el Singleton
+        Instance = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -194,15 +210,7 @@ public class CombatManager : MonoBehaviour
 
         Debug.Log(state);
 
-        if (currentUnit.IsAlly)
-        {
-            Debug.Log("Comienza el turno del monstruo aliado " + currentUnit.name);
-
-        }
-        else
-        {
-            Debug.Log("Comienza el turno del monstruo enemigo " + currentUnit.name);
-        }
+        Debug.Log(currentUnit.IsAlly ? "Turno del Ally " + currentUnit.name : "Turno del Enemy " + currentUnit.name);
     }
 
     void HandleTurnEnd()
@@ -378,6 +386,27 @@ public class CombatManager : MonoBehaviour
             state = BattleState.TurnStart;
             Debug.Log(state);
         }
+    }
+
+    //Funcion llamada desde MonsterUnit.OnPointerClick y solo procesa el click si estamos esperando un target, añade las unidades clickadas a selected targets
+    public void OnUnitClicked(MonsterUnit unit)
+    {
+        //Si no estamos esperando recibir ningun target por el click del Player
+        if (!isWaitingForTarget)
+        {
+            //Salimos de la funcion
+            return;
+        }
+
+        //Si ya hemos seleccionado anteriormente la unidad clickada, para evitar duplicados
+        if (selectedTargets.Contains(unit))
+        {
+            //Salimos de la funcion
+            return;
+        }
+
+        //Añadimos la unidad Clickada que nos pasa Monster Unit a la lista de Selected Targets
+        selectedTargets.Add(unit);
     }
 
     //Coroutine para ejecutar la accion del Player
