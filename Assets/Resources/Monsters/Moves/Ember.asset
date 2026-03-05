@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveData
   MoveName: Ember
   MoveDescription: Quema al enemigo
+  TargetType: 6
+  Effects:
+  - {fileID: 11400000, guid: 745273a85c7ee1f438292353fe5d04a1, type: 2}
+  TargetCount: 2

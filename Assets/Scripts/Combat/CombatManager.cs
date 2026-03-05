@@ -288,12 +288,6 @@ public class CombatManager : MonoBehaviour
         //CalculateTurnQueue();
     }
 
-    /*void CalculateTurnQueue()
-    {
-        //Inicializamos la Queue de turnos donde la unidad esté viva y por velocidad
-        turnQueue = new Queue<MonsterUnit>(allMonsters.Where(u => u.IsAlive).OrderByDescending(u => u.monster.currentSpeed));
-    }*/
-
     void InitializeTimeline()
     {
         //Si no hay unidades en combate termina la funcion
@@ -409,6 +403,67 @@ public class CombatManager : MonoBehaviour
         selectedTargets.Add(unit);
     }
 
+    //Funcion para esperar hasta que el jugar clicke exactamente 1 target
+    private IEnumerator WaitForSingleTarget()
+    {
+        //Activamos que el jugador tiene que marcar un target
+        isWaitingForTarget = true;
+        //Limpiamos la lista de targets seleccionados
+        selectedTargets.Clear();
+
+        //Mientras que los targets seleccionados sean menor que 1 devolvemos null y hacemos que la coroutine espere antes de cambiar isWaitingForTarget
+        while(selectedTargets.Count < 1)
+        {
+            yield return null;
+        }
+
+        //Una vez ya se haya seleccionado 1 target indicamos que el jugador ya ha seleccionado
+        isWaitingForTarget = false;
+    }
+
+    //Funcion para esperar hasta que el jugar clicke X targets
+    private IEnumerator WaitForMultipleTargets(int count)
+    {
+        //Activamos que el jugador tiene que marcar un target
+        isWaitingForTarget = true;
+        //Limpiamos la lista de targets seleccionados
+        selectedTargets.Clear();
+
+        //Mientras que los targets seleccionados sean menor que X devolvemos null y hacemos que la coroutine espere antes de cambiar isWaitingForTarget
+        while(selectedTargets.Count < count)
+        {
+            yield return null;
+        }
+
+        //Una vez ya se haya seleccionado 1 target indicamos que el jugador ya ha seleccionado
+        isWaitingForTarget = false;
+    }
+
+    //Construimos una lista de Targets segun el TargetType del move
+    private List<MonsterUnit> ResolveTargets(TargetType targetType)
+    {
+        switch (targetType)
+        {
+            //Estos casos ya tienen selectedTargets rellena por las coroutines de espera
+            //Esto lo que hace es inicializar la lista con los selectedTargets que se rellenan entre las funciones OnUnitClicked y WaitForXTarget
+            case TargetType.SingleEnemy:
+            case TargetType.SigleAlly:
+            case TargetType.MultipleEnemies:
+            case TargetType.MultipleAllies:
+                return new List<MonsterUnit>(selectedTargets);
+            //En los casos de AllEnemies y AllAllies se inicializan con la lista de AllEnemy o AllAllies con las unidades que siguen vivas en escena
+            case TargetType.AllEnemies:
+                return enemyMonsters.Where(u => u.IsAlive).ToList();
+            case TargetType.AllAllies:
+                return allyMonsters.Where(u => u.IsAlive).ToList();
+            //En el caso de que sea Self se añade Current Unit a la lista de Targets
+            case TargetType.Self:
+                return new List<MonsterUnit> { currentUnit };
+            default:
+                return new List<MonsterUnit>();
+        }
+    }
+
     //Coroutine para ejecutar la accion del Player
     private IEnumerator PlayerActionRoutine()
     {
@@ -440,8 +495,28 @@ public class CombatManager : MonoBehaviour
         combatMenu.HideMenu();
         Debug.Log("Movimiento elegido : " + chosenMove.MoveName);
 
-        //Ejecutar movimiento
-        //yield return StartCoroutine(ExecuteMove());
+        //Gestionamos el targeting segun el tipo de move
+        switch (chosenMove.TargetType)
+        {
+            //En el caso de que el TargetType del Move elegido sea single se lanza la coroutine que espera a Single Target
+            case TargetType.SingleEnemy:
+            case TargetType.SigleAlly:
+                yield return StartCoroutine(WaitForSingleTarget());
+                break;
+            //En el caso de que el TargetType del Move elegido sea multiple se lanza la coroutine que espera Multiple Targets
+            case TargetType.MultipleEnemies:
+            case TargetType.MultipleAllies:
+                //Target Count viene del Move Data, lo defines en el inspector
+                yield return StartCoroutine(WaitForMultipleTargets(chosenMove.TargetCount));
+                break;
+            //All Enemies, All Allies y Self no esperan clicks
+        }
+
+        //Creas una lista de Targets y la inicializas con la lista ResolveTargets en la que hemos guardado los targets seleccionados dependiendo del target type del chosen move
+        List<MonsterUnit> targets = ResolveTargets(chosenMove.TargetType);
+
+        //Ejecutar la coroutine ExecuteMove pasandole la unidad que lo ejecuta, el movimiento elegido y los targets para que pueda hacer el Move Effect correctamente
+        yield return StartCoroutine(ExecuteMove(currentUnit, chosenMove, targets));
 
         //Cambiamos al estado Turn End
         state = BattleState.TurnEnd;
@@ -449,5 +524,16 @@ public class CombatManager : MonoBehaviour
 
         //Terminamos la coroutine
         isPlayerActionCoroutineRunning = false;
+    }
+
+    //Coroutine para ejecutar los Move Effects en orden
+    private IEnumerator ExecuteMove(MonsterUnit user, MoveData move, List<MonsterUnit> targets)
+    {
+        //Por cada efecto en el move
+        foreach(var effect in move.Effects)
+        {
+            //Ejecutamos la coroutine del MoveEffect Execute
+            yield return StartCoroutine(effect.Execute(user, targets));
+        }
     }
 }
