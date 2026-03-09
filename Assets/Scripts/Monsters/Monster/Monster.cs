@@ -6,8 +6,10 @@ public class Monster
     public MonsterData data;
 
     public int currentHP { get; set; }
-    public int maxHP { get; private set; }
+    public int maxHP { get; set; }
     public int currentBP;
+    public int currentAttack { get; set; }
+    public int currentDefense { get; set; }
     public int maxBP;
     public int level;
     public int currentSpeed { get; set; }
@@ -20,6 +22,8 @@ public class Monster
         this.currentHP = currentHP;
         this.currentBP = currentBP;
         currentSpeed = data.BaseSpeed;
+        this.currentAttack = data.BaseAttack;
+        this.currentDefense = data.BaseDefense;
         maxHP = CalculateMaxHP();
         maxBP = CalculateMaxBP();
         //Inicializamos la lista de los Learned Moves
