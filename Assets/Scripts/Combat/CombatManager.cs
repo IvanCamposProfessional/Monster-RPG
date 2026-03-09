@@ -399,6 +399,31 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
+        //Añadimos comprobacion del target type del movimiento elegido
+        switch (chosenMove.TargetType)
+        {
+            //En los casos en los que el tipo es del Enemy
+            case TargetType.SingleEnemy:
+            case TargetType.MultipleEnemies:
+                //Si la unit clickada es ally hacemos return en la funcion para no añadirla a la lista de selected targets
+                if (unit.IsAlly)
+                {
+                    Debug.Log("Unidad erronea, has clickado un aliado");
+                    return;
+                }
+                break;
+            //En los casos en los que el tipo es del Ally
+            case TargetType.SigleAlly:
+            case TargetType.MultipleAllies:
+                //Si la unit clickada es enemy hacemos return en la funcion para no añadirla a la lista de selected targets
+                if (!unit.IsAlly)
+                {
+                    Debug.Log("Unidad erronea, has clickado un enemigo");
+                    return;
+                } 
+                break;
+        }
+
         //Añadimos la unidad Clickada que nos pasa Monster Unit a la lista de Selected Targets
         selectedTargets.Add(unit);
     }
