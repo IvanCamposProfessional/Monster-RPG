@@ -172,12 +172,8 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
-        //Resaltamos el icono en la timeline de la unidad activa
-        /*foreach (var icon in timelineIcons)
-        {
-            //Especificamos que sea la currentUnit a la que se hace highlight
-            icon.SetHighlight(icon.unit == currentUnit);
-        }*/
+        //Procesamos los modifiers del inicio de turno
+        currentUnit.monster.ProcessModifiers(ModifierTiming.OnTurnStart);
 
         //Comprobamos si actualmente hay algun icon con Highlight
         if(currentHighlightedIcon != null)
@@ -217,6 +213,9 @@ public class CombatManager : MonoBehaviour
     {
         if(currentUnit != null)
         {
+            //Procesamos los modifiers del fin de turno
+            currentUnit.monster.ProcessModifiers(ModifierTiming.OnTurnEnd);
+
             //Al terminar el turno reseteamos el timeline progress de la unidad que ha hecho el turno
             currentUnit.timelineProgress = 0f;
         }

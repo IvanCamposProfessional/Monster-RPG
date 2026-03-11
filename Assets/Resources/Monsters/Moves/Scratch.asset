@@ -17,4 +17,5 @@ MonoBehaviour:
   TargetType: 0
   Effects:
   - {fileID: 11400000, guid: 32cb18d81a88e5a42a039a7080b1dab2, type: 2}
+  - {fileID: 11400000, guid: 8a66a41cdb89f054390ee7bdfff18de6, type: 2}
   TargetCount: 0
