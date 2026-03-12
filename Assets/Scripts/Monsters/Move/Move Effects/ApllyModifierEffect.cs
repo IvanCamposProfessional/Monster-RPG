@@ -20,7 +20,7 @@ public class ApllyModifierEffect : MoveEffect
     public int alteredStateDuration;
 
     //Ejecutamos el effect
-    public override IEnumerator Execute(MonsterUnit user, List<MonsterUnit> targets)
+    public override IEnumerator Execute(MonsterUnit user, List<MonsterUnit> targets, MoveData move)
     {
         //Por cada target del Move
         foreach(var target in targets)

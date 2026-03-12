@@ -8,9 +8,11 @@ public class Monster
     public int currentHP { get; set; }
     public int maxHP { get; set; }
     public int currentBP;
+    public int maxBP;
     public int currentAttack { get; set; }
     public int currentDefense { get; set; }
-    public int maxBP;
+    public int currentSpecialAttack { get; set; }
+    public int currentSpecialDefense { get; set; }
     public int level;
     public int currentSpeed { get; set; }
     //Los ataques que el monstruo actualmente sabe
@@ -28,6 +30,8 @@ public class Monster
         currentSpeed = data.BaseSpeed;
         currentAttack = data.BaseAttack;
         currentDefense = data.BaseDefense;
+        currentSpecialAttack = data.BaseSpecialAttack;
+        currentSpecialDefense = data.BaseSpecialDefense;
         maxHP = CalculateMaxHP();
         maxBP = CalculateMaxBP();
         //Inicializamos la lista de los Learned Moves

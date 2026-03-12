@@ -557,7 +557,7 @@ public class CombatManager : MonoBehaviour
         foreach(var effect in move.Effects)
         {
             //Ejecutamos la coroutine del MoveEffect Execute
-            yield return StartCoroutine(effect.Execute(user, targets));
+            yield return StartCoroutine(effect.Execute(user, targets, move));
         }
     }
 }

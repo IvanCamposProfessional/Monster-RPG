@@ -6,6 +6,9 @@ public class MoveData : ScriptableObject
 {
     public string MoveName;
     public string MoveDescription;
+    public MonsterType MoveType;
+    public MoveCategory Category;
+    public int Power;
     //Variable target type para poder definir que tipo de target utiliza (single, multi, etc)
     public TargetType TargetType;
     //Lista de efectos del move en orden de ejecucion, se crea una lista porque un Move puede realizar mas de un efecto (ej: daño al enemigo y curar al ally)
