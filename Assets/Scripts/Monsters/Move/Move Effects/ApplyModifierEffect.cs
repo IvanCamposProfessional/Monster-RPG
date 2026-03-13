@@ -6,7 +6,7 @@ using UnityEngine;
 //Creamos el Asset Menu
 [CreateAssetMenu(fileName = "ApplyModifierEffect", menuName = "Effects/ApplyModifier")]
 //Creamos el efecto de Aplly Modifier que hereda de Move Effect
-public class ApllyModifierEffect : MoveEffect
+public class ApplyModifierEffect : MoveEffect
 {
     [Header("Tipo de Modifier")]
     public ModifierType modifierType;
