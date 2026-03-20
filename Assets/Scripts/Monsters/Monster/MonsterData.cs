@@ -6,19 +6,6 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Monster Data", menuName = "Scriptable Objects/Monster Data")]
 public class MonsterData : ScriptableObject
 {
-    //Enumerador para tener los tipos listados
-    public enum MonsterType
-    {
-        Fire,
-        Water,
-        Grass,
-        Electric,
-        Ice,
-        Dark,
-        Light,
-        Normal
-    }
-
     //Data base del Monster
     public string MonsterID;
     public string MonsterName;
@@ -32,6 +19,8 @@ public class MonsterData : ScriptableObject
     public int MaxLevel;
     public int BaseAttack;
     public int BaseDefense;
+    public int BaseSpecialAttack;
+    public int BaseSpecialDefense;
     public int BaseSpeed;
 
     public List<LerneableMove> LerneableMoves;

@@ -14,3 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveData
   MoveName: Scratch
   MoveDescription: "Ara\xF1a al enemigo"
+  MoveType: 0
+  Category: 0
+  Power: 2
+  TargetType: 0
+  Effects:
+  - {fileID: 11400000, guid: 32cb18d81a88e5a42a039a7080b1dab2, type: 2}
+  - {fileID: 11400000, guid: 56f0ca17ab58ed74a935c7f03b6bf6c7, type: 2}
+  - {fileID: 11400000, guid: 134147e03d4ad024e97ce8d8ed907190, type: 2}
+  TargetCount: 0

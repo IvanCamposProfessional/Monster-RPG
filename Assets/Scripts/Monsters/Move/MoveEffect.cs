@@ -6,5 +6,5 @@ using UnityEngine;
 public abstract class MoveEffect : ScriptableObject
 {
     //Creamos una coroutine abstracta para luego al crear el efecto poder hacerle override
-    public abstract IEnumerator Execute(MonsterUnit user, List<MonsterUnit> targets);
+    public abstract IEnumerator Execute(MonsterUnit user, List<MonsterUnit> targets, MoveData move);
 }

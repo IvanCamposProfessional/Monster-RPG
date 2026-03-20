@@ -2,7 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MonsterUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MonsterUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public Monster monster;
     private SpriteRenderer sr;
@@ -58,5 +58,11 @@ public class MonsterUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void SetSide(bool isAlly)
     {
         IsAlly = isAlly;
+    }
+
+    //Creamos la funcion para saber si la Monster Unit ha sido clickada para seleccionarla como target y se lo pasamos al Combat Manager con la funcion On Unit Clicked
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        CombatManager.Instance.OnUnitClicked(this);
     }
 }

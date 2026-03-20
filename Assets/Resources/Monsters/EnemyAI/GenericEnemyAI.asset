@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 672b1666de10fdb45947f16a36a35e11, type: 3}
+  m_Name: GenericEnemyAI
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  behaviours:
+  - {fileID: 11400000, guid: e3f2e71e50e7b834ebe4d1500533bc10, type: 2}
+  - {fileID: 11400000, guid: 37153c820f70c1f4595b4079e7cb4cda, type: 2}
+  - {fileID: 11400000, guid: b790c3ec175fd034ab5df61d890095ab, type: 2}

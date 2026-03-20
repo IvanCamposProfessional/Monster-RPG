@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public enum BattleState
 {
@@ -20,6 +18,9 @@ public enum BattleState
 
 public class CombatManager : MonoBehaviour
 {
+    //Singleton para que MonsterUnit pueda comunicarse sin referencia en el inspector
+    public static CombatManager Instance { get; private set; }
+
     private BattleState state;
     public List<GameObject> AllySpawnAreas;
     public List<GameObject> EnemySpawnAreas;
@@ -69,6 +70,18 @@ public class CombatManager : MonoBehaviour
     //Variable para saber si la coroutine del player se está ejecutando
     private bool isPlayerActionCoroutineRunning = false;
 
+    [Header("Targeting")]
+    //Variable para saber si estamos esperando a que el jugador clicke un target
+    private bool isWaitingForTarget = false;
+    //Lista de Monster Unit donde se acumulan los targets clickados por el jugador
+    private List<MonsterUnit> selectedTargets = new List<MonsterUnit>();
+
+    void Awake()
+    {
+        //Inicializamos el Singleton
+        Instance = this;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -109,6 +122,11 @@ public class CombatManager : MonoBehaviour
                 }
                 break;
             case BattleState.EnemyAction:
+                //Cambiamos el estado a Busy
+                state = BattleState.Busy;
+                Debug.Log(state);
+                //Lanzamos la coroutine de Enemy Action
+                StartCoroutine(EnemyActionRoutine());
                 break;
             case BattleState.TurnEnd:
                 HandleTurnEnd();
@@ -156,37 +174,21 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
-        //Resaltamos el icono en la timeline de la unidad activa
-        /*foreach (var icon in timelineIcons)
-        {
-            //Especificamos que sea la currentUnit a la que se hace highlight
-            icon.SetHighlight(icon.unit == currentUnit);
-        }*/
+        //Procesamos los modifiers del inicio de turno
+        currentUnit.monster.ProcessModifiers(ModifierTiming.OnTurnStart);
 
-        //Comprobamos si actualmente hay algun icon con Highlight
-        if(currentHighlightedIcon != null)
-        {
-            //Desactivamos el icono que actualmente está resaltado
-            currentHighlightedIcon.SetHighlight(false);
-        }
+        //Refrescamos la UI inmediatamente despues de procesar para que los estados que expiren en este tick desaparezcan visualmente
+        CombatUIManager.UIManager.RefreshIfVisible(currentUnit.monster);
 
-        //Recorremos los timeline icons en la escena
-        foreach(var icon in timelineIcons)
-        {
-            //Si la unidad actual del bucle es la que tiene el turno
-            if(icon.unit == currentUnit)
-            {
-                //Almacenamos el icono que está actualmente resaltado y salimos del bucle
-                currentHighlightedIcon = icon;
-                break;
-            }
-        }
+        UpdateHighlight(currentUnit);
 
-        //Si el icono actualmente resaltado que hemos almacenado anteriormente no es nulo
-        if(currentHighlightedIcon != null)
+        // Si la unidad está stunneada saltamos directamente a TurnEnd
+        if (currentUnit.monster.actionBlocked)
         {
-            //Hacemos que sea visible
-            currentHighlightedIcon.SetHighlight(true);
+            Debug.Log(currentUnit.name + " está stunneado y pierde su turno");
+            state = BattleState.TurnEnd;
+            Debug.Log(state);
+            return;
         }
 
         //Comprobamos si la current Unit es Ally o Enemy y cambiamos al estado de accion correspondiente
@@ -194,21 +196,19 @@ public class CombatManager : MonoBehaviour
 
         Debug.Log(state);
 
-        if (currentUnit.IsAlly)
-        {
-            Debug.Log("Comienza el turno del monstruo aliado " + currentUnit.name);
-
-        }
-        else
-        {
-            Debug.Log("Comienza el turno del monstruo enemigo " + currentUnit.name);
-        }
+        Debug.Log(currentUnit.IsAlly ? "Turno del Ally " + currentUnit.name : "Turno del Enemy " + currentUnit.name);
     }
 
     void HandleTurnEnd()
     {
         if(currentUnit != null)
         {
+            //Procesamos los modifiers del fin de turno
+            currentUnit.monster.ProcessModifiers(ModifierTiming.OnTurnEnd);
+
+            //Refrescamos la UI inmediatamente despues de procesar para que los estados que expiren en este tick desaparezcan visualmente
+            CombatUIManager.UIManager.RefreshIfVisible(currentUnit.monster);
+
             //Al terminar el turno reseteamos el timeline progress de la unidad que ha hecho el turno
             currentUnit.timelineProgress = 0f;
         }
@@ -279,12 +279,6 @@ public class CombatManager : MonoBehaviour
 
         //CalculateTurnQueue();
     }
-
-    /*void CalculateTurnQueue()
-    {
-        //Inicializamos la Queue de turnos donde la unidad esté viva y por velocidad
-        turnQueue = new Queue<MonsterUnit>(allMonsters.Where(u => u.IsAlive).OrderByDescending(u => u.monster.currentSpeed));
-    }*/
 
     void InitializeTimeline()
     {
@@ -379,6 +373,159 @@ public class CombatManager : MonoBehaviour
             Debug.Log(state);
         }
     }
+    
+    //Funcion para forzar la UI de la Timeline, el MoveEffect de Delay lo usa y se puede usar a futuro
+    public void ForceUpdateTimelineUI()
+    {
+        //Actualiza la posicion cada icono
+        foreach (var icon in timelineIcons)
+        {
+            icon.UpdatePosition(timelineIcons);
+        }
+    }
+
+    //Funcion para updatear el highlited icon en la timeline
+    private void UpdateHighlight(MonsterUnit unit)
+    {
+        //Comprobamos si actualmente hay algun icon con Highlight
+        if(currentHighlightedIcon != null)
+        {
+            //Desactivamos el icono que actualmente está resaltado
+            currentHighlightedIcon.SetHighlight(false);
+        }
+
+        //Recorremos los timeline icons en la escena
+        foreach(var icon in timelineIcons)
+        {
+            //Si la unidad actual del bucle es la que tiene el turno
+            if(icon.unit == currentUnit)
+            {
+                //Almacenamos el icono que está actualmente resaltado y salimos del bucle
+                currentHighlightedIcon = icon;
+                break;
+            }
+        }
+
+        //Si el icono actualmente resaltado que hemos almacenado anteriormente no es nulo
+        if(currentHighlightedIcon != null)
+        {
+            //Hacemos que sea visible
+            currentHighlightedIcon.SetHighlight(true);
+        }
+    }
+
+    //Funcion llamada desde MonsterUnit.OnPointerClick y solo procesa el click si estamos esperando un target, añade las unidades clickadas a selected targets
+    public void OnUnitClicked(MonsterUnit unit)
+    {
+        //Si no estamos esperando recibir ningun target por el click del Player
+        if (!isWaitingForTarget)
+        {
+            //Salimos de la funcion
+            return;
+        }
+
+        //Si ya hemos seleccionado anteriormente la unidad clickada, para evitar duplicados
+        if (selectedTargets.Contains(unit))
+        {
+            //Salimos de la funcion
+            return;
+        }
+
+        //No permite seleccionar como target unidades muertas con Moves que no contengan Heal Effect
+        if (!unit.IsAlive && !chosenMove.Effects.Any(e => e is HealEffect))
+        {
+            return;
+        }
+
+        //Añadimos comprobacion del target type del movimiento elegido
+        switch (chosenMove.TargetType)
+        {
+            //En los casos en los que el tipo es del Enemy
+            case TargetType.SingleEnemy:
+            case TargetType.MultipleEnemies:
+                //Si la unit clickada es ally hacemos return en la funcion para no añadirla a la lista de selected targets
+                if (unit.IsAlly)
+                {
+                    Debug.Log("Unidad erronea, has clickado un aliado");
+                    return;
+                }
+                break;
+            //En los casos en los que el tipo es del Ally
+            case TargetType.SigleAlly:
+            case TargetType.MultipleAllies:
+                //Si la unit clickada es enemy hacemos return en la funcion para no añadirla a la lista de selected targets
+                if (!unit.IsAlly)
+                {
+                    Debug.Log("Unidad erronea, has clickado un enemigo");
+                    return;
+                } 
+                break;
+        }
+
+        //Añadimos la unidad Clickada que nos pasa Monster Unit a la lista de Selected Targets
+        selectedTargets.Add(unit);
+    }
+
+    //Funcion para esperar hasta que el jugar clicke exactamente 1 target
+    private IEnumerator WaitForSingleTarget()
+    {
+        //Activamos que el jugador tiene que marcar un target
+        isWaitingForTarget = true;
+        //Limpiamos la lista de targets seleccionados
+        selectedTargets.Clear();
+
+        //Mientras que los targets seleccionados sean menor que 1 devolvemos null y hacemos que la coroutine espere antes de cambiar isWaitingForTarget
+        while(selectedTargets.Count < 1)
+        {
+            yield return null;
+        }
+
+        //Una vez ya se haya seleccionado 1 target indicamos que el jugador ya ha seleccionado
+        isWaitingForTarget = false;
+    }
+
+    //Funcion para esperar hasta que el jugar clicke X targets
+    private IEnumerator WaitForMultipleTargets(int count)
+    {
+        //Activamos que el jugador tiene que marcar un target
+        isWaitingForTarget = true;
+        //Limpiamos la lista de targets seleccionados
+        selectedTargets.Clear();
+
+        //Mientras que los targets seleccionados sean menor que X devolvemos null y hacemos que la coroutine espere antes de cambiar isWaitingForTarget
+        while(selectedTargets.Count < count)
+        {
+            yield return null;
+        }
+
+        //Una vez ya se haya seleccionado 1 target indicamos que el jugador ya ha seleccionado
+        isWaitingForTarget = false;
+    }
+
+    //Construimos una lista de Targets segun el TargetType del move
+    private List<MonsterUnit> ResolveTargets(TargetType targetType)
+    {
+        switch (targetType)
+        {
+            //Estos casos ya tienen selectedTargets rellena por las coroutines de espera
+            //Esto lo que hace es inicializar la lista con los selectedTargets que se rellenan entre las funciones OnUnitClicked y WaitForXTarget
+            case TargetType.SingleEnemy:
+            case TargetType.SigleAlly:
+            case TargetType.MultipleEnemies:
+            case TargetType.MultipleAllies:
+                return new List<MonsterUnit>(selectedTargets);
+            //En los casos de AllEnemies y AllAllies se inicializan con la lista de AllEnemy o AllAllies con las unidades que siguen vivas en escena
+            case TargetType.AllEnemies:
+                return enemyMonsters.Where(u => u.IsAlive).ToList();
+            case TargetType.AllAllies:
+                return allyMonsters.Where(u => u.IsAlive).ToList();
+            //En el caso de que sea Self se añade Current Unit a la lista de Targets
+            case TargetType.Self:
+                return new List<MonsterUnit> { currentUnit };
+            default:
+                return new List<MonsterUnit>();
+        }
+    }
 
     //Coroutine para ejecutar la accion del Player
     private IEnumerator PlayerActionRoutine()
@@ -411,14 +558,156 @@ public class CombatManager : MonoBehaviour
         combatMenu.HideMenu();
         Debug.Log("Movimiento elegido : " + chosenMove.MoveName);
 
-        //Ejecutar movimiento
-        //yield return StartCoroutine(ExecuteMove());
+        //Gestionamos el targeting segun el tipo de move
+        switch (chosenMove.TargetType)
+        {
+            //En el caso de que el TargetType del Move elegido sea single se lanza la coroutine que espera a Single Target
+            case TargetType.SingleEnemy:
+            case TargetType.SigleAlly:
+                yield return StartCoroutine(WaitForSingleTarget());
+                break;
+            //En el caso de que el TargetType del Move elegido sea multiple se lanza la coroutine que espera Multiple Targets
+            case TargetType.MultipleEnemies:
+            case TargetType.MultipleAllies:
+                //Target Count viene del Move Data, lo defines en el inspector
+                yield return StartCoroutine(WaitForMultipleTargets(chosenMove.TargetCount));
+                break;
+            //All Enemies, All Allies y Self no esperan clicks
+        }
 
-        //Cambiamos al estado Turn End
-        state = BattleState.TurnEnd;
-        Debug.Log(state);
+        //Creas una lista de Targets y la inicializas con la lista ResolveTargets en la que hemos guardado los targets seleccionados dependiendo del target type del chosen move
+        List<MonsterUnit> targets = ResolveTargets(chosenMove.TargetType);
+
+        //Ejecutar la coroutine ExecuteMove pasandole la unidad que lo ejecuta, el movimiento elegido y los targets para que pueda hacer el Move Effect correctamente
+        yield return StartCoroutine(ExecuteMove(currentUnit, chosenMove, targets));
+
+        //Gestionamos las muertes antes de cambiar de estado
+        yield return StartCoroutine(HandleDeaths());
+
+        // Solo cambiamos a TurnEnd si el combate no ha terminado
+        if (state != BattleState.BattleWon && state != BattleState.BattleLost)
+        {
+            //Cambiamos al estado Turn End
+            state = BattleState.TurnEnd;
+            Debug.Log(state);
+        }
 
         //Terminamos la coroutine
         isPlayerActionCoroutineRunning = false;
+    }
+
+    //Coroutine para ejecutar los Move Effects en orden
+    private IEnumerator ExecuteMove(MonsterUnit user, MoveData move, List<MonsterUnit> targets)
+    {
+        //Por cada efecto en el move
+        foreach(var effect in move.Effects)
+        {
+            //Ejecutamos la coroutine del MoveEffect Execute
+            yield return StartCoroutine(effect.Execute(user, targets, move));
+        }
+    }
+
+    private IEnumerator EnemyActionRoutine()
+    {
+        //Si no hay current unit o no está viva volvemos al estado Timeline Update
+        if(currentUnit == null || !currentUnit.IsAlive)
+        {
+            state = BattleState.TimelineUpdate;
+            Debug.Log(state);
+            yield break;
+        }
+
+        //Delay para simular que el enemy esta pensando
+        yield return new WaitForSeconds(1f);
+
+        //Guardamos la AI del Enemy Current Unit
+        EnemyAI ai = currentUnit.monster.enemyAI;
+
+        //Si la current unit no tiene AI
+        if(ai == null)
+        {
+            Debug.LogWarning("El Enemy " + currentUnit.name + " no tiene Enemy AI asignada");
+            //Terminamos el turno
+            state = BattleState.TurnEnd;
+            yield break;
+        }
+
+        // El enemy toma su decision pasandole los allies vivos como targets posibles
+        AIDecision decision = ai.MakeDecision(currentUnit, allyMonsters);
+
+        //Si no se ha generado ninguna decision
+        if (decision == null)
+        {
+            Debug.LogWarning("El enemy " + currentUnit.name + " no pudo tomar ninguna decision");
+            //Terminamos el turno
+            state = BattleState.TurnEnd;
+            yield break;
+        }
+
+        Debug.Log("Enemy " + currentUnit.name + " usa " + decision.move.MoveName);
+
+        //Ejecutamos el move elegido a los targets elegidos
+        yield return StartCoroutine(ExecuteMove(currentUnit, decision.move, decision.targets));
+
+        //Gestionamos las muertes antes de cambiar de estado
+        yield return StartCoroutine(HandleDeaths());
+
+        // Solo cambiamos a TurnEnd si el combate no ha terminado
+        if (state != BattleState.BattleWon && state != BattleState.BattleLost)
+        {
+            //Terminamos el turno
+            state = BattleState.TurnEnd;
+            Debug.Log(state);
+        }
+    }
+
+    //Coroutine para comprobar las unidades que han muerto y eliminarlas tras ejecutar un Move
+    private IEnumerator HandleDeaths()
+    {
+        //Buscamos todas las unidades que han muerto
+        List<MonsterUnit> deadUnits = allMonsters.Where(u => !u.IsAlive).ToList();
+
+        //Por cada unidad que ha muerto
+        foreach(var unit in deadUnits)
+        {
+            //Buscamos y eliminamos el icono de la TimeLine donde la unidad del icono == a la unidad que se esta comprobando de la lista de muertos
+            TimelineIcon icon = timelineIcons.Find(i => i.unit == unit);
+
+            //Delay antes de destruir todo
+            yield return new WaitForSeconds(0.5f);
+
+            //Si ha encontrado una unidad muerta con icono
+            if(icon != null)
+            {
+                //Quitamos el icono de la lista
+                timelineIcons.Remove(icon);
+                //Eliminamos el prefab
+                Destroy(icon.gameObject);
+            }
+
+            //Eliminamos la unidad de todas las listas
+            allMonsters.Remove(unit);
+            allyMonsters.Remove(unit);
+            enemyMonsters.Remove(unit);
+
+            //Destruimos el prefab de la unit
+            Destroy(unit.gameObject);
+        }
+
+        //Comprobamos condiciones de victoria o derrota
+        //Si todas las Enemy Units han muerto
+        if(enemyMonsters.All(u => !u.IsAlive))
+        {
+            //Cambiamos el estado a Battle Won
+            state = BattleState.BattleWon;
+            Debug.Log(state);
+        }
+        //Si todas las Ally Units han muerto
+        else if (allyMonsters.All(u => !u.IsAlive))
+        {
+            //Cambiamos el estado a Battle Lost
+            state = BattleState.BattleLost;
+            Debug.Log(state);
+        }
     }
 }
