@@ -28,6 +28,8 @@ public class PoisonInstance : AlteredStateInstance
 
     public override void OnApply(Monster monster)
     {
+        // Sincronizamos duracion con intensidad ya que en el veneno son iguales
+        duration = intensity;
         Debug.Log(monster.data.MonsterName + " ha sido envenenado con intensidad " + intensity);
     }
 
@@ -42,10 +44,10 @@ public class PoisonInstance : AlteredStateInstance
         monster.TakeDamage(intensity);
         Debug.Log(monster.data.MonsterName + " recibe " + intensity + " de daño por veneno");
 
-        //Reducimos intensidad
+        // Reducimos tanto intensidad como duracion juntas
         intensity--;
+        duration--;
 
-        //Cuando la intensidad llega a 0 el veneno expira
-        return intensity <= 0;
+        return duration <= 0;
     }
 }

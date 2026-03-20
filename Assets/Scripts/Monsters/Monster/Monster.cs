@@ -22,6 +22,12 @@ public class Monster
     //Lista de Altered States activos
     public List<AlteredStateInstance> alteredStates = new List<AlteredStateInstance>(); 
 
+    //IA del enemy, se queda a null si es ally
+    public EnemyAI enemyAI;
+
+    //Flag que el StuntInstance activa para bloquear el turno
+    public bool actionBlocked = false;
+
     public Monster(MonsterData data, int level, int currentHP, int currentBP){
         this.data = data;
         this.level = level;

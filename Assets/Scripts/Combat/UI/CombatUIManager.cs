@@ -89,4 +89,11 @@ public class CombatUIManager : MonoBehaviour
             activeStateIcons.Add(obj);
         }
     }
+
+    // Refresca el panel solo si el monster que se muestra es el actual
+    public void RefreshIfVisible(Monster monster)
+    {
+        if (MonsterPanel.activeSelf)
+            ShowAllyPanel(monster);
+    }
 }

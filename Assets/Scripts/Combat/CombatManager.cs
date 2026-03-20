@@ -1,10 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Unity.PlasticSCM.Editor.WebApi;
 
 public enum BattleState
 {
@@ -125,6 +122,11 @@ public class CombatManager : MonoBehaviour
                 }
                 break;
             case BattleState.EnemyAction:
+                //Cambiamos el estado a Busy
+                state = BattleState.Busy;
+                Debug.Log(state);
+                //Lanzamos la coroutine de Enemy Action
+                StartCoroutine(EnemyActionRoutine());
                 break;
             case BattleState.TurnEnd:
                 HandleTurnEnd();
@@ -175,30 +177,18 @@ public class CombatManager : MonoBehaviour
         //Procesamos los modifiers del inicio de turno
         currentUnit.monster.ProcessModifiers(ModifierTiming.OnTurnStart);
 
-        //Comprobamos si actualmente hay algun icon con Highlight
-        if(currentHighlightedIcon != null)
-        {
-            //Desactivamos el icono que actualmente está resaltado
-            currentHighlightedIcon.SetHighlight(false);
-        }
+        //Refrescamos la UI inmediatamente despues de procesar para que los estados que expiren en este tick desaparezcan visualmente
+        CombatUIManager.UIManager.RefreshIfVisible(currentUnit.monster);
 
-        //Recorremos los timeline icons en la escena
-        foreach(var icon in timelineIcons)
-        {
-            //Si la unidad actual del bucle es la que tiene el turno
-            if(icon.unit == currentUnit)
-            {
-                //Almacenamos el icono que está actualmente resaltado y salimos del bucle
-                currentHighlightedIcon = icon;
-                break;
-            }
-        }
+        UpdateHighlight(currentUnit);
 
-        //Si el icono actualmente resaltado que hemos almacenado anteriormente no es nulo
-        if(currentHighlightedIcon != null)
+        // Si la unidad está stunneada saltamos directamente a TurnEnd
+        if (currentUnit.monster.actionBlocked)
         {
-            //Hacemos que sea visible
-            currentHighlightedIcon.SetHighlight(true);
+            Debug.Log(currentUnit.name + " está stunneado y pierde su turno");
+            state = BattleState.TurnEnd;
+            Debug.Log(state);
+            return;
         }
 
         //Comprobamos si la current Unit es Ally o Enemy y cambiamos al estado de accion correspondiente
@@ -215,6 +205,9 @@ public class CombatManager : MonoBehaviour
         {
             //Procesamos los modifiers del fin de turno
             currentUnit.monster.ProcessModifiers(ModifierTiming.OnTurnEnd);
+
+            //Refrescamos la UI inmediatamente despues de procesar para que los estados que expiren en este tick desaparezcan visualmente
+            CombatUIManager.UIManager.RefreshIfVisible(currentUnit.monster);
 
             //Al terminar el turno reseteamos el timeline progress de la unidad que ha hecho el turno
             currentUnit.timelineProgress = 0f;
@@ -380,6 +373,46 @@ public class CombatManager : MonoBehaviour
             Debug.Log(state);
         }
     }
+    
+    //Funcion para forzar la UI de la Timeline, el MoveEffect de Delay lo usa y se puede usar a futuro
+    public void ForceUpdateTimelineUI()
+    {
+        //Actualiza la posicion cada icono
+        foreach (var icon in timelineIcons)
+        {
+            icon.UpdatePosition(timelineIcons);
+        }
+    }
+
+    //Funcion para updatear el highlited icon en la timeline
+    private void UpdateHighlight(MonsterUnit unit)
+    {
+        //Comprobamos si actualmente hay algun icon con Highlight
+        if(currentHighlightedIcon != null)
+        {
+            //Desactivamos el icono que actualmente está resaltado
+            currentHighlightedIcon.SetHighlight(false);
+        }
+
+        //Recorremos los timeline icons en la escena
+        foreach(var icon in timelineIcons)
+        {
+            //Si la unidad actual del bucle es la que tiene el turno
+            if(icon.unit == currentUnit)
+            {
+                //Almacenamos el icono que está actualmente resaltado y salimos del bucle
+                currentHighlightedIcon = icon;
+                break;
+            }
+        }
+
+        //Si el icono actualmente resaltado que hemos almacenado anteriormente no es nulo
+        if(currentHighlightedIcon != null)
+        {
+            //Hacemos que sea visible
+            currentHighlightedIcon.SetHighlight(true);
+        }
+    }
 
     //Funcion llamada desde MonsterUnit.OnPointerClick y solo procesa el click si estamos esperando un target, añade las unidades clickadas a selected targets
     public void OnUnitClicked(MonsterUnit unit)
@@ -395,6 +428,12 @@ public class CombatManager : MonoBehaviour
         if (selectedTargets.Contains(unit))
         {
             //Salimos de la funcion
+            return;
+        }
+
+        //No permite seleccionar como target unidades muertas con Moves que no contengan Heal Effect
+        if (!unit.IsAlive && !chosenMove.Effects.Any(e => e is HealEffect))
+        {
             return;
         }
 
@@ -542,9 +581,16 @@ public class CombatManager : MonoBehaviour
         //Ejecutar la coroutine ExecuteMove pasandole la unidad que lo ejecuta, el movimiento elegido y los targets para que pueda hacer el Move Effect correctamente
         yield return StartCoroutine(ExecuteMove(currentUnit, chosenMove, targets));
 
-        //Cambiamos al estado Turn End
-        state = BattleState.TurnEnd;
-        Debug.Log(state);
+        //Gestionamos las muertes antes de cambiar de estado
+        yield return StartCoroutine(HandleDeaths());
+
+        // Solo cambiamos a TurnEnd si el combate no ha terminado
+        if (state != BattleState.BattleWon && state != BattleState.BattleLost)
+        {
+            //Cambiamos al estado Turn End
+            state = BattleState.TurnEnd;
+            Debug.Log(state);
+        }
 
         //Terminamos la coroutine
         isPlayerActionCoroutineRunning = false;
@@ -558,6 +604,110 @@ public class CombatManager : MonoBehaviour
         {
             //Ejecutamos la coroutine del MoveEffect Execute
             yield return StartCoroutine(effect.Execute(user, targets, move));
+        }
+    }
+
+    private IEnumerator EnemyActionRoutine()
+    {
+        //Si no hay current unit o no está viva volvemos al estado Timeline Update
+        if(currentUnit == null || !currentUnit.IsAlive)
+        {
+            state = BattleState.TimelineUpdate;
+            Debug.Log(state);
+            yield break;
+        }
+
+        //Delay para simular que el enemy esta pensando
+        yield return new WaitForSeconds(1f);
+
+        //Guardamos la AI del Enemy Current Unit
+        EnemyAI ai = currentUnit.monster.enemyAI;
+
+        //Si la current unit no tiene AI
+        if(ai == null)
+        {
+            Debug.LogWarning("El Enemy " + currentUnit.name + " no tiene Enemy AI asignada");
+            //Terminamos el turno
+            state = BattleState.TurnEnd;
+            yield break;
+        }
+
+        // El enemy toma su decision pasandole los allies vivos como targets posibles
+        AIDecision decision = ai.MakeDecision(currentUnit, allyMonsters);
+
+        //Si no se ha generado ninguna decision
+        if (decision == null)
+        {
+            Debug.LogWarning("El enemy " + currentUnit.name + " no pudo tomar ninguna decision");
+            //Terminamos el turno
+            state = BattleState.TurnEnd;
+            yield break;
+        }
+
+        Debug.Log("Enemy " + currentUnit.name + " usa " + decision.move.MoveName);
+
+        //Ejecutamos el move elegido a los targets elegidos
+        yield return StartCoroutine(ExecuteMove(currentUnit, decision.move, decision.targets));
+
+        //Gestionamos las muertes antes de cambiar de estado
+        yield return StartCoroutine(HandleDeaths());
+
+        // Solo cambiamos a TurnEnd si el combate no ha terminado
+        if (state != BattleState.BattleWon && state != BattleState.BattleLost)
+        {
+            //Terminamos el turno
+            state = BattleState.TurnEnd;
+            Debug.Log(state);
+        }
+    }
+
+    //Coroutine para comprobar las unidades que han muerto y eliminarlas tras ejecutar un Move
+    private IEnumerator HandleDeaths()
+    {
+        //Buscamos todas las unidades que han muerto
+        List<MonsterUnit> deadUnits = allMonsters.Where(u => !u.IsAlive).ToList();
+
+        //Por cada unidad que ha muerto
+        foreach(var unit in deadUnits)
+        {
+            //Buscamos y eliminamos el icono de la TimeLine donde la unidad del icono == a la unidad que se esta comprobando de la lista de muertos
+            TimelineIcon icon = timelineIcons.Find(i => i.unit == unit);
+
+            //Delay antes de destruir todo
+            yield return new WaitForSeconds(0.5f);
+
+            //Si ha encontrado una unidad muerta con icono
+            if(icon != null)
+            {
+                //Quitamos el icono de la lista
+                timelineIcons.Remove(icon);
+                //Eliminamos el prefab
+                Destroy(icon.gameObject);
+            }
+
+            //Eliminamos la unidad de todas las listas
+            allMonsters.Remove(unit);
+            allyMonsters.Remove(unit);
+            enemyMonsters.Remove(unit);
+
+            //Destruimos el prefab de la unit
+            Destroy(unit.gameObject);
+        }
+
+        //Comprobamos condiciones de victoria o derrota
+        //Si todas las Enemy Units han muerto
+        if(enemyMonsters.All(u => !u.IsAlive))
+        {
+            //Cambiamos el estado a Battle Won
+            state = BattleState.BattleWon;
+            Debug.Log(state);
+        }
+        //Si todas las Ally Units han muerto
+        else if (allyMonsters.All(u => !u.IsAlive))
+        {
+            //Cambiamos el estado a Battle Lost
+            state = BattleState.BattleLost;
+            Debug.Log(state);
         }
     }
 }
