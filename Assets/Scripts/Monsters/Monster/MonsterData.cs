@@ -24,4 +24,8 @@ public class MonsterData : ScriptableObject
     public int BaseSpeed;
 
     public List<LerneableMove> LerneableMoves;
+
+    public int timesDefeatedForLevel2;
+    public int timesDefeatedForLevel3;
+    public int timesSummonedForLevel2;
 }
