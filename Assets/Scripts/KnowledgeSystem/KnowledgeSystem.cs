@@ -1,6 +1,3 @@
-using JetBrains.Annotations;
-using NUnit.Framework.Interfaces;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class KnowledgeSystem
