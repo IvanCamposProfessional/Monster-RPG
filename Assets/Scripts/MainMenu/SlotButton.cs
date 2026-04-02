@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 //Script que va en cada boton del slot y gestiona su apariencia segun si esta vacio u ocupado

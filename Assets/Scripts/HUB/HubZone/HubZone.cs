@@ -1,21 +1,34 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 //Componente que va en cada zona clickable del Hub.
-//Requiere un Collider2D para detectar clicks y hover.
+//Requiere un Collider2D para detectar clicks y hover y un SpriteRenderer.
 [RequireComponent(typeof(Collider2D))]
-public class HubZone : MonoBehaviour
+[RequireComponent(typeof(SpriteRenderer))]
+public class HubZone : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     //Información de la zona a la que vamos a acceder
     [SerializeField] private HubZoneData zoneData;
 
+    private SpriteRenderer sr;
+
     private void Start()
     {
+        //Inicializamos el SpriteRenderer
+        sr = GetComponent<SpriteRenderer>();
+        //Aplicamos el Sprite al Game Object
+        ApplySprite();
+        //Aplicamos el Collider a la forma del Sprite
+        ApplyCollider();
         //Al empezar la escena lanzamos la funcion Refresh Visual
         RefreshVisual();
     }
 
-    private void OnMouseDown()
+    //OnValidate se ejecuta en el editor cada vez que se modifica el inspector asi el Sprite se asigna sin necesidad de entrar en el 
+
+    public void OnPointerClick(PointerEventData eventData)
     {
         //Si no está desbloqueada la zona
         if (!IsUnlocked())
@@ -29,13 +42,13 @@ public class HubZone : MonoBehaviour
         SceneManager.LoadScene(zoneData.sceneName);
     }
 
-    private void OnMouseEnter()
+    public void OnPointerEnter(PointerEventData eventData)
     {
         //Mostramos el Tooltip de la zona desde Hub UI Manager
         HubUIManager.Instance.ShowZoneTooltip(zoneData.zoneName, IsUnlocked());
     }
 
-    private void OnMouseExit()
+    public void OnPointerExit(PointerEventData eventData)
     {
         //Ocultamos el Tooltip de la zona desde Hub UI Manager
         HubUIManager.Instance.HideZoneTooltip();
@@ -48,6 +61,37 @@ public class HubZone : MonoBehaviour
 
         //Devolvemos true o false segun si el World Knowledge que tenemos contiene la flag necesaria para desbloquear la zona
         return GameManager.Instance.Knowledge.HasWorldKnowledge(zoneData.unlockFlag); 
+    }
+
+    private void ApplySprite()
+    {
+        //Comprobacion de seguridad
+        if(zoneData.zoneSprite != null)
+        {
+            //Asignamos al sprite del Game Object el Sprite del data
+            sr.sprite = zoneData.zoneSprite;
+        }
+    }
+
+    private void ApplyCollider()
+    {
+        //Comprobacion de seguridad
+        if(sr.sprite == null) return;
+
+        //Guardamos el polygon collider
+        PolygonCollider2D col = GetComponent<PolygonCollider2D>();
+        //Comprobacion de seguridad
+        if(col == null) return;
+
+        //Obtenemos los paths de la fisica del sprite y los aplicamos al collider
+        col.pathCount = sr.sprite.GetPhysicsShapeCount();
+        List<Vector2> path = new List<Vector2>();
+
+        for(int i = 0; i < col.pathCount; i++)
+        {
+            sr.sprite.GetPhysicsShape(i, path);
+            col.SetPath(i, path);
+        }
     }
 
     //Oscurece el sprite si la zona esta bloqueada (se puede reemplazar con animacion a futuro)

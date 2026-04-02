@@ -8,6 +8,7 @@ public class HubZoneData : ScriptableObject
     public string zoneID;
     public string zoneName;
     [TextArea] public string zoneDescription;
+    public Sprite zoneSprite;
     public Sprite zoneIcon;
 
     [Header("Escena")]
