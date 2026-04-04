@@ -154,6 +154,15 @@ public class KnowledgeSystem
         return GetEntry(monsterID);
     }
 
+    //Devuelve el nivel de conocimeinto de un monster SIN crear una entrada si no existe
+    //Devuelve 0 si el monster es completamente desconocido
+    public int GetKnowledgeLevel(string monsterID)
+    {
+        MonsterKnowledgeEntry entry = GetEntry(monsterID);
+        //Devuelve el knowledge level de la entry, si es null devuelve 0
+        return entry?.knowledgeLevel ?? 0;
+    }
+
     //Funcion para saber si el player tiene un monster knowledge
     public bool HasMonsterKnowledge(string monsterID)
     {
