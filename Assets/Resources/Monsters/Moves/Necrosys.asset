@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8a0dda42d7b344da1882ecd19e2b94, type: 3}
   m_Name: Necrosys
   m_EditorClassIdentifier: Assembly-CSharp::MoveData
+  MoveID: necrosys
   MoveName: Necrosys
   MoveDescription: Se te cae la piel
+  MoveType: 0
+  Category: 0
+  Power: 0
+  TargetType: 0
+  Effects: []
+  TargetCount: 0

@@ -3937,7 +3937,7 @@ Transform:
   m_GameObject: {fileID: 1868783797}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.11739, y: -0.31895, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3956,6 +3956,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   monsterDatabase: {fileID: 11400000, guid: d90bfc1e4d7ef9347a77b0d6d6b0dae2, type: 2}
+  moveDatabase: {fileID: 11400000, guid: e747d1703db1a774bb8a45d8e9e835e1, type: 2}
+  itemDatabase: {fileID: 11400000, guid: e62fd29c1516f214093b5d3dd22bc0fb, type: 2}
+  recipeDatabase: {fileID: 11400000, guid: 70b66b0d6d1a44c45be274a8afd57cc7, type: 2}
 --- !u!1 &1869902968
 GameObject:
   m_ObjectHideFlags: 0

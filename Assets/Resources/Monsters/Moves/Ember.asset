@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8a0dda42d7b344da1882ecd19e2b94, type: 3}
   m_Name: Ember
   m_EditorClassIdentifier: Assembly-CSharp::MoveData
+  MoveID: ember
   MoveName: Ember
   MoveDescription: Quema al enemigo
   MoveType: 5

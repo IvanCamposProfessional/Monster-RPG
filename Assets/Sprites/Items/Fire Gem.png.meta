@@ -1,0 +1,2119 @@
+fileFormatVersion: 2
+guid: 2527ad59f811c024b9d1e83b5c91f6e4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8643620179409757597
+    second: Fire Gem_0
+  - first:
+      213: 4341511526757891569
+    second: Fire Gem_1
+  - first:
+      213: -6108750664175649929
+    second: Fire Gem_2
+  - first:
+      213: 2741906233215881567
+    second: Fire Gem_3
+  - first:
+      213: 8939648946059804705
+    second: Fire Gem_4
+  - first:
+      213: -1219376537506811000
+    second: Fire Gem_5
+  - first:
+      213: -2313326330362208890
+    second: Fire Gem_6
+  - first:
+      213: -3562824812791480150
+    second: Fire Gem_7
+  - first:
+      213: 1977945897219483937
+    second: Fire Gem_8
+  - first:
+      213: -7861572753758094972
+    second: Fire Gem_9
+  - first:
+      213: 7353579889583176721
+    second: Fire Gem_10
+  - first:
+      213: -4961730813059255103
+    second: Fire Gem_11
+  - first:
+      213: 1251844491577189726
+    second: Fire Gem_12
+  - first:
+      213: 7590839338977641432
+    second: Fire Gem_13
+  - first:
+      213: 3763816683137532210
+    second: Fire Gem_14
+  - first:
+      213: -7049365575879988378
+    second: Fire Gem_15
+  - first:
+      213: 716523142191517262
+    second: Fire Gem_16
+  - first:
+      213: -4719205769715742488
+    second: Fire Gem_17
+  - first:
+      213: 6832847001179111517
+    second: Fire Gem_18
+  - first:
+      213: 2382581905264633055
+    second: Fire Gem_19
+  - first:
+      213: -7544264427802150951
+    second: Fire Gem_20
+  - first:
+      213: 4055027981472909513
+    second: Fire Gem_21
+  - first:
+      213: -3394924001493512695
+    second: Fire Gem_22
+  - first:
+      213: -181675058358768615
+    second: Fire Gem_23
+  - first:
+      213: -2125657694391029554
+    second: Fire Gem_24
+  - first:
+      213: 4874811279719030439
+    second: Fire Gem_25
+  - first:
+      213: 6728717831389658732
+    second: Fire Gem_26
+  - first:
+      213: 6943568296952423090
+    second: Fire Gem_27
+  - first:
+      213: -2920433691536844939
+    second: Fire Gem_28
+  - first:
+      213: -8486270065630250823
+    second: Fire Gem_29
+  - first:
+      213: 7561681375072157060
+    second: Fire Gem_30
+  - first:
+      213: -1171821088616540678
+    second: Fire Gem_31
+  - first:
+      213: 6145052698847286398
+    second: Fire Gem_32
+  - first:
+      213: -2781416139235919331
+    second: Fire Gem_33
+  - first:
+      213: 6537649798727159242
+    second: Fire Gem_34
+  - first:
+      213: 9204065958744350852
+    second: Fire Gem_35
+  - first:
+      213: 228647206519701260
+    second: Fire Gem_36
+  - first:
+      213: 8036402683216503741
+    second: Fire Gem_37
+  - first:
+      213: 7369647134316721177
+    second: Fire Gem_38
+  - first:
+      213: 2318042753203331202
+    second: Fire Gem_39
+  - first:
+      213: 1058795820576785319
+    second: Fire Gem_40
+  - first:
+      213: -7828402855949748348
+    second: Fire Gem_41
+  - first:
+      213: 3599922907941666063
+    second: Fire Gem_42
+  - first:
+      213: 4602544497622016929
+    second: Fire Gem_43
+  - first:
+      213: -2585007292878923946
+    second: Fire Gem_44
+  - first:
+      213: 6867143511520522789
+    second: Fire Gem_45
+  - first:
+      213: -5702461701024160979
+    second: Fire Gem_46
+  - first:
+      213: -2841216182177297605
+    second: Fire Gem_47
+  - first:
+      213: -2286874871785307326
+    second: Fire Gem_48
+  - first:
+      213: 9122418272221646872
+    second: Fire Gem_49
+  - first:
+      213: 5189486521068316695
+    second: Fire Gem_50
+  - first:
+      213: 5907293123067090708
+    second: Fire Gem_51
+  - first:
+      213: 65524704445300302
+    second: Fire Gem_52
+  - first:
+      213: -2974412361140621115
+    second: Fire Gem_53
+  - first:
+      213: -2844005996942023622
+    second: Fire Gem_54
+  - first:
+      213: -5581508595744961548
+    second: Fire Gem_55
+  - first:
+      213: 4663186071827266783
+    second: Fire Gem_56
+  - first:
+      213: -4665665247875221705
+    second: Fire Gem_57
+  - first:
+      213: -2810191267753692441
+    second: Fire Gem_58
+  - first:
+      213: 1587901918551922484
+    second: Fire Gem_59
+  - first:
+      213: -12109697392566191
+    second: Fire Gem_60
+  - first:
+      213: 6807728716557454004
+    second: Fire Gem_61
+  - first:
+      213: 4196636252947607481
+    second: Fire Gem_62
+  - first:
+      213: 8541532539043830635
+    second: Fire Gem_63
+  - first:
+      213: -4824821890339801484
+    second: Fire Gem_64
+  - first:
+      213: 7725360822656090599
+    second: Fire Gem_65
+  - first:
+      213: -204923534304567288
+    second: Fire Gem_66
+  - first:
+      213: -1285517140529312715
+    second: Fire Gem_67
+  - first:
+      213: -863699571658984490
+    second: Fire Gem_68
+  - first:
+      213: 8735656013575107119
+    second: Fire Gem_69
+  - first:
+      213: -5973483756829765683
+    second: Fire Gem_70
+  - first:
+      213: 5110592455368372182
+    second: Fire Gem_71
+  - first:
+      213: -354735951476407768
+    second: Fire Gem_72
+  - first:
+      213: 3662479938637637136
+    second: Fire Gem_73
+  - first:
+      213: -1457481838500952945
+    second: Fire Gem_74
+  - first:
+      213: 7874733436185141360
+    second: Fire Gem_75
+  - first:
+      213: 4832526152468852704
+    second: Fire Gem_76
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Fire Gem_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 2246
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36a12e02e31bb0880800000000000000
+      internalID: -8643620179409757597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_1
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 2366
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fdfaa43bb5204c30800000000000000
+      internalID: 4341511526757891569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_2
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 2391
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77bf060f2ab593ba0800000000000000
+      internalID: -6108750664175649929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_3
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 2246
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f51134e11353d0620800000000000000
+      internalID: 2741906233215881567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_4
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 2366
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12007962a53001c70800000000000000
+      internalID: 8939648946059804705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_5
+      rect:
+        serializedVersion: 2
+        x: 1085
+        y: 2391
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 883f57aef77e31fe0800000000000000
+      internalID: -1219376537506811000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_6
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 2246
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68dd33585f965efd0800000000000000
+      internalID: -2313326330362208890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_7
+      rect:
+        serializedVersion: 2
+        x: 1662
+        y: 2366
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa0cd9c95bd4e8ec0800000000000000
+      internalID: -3562824812791480150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_8
+      rect:
+        serializedVersion: 2
+        x: 1686
+        y: 2391
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12965bc5053137b10800000000000000
+      internalID: 1977945897219483937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_9
+      rect:
+        serializedVersion: 2
+        x: 1809
+        y: 2246
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 489fb5c9b3516e290800000000000000
+      internalID: -7861572753758094972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_10
+      rect:
+        serializedVersion: 2
+        x: 2263
+        y: 2366
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11cbf0ad2f92d0660800000000000000
+      internalID: 7353579889583176721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_11
+      rect:
+        serializedVersion: 2
+        x: 2287
+        y: 2391
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c43e782d14642bb0800000000000000
+      internalID: -4961730813059255103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_12
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 2397
+        width: 90
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e55ec7abee17f5110800000000000000
+      internalID: 1251844491577189726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_13
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 2307
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d3c2da2924185960800000000000000
+      internalID: 7590839338977641432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_14
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 2345
+        width: 23
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2310a1ee453cb3430800000000000000
+      internalID: 3763816683137532210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_15
+      rect:
+        serializedVersion: 2
+        x: 1005
+        y: 2307
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66b6ecd9b5f9b2e90800000000000000
+      internalID: -7049365575879988378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_16
+      rect:
+        serializedVersion: 2
+        x: 1047
+        y: 2345
+        width: 23
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4e0ca3600a91f900800000000000000
+      internalID: 716523142191517262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_17
+      rect:
+        serializedVersion: 2
+        x: 1606
+        y: 2307
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e88e1a1b53028eb0800000000000000
+      internalID: -4719205769715742488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_18
+      rect:
+        serializedVersion: 2
+        x: 1648
+        y: 2345
+        width: 23
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d50cfd5452623de50800000000000000
+      internalID: 6832847001179111517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_19
+      rect:
+        serializedVersion: 2
+        x: 2207
+        y: 2307
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd4629f8e91a01120800000000000000
+      internalID: 2382581905264633055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_20
+      rect:
+        serializedVersion: 2
+        x: 2249
+        y: 2345
+        width: 23
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d7bc3169736d4790800000000000000
+      internalID: -7544264427802150951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_21
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 2247
+        width: 43
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c846f5f67a564830800000000000000
+      internalID: 4055027981472909513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_22
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 2278
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90e08839b9ec2e0d0800000000000000
+      internalID: -3394924001493512695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_23
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 2247
+        width: 43
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91c2af93f7f8a7df0800000000000000
+      internalID: -181675058358768615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_24
+      rect:
+        serializedVersion: 2
+        x: 980
+        y: 2278
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec03fb3d6952082e0800000000000000
+      internalID: -2125657694391029554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_25
+      rect:
+        serializedVersion: 2
+        x: 1549
+        y: 2247
+        width: 43
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ae58b2f70fc6a340800000000000000
+      internalID: 4874811279719030439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_26
+      rect:
+        serializedVersion: 2
+        x: 1581
+        y: 2278
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6e31d5a735316d50800000000000000
+      internalID: 6728717831389658732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_27
+      rect:
+        serializedVersion: 2
+        x: 2150
+        y: 2247
+        width: 43
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b26385d3928c5060800000000000000
+      internalID: 6943568296952423090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_28
+      rect:
+        serializedVersion: 2
+        x: 2182
+        y: 2278
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5771dd9d7098877d0800000000000000
+      internalID: -2920433691536844939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_29
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 111
+        width: 2142
+        height: 2057
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b8f3166656ba3a80800000000000000
+      internalID: -8486270065630250823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_30
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 2162
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48dfcd9a52d70f860800000000000000
+      internalID: 7561681375072157060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_31
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 2162
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af513b0bdeadcbfe0800000000000000
+      internalID: -1171821088616540678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_32
+      rect:
+        serializedVersion: 2
+        x: 1464
+        y: 2162
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7419d82fdc974550800000000000000
+      internalID: 6145052698847286398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_33
+      rect:
+        serializedVersion: 2
+        x: 2065
+        y: 2162
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1afd4802cc6669d0800000000000000
+      internalID: -2781416139235919331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_34
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 2085
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acd490f9ad56aba50800000000000000
+      internalID: 6537649798727159242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_35
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 2110
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 480e83869396bbf70800000000000000
+      internalID: 9204065958744350852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_36
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 2028
+        width: 53
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0ffd734c615c2300800000000000000
+      internalID: 228647206519701260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_37
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 2066
+        width: 24
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db3ad1569a9078f60800000000000000
+      internalID: 8036402683216503741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_38
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 1968
+        width: 42
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9147ce8c50f364660800000000000000
+      internalID: 7369647134316721177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_39
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 1998
+        width: 41
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2806ade3a975b2020800000000000000
+      internalID: 2318042753203331202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_40
+      rect:
+        serializedVersion: 2
+        x: 2473
+        y: 1969
+        width: 27
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a3c527603991be00800000000000000
+      internalID: 1058795820576785319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_41
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 1645
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4873674441deb5390800000000000000
+      internalID: -7828402855949748348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_42
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 1796
+        width: 90
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0d77a2cfce75f130800000000000000
+      internalID: 3599922907941666063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_43
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 1484
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a360b3d5d58fdf30800000000000000
+      internalID: 4602544497622016929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_44
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 1509
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65758262095302cd0800000000000000
+      internalID: -2585007292878923946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_45
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 1427
+        width: 53
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5223fc9d3aefc4f50800000000000000
+      internalID: 6867143511520522789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_46
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 1465
+        width: 24
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d236f2dbb49ccd0b0800000000000000
+      internalID: -5702461701024160979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_47
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 1367
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3b0b3b8fe8f198d0800000000000000
+      internalID: -2841216182177297605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_48
+      rect:
+        serializedVersion: 2
+        x: 2473
+        y: 1368
+        width: 27
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2434875ab636340e0800000000000000
+      internalID: -2286874871785307326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_49
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 1044
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 810dd400617599e70800000000000000
+      internalID: 9122418272221646872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_50
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 1195
+        width: 90
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71864feee72c40840800000000000000
+      internalID: 5189486521068316695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_51
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 883
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41795881ccbeaf150800000000000000
+      internalID: 5907293123067090708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_52
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 908
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4e797c1f5ac8e000800000000000000
+      internalID: 65524704445300302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_53
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 826
+        width: 53
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c0bea677b3c8b6d0800000000000000
+      internalID: -2974412361140621115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_54
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 864
+        width: 24
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a34a03d2d9f0888d0800000000000000
+      internalID: -2844005996942023622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_55
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 766
+        width: 42
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fb05d7118f7a82b0800000000000000
+      internalID: -5581508595744961548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_56
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 796
+        width: 41
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdc30d49607f6b040800000000000000
+      internalID: 4663186071827266783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_57
+      rect:
+        serializedVersion: 2
+        x: 2473
+        y: 767
+        width: 27
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73733834d2a304fb0800000000000000
+      internalID: -4665665247875221705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_58
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 443
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e2f2a65ee13009d0800000000000000
+      internalID: -2810191267753692441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_59
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 594
+        width: 90
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 437d271c16c590610800000000000000
+      internalID: 1587901918551922484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_60
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 282
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 150249c5b4af4dff0800000000000000
+      internalID: -12109697392566191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_61
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 307
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ba02a5e239e97e50800000000000000
+      internalID: 6807728716557454004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_62
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 111
+        width: 255
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bfe774ff627d3a30800000000000000
+      internalID: 4196636252947607481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_63
+      rect:
+        serializedVersion: 2
+        x: 1534
+        y: 111
+        width: 255
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6bd52bd69e998670800000000000000
+      internalID: 8541532539043830635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_64
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 225
+        width: 53
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47674c1cd0aca0db0800000000000000
+      internalID: -4824821890339801484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_65
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 263
+        width: 24
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e1c22cccbef53b60800000000000000
+      internalID: 7725360822656090599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_66
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 165
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 800a8ab9127f72df0800000000000000
+      internalID: -204923534304567288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_67
+      rect:
+        serializedVersion: 2
+        x: 2473
+        y: 166
+        width: 27
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53c031eb8fce82ee0800000000000000
+      internalID: -1285517140529312715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_68
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 0
+        width: 96
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d3fb9ec0d58304f0800000000000000
+      internalID: -863699571658984490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_69
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 0
+        width: 36
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2236216cd84b3970800000000000000
+      internalID: 8735656013575107119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_70
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 0
+        width: 96
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcf889a0c2ce91da0800000000000000
+      internalID: -5973483756829765683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_71
+      rect:
+        serializedVersion: 2
+        x: 1085
+        y: 0
+        width: 36
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dfe506d2c87ce640800000000000000
+      internalID: 5110592455368372182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_72
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 0
+        width: 96
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82240371889b31bf0800000000000000
+      internalID: -354735951476407768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_73
+      rect:
+        serializedVersion: 2
+        x: 1686
+        y: 0
+        width: 36
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 016ad7b791eb3d230800000000000000
+      internalID: 3662479938637637136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_74
+      rect:
+        serializedVersion: 2
+        x: 1809
+        y: 0
+        width: 96
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f84419d6dfbf5cbe0800000000000000
+      internalID: -1457481838500952945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_75
+      rect:
+        serializedVersion: 2
+        x: 2287
+        y: 0
+        width: 36
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 070e4bc865ca84d60800000000000000
+      internalID: 7874733436185141360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Gem_76
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 0
+        width: 90
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0efe0bd8ee4901340800000000000000
+      internalID: 4832526152468852704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Fire Gem_0: -8643620179409757597
+      Fire Gem_1: 4341511526757891569
+      Fire Gem_10: 7353579889583176721
+      Fire Gem_11: -4961730813059255103
+      Fire Gem_12: 1251844491577189726
+      Fire Gem_13: 7590839338977641432
+      Fire Gem_14: 3763816683137532210
+      Fire Gem_15: -7049365575879988378
+      Fire Gem_16: 716523142191517262
+      Fire Gem_17: -4719205769715742488
+      Fire Gem_18: 6832847001179111517
+      Fire Gem_19: 2382581905264633055
+      Fire Gem_2: -6108750664175649929
+      Fire Gem_20: -7544264427802150951
+      Fire Gem_21: 4055027981472909513
+      Fire Gem_22: -3394924001493512695
+      Fire Gem_23: -181675058358768615
+      Fire Gem_24: -2125657694391029554
+      Fire Gem_25: 4874811279719030439
+      Fire Gem_26: 6728717831389658732
+      Fire Gem_27: 6943568296952423090
+      Fire Gem_28: -2920433691536844939
+      Fire Gem_29: -8486270065630250823
+      Fire Gem_3: 2741906233215881567
+      Fire Gem_30: 7561681375072157060
+      Fire Gem_31: -1171821088616540678
+      Fire Gem_32: 6145052698847286398
+      Fire Gem_33: -2781416139235919331
+      Fire Gem_34: 6537649798727159242
+      Fire Gem_35: 9204065958744350852
+      Fire Gem_36: 228647206519701260
+      Fire Gem_37: 8036402683216503741
+      Fire Gem_38: 7369647134316721177
+      Fire Gem_39: 2318042753203331202
+      Fire Gem_4: 8939648946059804705
+      Fire Gem_40: 1058795820576785319
+      Fire Gem_41: -7828402855949748348
+      Fire Gem_42: 3599922907941666063
+      Fire Gem_43: 4602544497622016929
+      Fire Gem_44: -2585007292878923946
+      Fire Gem_45: 6867143511520522789
+      Fire Gem_46: -5702461701024160979
+      Fire Gem_47: -2841216182177297605
+      Fire Gem_48: -2286874871785307326
+      Fire Gem_49: 9122418272221646872
+      Fire Gem_5: -1219376537506811000
+      Fire Gem_50: 5189486521068316695
+      Fire Gem_51: 5907293123067090708
+      Fire Gem_52: 65524704445300302
+      Fire Gem_53: -2974412361140621115
+      Fire Gem_54: -2844005996942023622
+      Fire Gem_55: -5581508595744961548
+      Fire Gem_56: 4663186071827266783
+      Fire Gem_57: -4665665247875221705
+      Fire Gem_58: -2810191267753692441
+      Fire Gem_59: 1587901918551922484
+      Fire Gem_6: -2313326330362208890
+      Fire Gem_60: -12109697392566191
+      Fire Gem_61: 6807728716557454004
+      Fire Gem_62: 4196636252947607481
+      Fire Gem_63: 8541532539043830635
+      Fire Gem_64: -4824821890339801484
+      Fire Gem_65: 7725360822656090599
+      Fire Gem_66: -204923534304567288
+      Fire Gem_67: -1285517140529312715
+      Fire Gem_68: -863699571658984490
+      Fire Gem_69: 8735656013575107119
+      Fire Gem_7: -3562824812791480150
+      Fire Gem_70: -5973483756829765683
+      Fire Gem_71: 5110592455368372182
+      Fire Gem_72: -354735951476407768
+      Fire Gem_73: 3662479938637637136
+      Fire Gem_74: -1457481838500952945
+      Fire Gem_75: 7874733436185141360
+      Fire Gem_76: 4832526152468852704
+      Fire Gem_8: 1977945897219483937
+      Fire Gem_9: -7861572753758094972
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

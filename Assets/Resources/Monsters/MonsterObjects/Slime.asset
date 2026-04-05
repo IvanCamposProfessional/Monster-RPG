@@ -29,7 +29,7 @@ MonoBehaviour:
   BaseSpeed: 3
   LerneableMoves:
   - Move: {fileID: 11400000, guid: b263d2e3f6256f44688dbfc3754c9656, type: 2}
-    LevelLearned: 3
+    LevelLearned: 1
   - Move: {fileID: 11400000, guid: 65c348e781b866542ac73e8bf2d5c49f, type: 2}
     LevelLearned: 6
   timesDefeatedForLevel2: 0
