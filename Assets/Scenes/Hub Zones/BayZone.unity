@@ -207,19 +207,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96014423}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 607405592}
   - {fileID: 1932554823}
-  m_Father: {fileID: 675420980}
+  m_Father: {fileID: 1995330459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.06281878, y: 0.0965941}
   m_AnchorMax: {x: 0.94000006, y: 0.88920295}
-  m_AnchoredPosition: {x: 0.23480225, y: -0.53585815}
-  m_SizeDelta: {x: 3.5304108, y: 0.9282913}
+  m_AnchoredPosition: {x: 0.19769287, y: 7.1775513}
+  m_SizeDelta: {x: -19.59282, y: -124.434746}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &96014425
 MonoBehaviour:
@@ -313,6 +313,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0bdf520ff4281e45b99ebc803b9e7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SummonUIManager
+  summonPanel: {fileID: 675420979}
+  recipeCardPrefab: {fileID: 2960858616580048115, guid: 056cb1bd93209974fabcefccddcca9b9, type: 3}
+  cardsContainer: {fileID: 65214895}
+  feedbackPanel: {fileID: 96014423}
+  feedbackText: {fileID: 607405593}
 --- !u!4 &227855444
 Transform:
   m_ObjectHideFlags: 0
@@ -730,12 +735,11 @@ RectTransform:
   m_Children:
   - {fileID: 65214895}
   - {fileID: 1620741235}
-  - {fileID: 96014424}
   m_Father: {fileID: 1995330459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 6.5902}
+  m_AnchoredPosition: {x: 0, y: 6.59021}
   m_SizeDelta: {x: -26.3608, y: -158.1651}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &675420981
@@ -857,7 +861,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1620741237}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 227855443}
+        m_TargetAssemblyTypeName: SummonUIManager, Assembly-CSharp
+        m_MethodName: CloseSummonPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1620741237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -907,6 +923,7 @@ GameObject:
   - component: {fileID: 1754304317}
   - component: {fileID: 1754304316}
   - component: {fileID: 1754304315}
+  - component: {fileID: 1754304318}
   m_Layer: 0
   m_Name: SummonInteractable
   m_TagString: Untagged
@@ -1034,6 +1051,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1754304318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754304314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0ff5315f2203540bafbce32bdb5a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SummonInteractable
 --- !u!1 &1932554822
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,7 +1144,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1932554825}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 227855443}
+        m_TargetAssemblyTypeName: SummonUIManager, Assembly-CSharp
+        m_MethodName: CloseFeedbackPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1932554825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1249,6 +1290,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 675420980}
+  - {fileID: 96014424}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

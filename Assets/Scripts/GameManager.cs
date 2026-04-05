@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
         if(playerName == DEV_PLAYER_NAME)
         {
             Inventory.FillAllItems(itemDatabase);
+            UnlockAllMonsterKnowledge();
             Debug.Log("Modo desarrollador activado en slot " + slot);
         }
 
@@ -109,6 +110,7 @@ public class GameManager : MonoBehaviour
         if (CurrentPlayer.playerName == DEV_PLAYER_NAME)
         {
             Inventory.FillAllItems(itemDatabase);
+            UnlockAllMonsterKnowledge();
             Debug.Log("Modo desarrollador activado (partida cargada) en slot " + slot);
         }
 
@@ -148,5 +150,14 @@ public class GameManager : MonoBehaviour
         Knowledge = new KnowledgeSystem(CurrentPlayer.knowledge, monsterDatabase);
         Inventory = new InventorySystem(CurrentPlayer.inventory);
         Summon = new SummonSystem(CurrentPlayer, Inventory, Knowledge);
+    }
+
+     private void UnlockAllMonsterKnowledge()
+    {
+        foreach (MonsterData monster in monsterDatabase.allMonsters)
+        {
+            Knowledge.RegisterMonsterEncountered(monster.MonsterID);
+        }
+        Debug.Log("Modo dev: knowledge nivel 1 desbloqueado para todos los monsters");
     }
 }
