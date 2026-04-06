@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8a0dda42d7b344da1882ecd19e2b94, type: 3}
   m_Name: Scratch
   m_EditorClassIdentifier: Assembly-CSharp::MoveData
+  MoveID: scratch
   MoveName: Scratch
   MoveDescription: "Ara\xF1a al enemigo"
   MoveType: 0

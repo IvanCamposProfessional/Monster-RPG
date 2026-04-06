@@ -25,7 +25,6 @@ public class CombatManager : MonoBehaviour
     public List<GameObject> AllySpawnAreas;
     public List<GameObject> EnemySpawnAreas;
     Enemy enemy;
-    Player player;
     [SerializeField]
     private GameObject monsterPrefab;
     //Variable para almacenar la unidad a la que le corresponde el turno
@@ -85,8 +84,6 @@ public class CombatManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Guardamos el objeto player en la variable
-        player = GameObject.Find("Player").GetComponent<Player>();
         //Guardamos el objeto enemy en la variable
         enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
 
@@ -227,33 +224,47 @@ public class CombatManager : MonoBehaviour
 
     private void SetupBattle()
     {
-        //Hacemos un bucle que recorra los spawn area para instanciar los allys
-        for(int i = 0; i < AllySpawnAreas.Count; i++)
+        //── Ally side ──
+        //Comprobaciones de seguridad
+        if(GameManager.Instance != null && GameManager.Instance.CurrentPlayer != null)
         {
-            if(player.party[i] == null)
-                continue; //Slot de la party vacio, no hacemos nada
+            //Guardamos la active party del player de tipo Monster Save Data
+            List<MonsterSaveData> activeParty = GameManager.Instance.CurrentPlayer.activeParty;
+
+            //Hacemos un bucle que recorra los spawn area para instanciar los allys
+            for(int i = 0; i < AllySpawnAreas.Count; i++)
+            {
+                //Deserializamos el Monster Save Data a Monster Runtime
+                Monster monster = MonsterSerializer.Deserialize(activeParty[i], GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase);
+
+                if(monster == null) continue; //Slot de la party vacio, no hacemos nada
                 
-            //Instanciamos el GameObject del monster
-            GameObject monsterInstance = Instantiate(monsterPrefab, AllySpawnAreas[i].transform.position, Quaternion.identity, AllySpawnAreas[i].transform.parent);
+                //Instanciamos el GameObject del monster
+                GameObject monsterInstance = Instantiate(monsterPrefab, AllySpawnAreas[i].transform.position, Quaternion.identity, AllySpawnAreas[i].transform.parent);
 
-            //Guardamos la unit
-            MonsterUnit unit = monsterInstance.GetComponent<MonsterUnit>();
-            //Indicamos al prefab que monster de la party del player es
-            unit.Setup(player.party[i]);
-            //Indicamos a la Unit que es Ally
-            unit.SetSide(true);
-            //Guardamos la unidad en la lista de Monster Ally
-            allyMonsters.Add(unit);
+                //Guardamos la unit
+                MonsterUnit unit = monsterInstance.GetComponent<MonsterUnit>();
+                //Indicamos al prefab que monster de la party del player es
+                unit.Setup(monster);
+                //Indicamos a la Unit que es Ally
+                unit.SetSide(true);
+                //Guardamos la unidad en la lista de Monster Ally
+                allyMonsters.Add(unit);
 
-            //Cambiamos el nombre al Ally instanciado
-            monsterInstance.name = "Ally " + player.party[i].data.MonsterName;
-        }   
+                //Cambiamos el nombre al Ally instanciado
+                monsterInstance.name = "Ally " + monster.data.MonsterName;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("CombatManager: GameManager o CurrentPlayer no disponible. No se han instanciado allies.");
+        }
 
+        //── Enemy side ──
         //Hacemos un bucle que recorra los spawn area para instanciar los enemys
         for(int i = 0; i < EnemySpawnAreas.Count; i++)
         {
-            if(enemy.party[i] == null)
-                continue; //Slot de la party vacio, no hacemos nada
+            if(enemy.party[i] == null) continue; //Slot de la party vacio, no hacemos nada
                 
             //Instanciamos el GameObject del monster
             GameObject monsterInstance = Instantiate(monsterPrefab, EnemySpawnAreas[i].transform.position, Quaternion.identity, EnemySpawnAreas[i].transform.parent);
@@ -276,8 +287,6 @@ public class CombatManager : MonoBehaviour
         //Añadimos todos los monster units a la lista
         allMonsters.AddRange(allyMonsters);
         allMonsters.AddRange(enemyMonsters);
-
-        //CalculateTurnQueue();
     }
 
     void InitializeTimeline()
