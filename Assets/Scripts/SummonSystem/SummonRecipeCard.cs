@@ -79,7 +79,7 @@ public class SummonRecipeCard : MonoBehaviour, IPointerClickHandler
             if(ingredient == null || ingredient.item == null) continue;
 
             //Creamos la row del ingrediente secundario
-            CreateIngredientRow(recipe.mainIngredient);
+            CreateIngredientRow(ingredient);
         }
     }
 
