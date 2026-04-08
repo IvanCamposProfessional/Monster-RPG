@@ -75,6 +75,9 @@ public class GameManager : MonoBehaviour
         //Modo desarrollador: si el nombre es el nombre reservado rellenamos el inventario
         if(playerName == DEV_PLAYER_NAME)
         {
+            CurrentPlayer.activeParty.Clear();
+            CurrentPlayer.reserve.Clear();
+            CurrentPlayer.inventory.Clear();
             Inventory.FillAllItems(itemDatabase);
             UnlockAllMonsterKnowledge();
             Debug.Log("Modo desarrollador activado en slot " + slot);
@@ -106,12 +109,15 @@ public class GameManager : MonoBehaviour
         //Inicializamos los sistemas con los datos cargados
         InitializeSystems();
 
-        //Modo desarrollador: también activo al cargar una partida dev
-        if (CurrentPlayer.playerName == DEV_PLAYER_NAME)
+        //Modo desarrollador: si el nombre del current player es el nombre reservado rellenamos el inventario
+        if(CurrentPlayer.playerName == DEV_PLAYER_NAME)
         {
+            CurrentPlayer.activeParty.Clear();
+            CurrentPlayer.reserve.Clear();
+            CurrentPlayer.inventory.Clear();
             Inventory.FillAllItems(itemDatabase);
             UnlockAllMonsterKnowledge();
-            Debug.Log("Modo desarrollador activado (partida cargada) en slot " + slot);
+            Debug.Log("Modo desarrollador activado en slot " + slot);
         }
 
         //Cambiamos el bool para empezar a contar el tiempo de partida

@@ -94,14 +94,14 @@ public class SummonUIManager : MonoBehaviour
     // REFRESCO
     // ─────────────────────────────────────────
 
-    //Refresca el color de todas las cartas activas
+    //Refresca todas las cartas activas
     public void RefreshAllCards()
     {
         //Creamos un bucle que recorre las active cards
         foreach(SummonRecipeCard card in activeCards)
         {
             //Refrescamos el color de la card
-            if(card != null) card.RefreshColor();
+            if(card != null) card.Refresh();
         }
     }
 

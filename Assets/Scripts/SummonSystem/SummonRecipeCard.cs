@@ -112,6 +112,13 @@ public class SummonRecipeCard : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    //Refresca los ingredientes y los colores de la card
+    public void Refresh()
+    {
+        BuildIngredientRows();
+        RefreshColor();
+    }
+
     public void RefreshColor()
     {
         //Booleano que almacena si podemos hacer summon del monster

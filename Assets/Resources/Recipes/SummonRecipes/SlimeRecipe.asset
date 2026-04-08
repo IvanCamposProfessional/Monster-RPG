@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SlimeRecipe
   m_EditorClassIdentifier: Assembly-CSharp::SummonRecipe
   outputMonster: {fileID: 11400000, guid: 3456c62a205d5cb4d8e039f1998804af, type: 2}
-  requiredKnowledgeLevel: 2
+  requiredKnowledgeLevel: 1
   mainIngredient:
     item: {fileID: 11400000, guid: 0a60cf452020d2645b9e53601eb5f38c, type: 2}
     quantity: 1
