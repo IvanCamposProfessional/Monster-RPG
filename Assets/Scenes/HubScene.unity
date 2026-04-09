@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 92278995}
   - component: {fileID: 92278994}
   m_Layer: 5
-  m_Name: MonstersTab
+  m_Name: MonstersTabButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,8 +227,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 826925286}
-  - {fileID: 1106388228}
-  - {fileID: 1734145446}
   m_Father: {fileID: 99691545}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1135475, y: 0.85}
@@ -329,6 +327,7 @@ GameObject:
   - component: {fileID: 99691545}
   - component: {fileID: 99691547}
   - component: {fileID: 99691546}
+  - component: {fileID: 99691548}
   m_Layer: 5
   m_Name: PlayerPanel
   m_TagString: Untagged
@@ -351,6 +350,7 @@ RectTransform:
   - {fileID: 92278993}
   - {fileID: 1108063013}
   - {fileID: 370126695}
+  - {fileID: 749990170}
   m_Father: {fileID: 398122908}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -396,6 +396,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99691544}
   m_CullTransparentMesh: 1
+--- !u!114 &99691548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99691544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af8659b1e0fb1244b29189f539455a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPanelManager
+  playerPanel: {fileID: 99691544}
+  monstersTab: {fileID: 749990169}
+  monstersTabManager: {fileID: 749990171}
 --- !u!1 &129445212
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +561,7 @@ GameObject:
   - component: {fileID: 370126697}
   - component: {fileID: 370126696}
   m_Layer: 5
-  m_Name: InventoryTab
+  m_Name: InventoryTabButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1678,6 +1693,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724959200}
   m_CullTransparentMesh: 1
+--- !u!1 &749990169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 749990170}
+  - component: {fileID: 749990171}
+  m_Layer: 5
+  m_Name: MonstersTab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &749990170
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749990169}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1106388228}
+  - {fileID: 1734145446}
+  m_Father: {fileID: 99691545}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 2.7175, y: -17.3012}
+  m_SizeDelta: {x: 982.57, y: 375.6251}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &749990171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749990169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d574dd96fcb82c4b9e0930df928a9aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonstersTabManager
+  monsterSlotPrefab: {fileID: 5755244792761902108, guid: a1c17a875b171fc4ab6375e332e220d2, type: 3}
+  slotsContainer: {fileID: 1106388228}
+  detailPanel: {fileID: 0}
 --- !u!1 &826925285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1839,17 +1907,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1106388227}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 92278993}
+  m_Father: {fileID: 749990170}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 408.89636, y: -234.09482}
-  m_SizeDelta: {x: 976.7927, y: 376.1897}
+  m_AnchoredPosition: {x: -3.3891602, y: -2.1379}
+  m_SizeDelta: {x: 976.7927, y: 379.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1106388229
 MonoBehaviour:
@@ -1890,7 +1958,7 @@ GameObject:
   - component: {fileID: 1108063015}
   - component: {fileID: 1108063014}
   m_Layer: 5
-  m_Name: GrimoireTab
+  m_Name: GrimoireTabButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3279,6 +3347,7 @@ GameObject:
   - component: {fileID: 1734145446}
   - component: {fileID: 1734145448}
   - component: {fileID: 1734145447}
+  - component: {fileID: 1734145449}
   m_Layer: 5
   m_Name: MonsterDetailPanel
   m_TagString: Untagged
@@ -3293,7 +3362,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1734145445}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3308,12 +3377,12 @@ RectTransform:
   - {fileID: 397838510}
   - {fileID: 405143709}
   - {fileID: 1191001556}
-  m_Father: {fileID: 92278993}
+  m_Father: {fileID: 749990170}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 408.9, y: -234.09}
-  m_SizeDelta: {x: 817.79, y: 346.19}
+  m_AnchoredPosition: {x: -3.3854675, y: -3.9888}
+  m_SizeDelta: {x: -6.7800293, y: 0.5649414}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1734145447
 MonoBehaviour:
@@ -3353,6 +3422,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1734145445}
   m_CullTransparentMesh: 1
+--- !u!114 &1734145449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734145445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 632abd4b4d9a1c347b78c71de2737486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterDetailPanel
 --- !u!1 &1748474325
 GameObject:
   m_ObjectHideFlags: 0
