@@ -37,7 +37,7 @@ public class MonstersTabManager : MonoBehaviour
             MonsterSlotCard card = slotObj.GetComponent<MonsterSlotCard>();
 
             //Si la posicion actual de la party contiene un monster
-            if(activeParty[i] != null)
+            if(i < activeParty.Count && activeParty[i] != null)
             {
                 //Deserializamos el MonsterSaveData a Monster Runtime para obtener sus stats
                 Monster monster = MonsterSerializer.Deserialize(activeParty[i],  GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase);

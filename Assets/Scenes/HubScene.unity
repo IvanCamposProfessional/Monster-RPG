@@ -1709,7 +1709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &749990170
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1745,7 +1745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonstersTabManager
   monsterSlotPrefab: {fileID: 5755244792761902108, guid: a1c17a875b171fc4ab6375e332e220d2, type: 3}
   slotsContainer: {fileID: 1106388228}
-  detailPanel: {fileID: 0}
+  detailPanel: {fileID: 1734145449}
 --- !u!1 &826925285
 GameObject:
   m_ObjectHideFlags: 0
@@ -3354,7 +3354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1734145446
 RectTransform:
   m_ObjectHideFlags: 0

@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MoveDatabase moveDatabase;
     [SerializeField] private ItemDatabase itemDatabase;
     [SerializeField] private RecipeDatabase recipeDatabase;
+    [SerializeField] private TypeIconDatabase typeIconDatabase;
 
     //Sistemas de juego accesibles globalmente
     public KnowledgeSystem Knowledge { get; private set; }
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     public MoveDatabase MoveDatabase => moveDatabase;
     public ItemDatabase ItemDatabase => itemDatabase;
     public RecipeDatabase RecipeDatabase => recipeDatabase;
+    public TypeIconDatabase TypeIconDatabase => typeIconDatabase;
 
     private bool isTrackingTime = false;
 
