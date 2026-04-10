@@ -79,7 +79,7 @@ public class SummonRecipeCard : MonoBehaviour, IPointerClickHandler
             if(ingredient == null || ingredient.item == null) continue;
 
             //Creamos la row del ingrediente secundario
-            CreateIngredientRow(recipe.mainIngredient);
+            CreateIngredientRow(ingredient);
         }
     }
 
@@ -110,6 +110,13 @@ public class SummonRecipeCard : MonoBehaviour, IPointerClickHandler
             //Cambiamos el color del texto a verde si tenemos la cantidad suficiente y a rojo si no disponemos de la cantidad
             quantityText.color = owned >= ingredient.quantity ? Color.green : Color.red;
         }
+    }
+
+    //Refresca los ingredientes y los colores de la card
+    public void Refresh()
+    {
+        BuildIngredientRows();
+        RefreshColor();
     }
 
     public void RefreshColor()

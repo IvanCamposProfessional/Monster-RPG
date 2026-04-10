@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MoveDatabase moveDatabase;
     [SerializeField] private ItemDatabase itemDatabase;
     [SerializeField] private RecipeDatabase recipeDatabase;
+    [SerializeField] private TypeIconDatabase typeIconDatabase;
 
     //Sistemas de juego accesibles globalmente
     public KnowledgeSystem Knowledge { get; private set; }
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     public MoveDatabase MoveDatabase => moveDatabase;
     public ItemDatabase ItemDatabase => itemDatabase;
     public RecipeDatabase RecipeDatabase => recipeDatabase;
+    public TypeIconDatabase TypeIconDatabase => typeIconDatabase;
 
     private bool isTrackingTime = false;
 
@@ -75,6 +77,9 @@ public class GameManager : MonoBehaviour
         //Modo desarrollador: si el nombre es el nombre reservado rellenamos el inventario
         if(playerName == DEV_PLAYER_NAME)
         {
+            CurrentPlayer.activeParty.Clear();
+            CurrentPlayer.reserve.Clear();
+            CurrentPlayer.inventory.Clear();
             Inventory.FillAllItems(itemDatabase);
             UnlockAllMonsterKnowledge();
             Debug.Log("Modo desarrollador activado en slot " + slot);
@@ -106,12 +111,15 @@ public class GameManager : MonoBehaviour
         //Inicializamos los sistemas con los datos cargados
         InitializeSystems();
 
-        //Modo desarrollador: también activo al cargar una partida dev
-        if (CurrentPlayer.playerName == DEV_PLAYER_NAME)
+        //Modo desarrollador: si el nombre del current player es el nombre reservado rellenamos el inventario
+        if(CurrentPlayer.playerName == DEV_PLAYER_NAME)
         {
+            CurrentPlayer.activeParty.Clear();
+            CurrentPlayer.reserve.Clear();
+            CurrentPlayer.inventory.Clear();
             Inventory.FillAllItems(itemDatabase);
             UnlockAllMonsterKnowledge();
-            Debug.Log("Modo desarrollador activado (partida cargada) en slot " + slot);
+            Debug.Log("Modo desarrollador activado en slot " + slot);
         }
 
         //Cambiamos el bool para empezar a contar el tiempo de partida
