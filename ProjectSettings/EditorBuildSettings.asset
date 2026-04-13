@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hub Zones/BayZone.unity
     guid: 27211c2760ed79545bd30af8ac347f11
+  - enabled: 1
+    path: Assets/Scenes/Hub Zones/RunZone.unity
+    guid: cc9cc91870d530745876eef87104a36e
+  - enabled: 1
+    path: Assets/Scenes/RunScene.unity
+    guid: dad4c836522e03d48a33b37f12eff749
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

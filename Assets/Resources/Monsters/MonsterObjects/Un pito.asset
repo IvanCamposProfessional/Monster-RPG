@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1198f578c01194f96c911dc4cc4973, type: 3}
+  m_Name: Un pito
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterData
+  MonsterID: pito
+  MonsterName: Pito
+  MonsterDescription: Pita
+  Type: 8
+  MonsterIcon: {fileID: 6479198127483453842, guid: df8c336f887707a4fac15a1a33999590, type: 3}
+  MonsterSprite: {fileID: 6479198127483453842, guid: df8c336f887707a4fac15a1a33999590, type: 3}
+  BaseHP: 8
+  BaseBP: 5
+  BaseLevel: 1
+  MaxLevel: 150
+  BaseAttack: 5
+  BaseDefense: 5
+  BaseSpecialAttack: 5
+  BaseSpecialDefense: 5
+  BaseSpeed: 5
+  LerneableMoves:
+  - Move: {fileID: 11400000, guid: 52961b51b6e268946b22e2ab4556f6a4, type: 2}
+    LevelLearned: 1
+  - Move: {fileID: 11400000, guid: 8da4f4b7d45fb6e44aeb592cac61d9a3, type: 2}
+    LevelLearned: 6
+  timesDefeatedForLevel2: 0
+  timesDefeatedForLevel3: 0
+  timesSummonedForLevel2: 0
