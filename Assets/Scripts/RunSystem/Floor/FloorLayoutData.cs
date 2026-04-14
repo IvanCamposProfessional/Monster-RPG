@@ -9,7 +9,7 @@ public class NodeLayoutEntry
     //Identificador unico del nodo dentro de este layout
     public string nodeId;
     //Posicion en grid (ej: columna 2, fila 3)
-    public Vector2 gridPosition;
+    public Vector2Int gridPosition;
     //IDs de los nodos a los que conecta este nodo
     public List<string> connectedNodesIds;
     //Rol del nodo
