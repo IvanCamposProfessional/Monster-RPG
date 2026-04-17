@@ -19,6 +19,11 @@ public class RunMapManager : MonoBehaviour
 
     [Header("Layout")]
     [SerializeField] private float gridSpacing = 2f;
+    [SerializeField] private float nodeSize = 1f;
+
+    [Header("Conexiones")]
+    [SerializeField] private float connectionWidth = 0.1f;
+    [SerializeField] private float connectionHeight = 0.3f;
 
     //Diccionario que guarda la ID del nodo y el nodo activo
     private Dictionary<string, RunNode> activeNodes = new Dictionary<string, RunNode>();
@@ -53,7 +58,7 @@ public class RunMapManager : MonoBehaviour
 
             //Guardamos el Run Node en runtime del prefab y le hacemos Setup
             RunNode runNode = obj.GetComponent<RunNode>();
-            runNode.Setup(nodeData);
+            runNode.Setup(nodeData, nodeSize);
 
             //Guardamos el nodo en el diccionario
             activeNodes[nodeData.nodeId] = runNode;
@@ -134,19 +139,16 @@ public class RunMapManager : MonoBehaviour
 
     private void DrawConnection(Vector3 from, Vector3 to)
     {
-        //Instanciamos el prefab de la linea
         GameObject lineObj = Instantiate(connectionLinePrefab, nodesContainer);
-        //Añadimos la linea a la lista de conexiones
         activeConnections.Add(lineObj);
 
-        //Configuramos la posicion de la linea
-        LineRenderer lr = lineObj.GetComponent<LineRenderer>();
-        if (lr != null)
-        {
-            lr.positionCount = 2;
-            lr.SetPosition(0, from);
-            lr.SetPosition(1, to);
-        }
+        Vector3 direction = to - from;
+        float distance = direction.magnitude;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        lineObj.transform.position = (from + to) / 2f;
+        lineObj.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        lineObj.transform.localScale = new Vector3(distance * connectionWidth, connectionHeight, 1f);
     }
 
     //Funcion para convertir la posicion en grid a la posicion del mundo

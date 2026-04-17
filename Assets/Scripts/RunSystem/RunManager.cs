@@ -96,19 +96,21 @@ public class RunManager : MonoBehaviour
         RunFloorData floorData = new RunFloorData(nodeList);
         //Guardamos el Start Node
         RunNodeData startNode = floorData.GetStartNode();
+
+         //Guardamos el piso generado como Current Floor
+        CurrentFloor = floorData;
+
         //Comprobacion de seguridad
         if(startNode != null)
         {
-            //Marcamos que el Start Node Is Reachable
-            startNode.isReachable = true;
+            //Marcamos que el Start Node Is Visible
+            startNode.isVisited = true;
+            OnNodeVisited(startNode.nodeId);
         }
         else
         {
             Debug.LogWarning("RunManager: el layout " + layout.layoutId + " no tiene nodo Start");
         }
-        
-        //Guardamos el piso generado como Current Floor
-        CurrentFloor = floorData;
 
         Debug.Log("RunManager: piso " + floorIndex + " generado | tipo: " + runType.runTypeName + " (" + runType.themeType + ") | layout: " + layout.layoutId);
 
@@ -138,9 +140,15 @@ public class RunManager : MonoBehaviour
         //Comprobacion de seguridad
         if (visited == null) return;
 
+        //Desactivamos el isReachable de TODOS los nodos antes de asignar los nuevos, asi los nodos paralelos que no se visitaron quedan bloqueados
+        foreach (RunNodeData node in CurrentFloor.nodes)
+        {
+            if (!node.isVisited)
+                node.isReachable = false;
+        }
+        
         //Marcamos que se ha visitado y que ya no es alcanzable
         visited.isVisited = true;
-        visited.isReachable = false;
 
         //Creamos un bucle que recorre los nodos alcanzables al actual
         foreach(string connectedId in visited.connectedNodeIds)
