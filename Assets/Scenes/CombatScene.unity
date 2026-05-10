@@ -2766,6 +2766,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   monsterDatabase: {fileID: 11400000, guid: d90bfc1e4d7ef9347a77b0d6d6b0dae2, type: 2}
+  moveDatabase: {fileID: 11400000, guid: e747d1703db1a774bb8a45d8e9e835e1, type: 2}
+  encounterDataList:
+  - {fileID: 11400000, guid: 0cfa750c890ce8b4f997fd33c6c544ab, type: 2}
 --- !u!1 &1833706753
 GameObject:
   m_ObjectHideFlags: 0

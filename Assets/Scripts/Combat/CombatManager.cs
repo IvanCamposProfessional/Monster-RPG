@@ -232,8 +232,12 @@ public class CombatManager : MonoBehaviour
             List<MonsterSaveData> activeParty = GameManager.Instance.CurrentPlayer.activeParty;
 
             //Hacemos un bucle que recorra los spawn area para instanciar los allys
-            for(int i = 0; i < AllySpawnAreas.Count; i++)
+            for(int i = 0; i < Mathf.Min(AllySpawnAreas.Count, activeParty.Count); i++)
             {
+                MonsterSaveData saveData = activeParty[i];
+                // Slot vacio — lo saltamos sin instanciar nada
+                if (saveData == null) continue;
+
                 //Deserializamos el Monster Save Data a Monster Runtime
                 Monster monster = MonsterSerializer.Deserialize(activeParty[i], GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase);
 
@@ -262,7 +266,7 @@ public class CombatManager : MonoBehaviour
 
         //── Enemy side ──
         //Hacemos un bucle que recorra los spawn area para instanciar los enemys
-        for(int i = 0; i < EnemySpawnAreas.Count; i++)
+        for(int i = 0; i < Mathf.Min(EnemySpawnAreas.Count, enemy.party.Count); i++)
         {
             if(enemy.party[i] == null) continue; //Slot de la party vacio, no hacemos nada
                 

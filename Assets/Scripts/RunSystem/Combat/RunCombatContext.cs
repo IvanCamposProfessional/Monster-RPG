@@ -1,0 +1,35 @@
+using UnityEngine;
+
+//Clase estatica que transporta el contexto de combate entre la RunScene y el CombatScene
+//RunNode escribe aqui antes de cargar la CombatScene
+//CombatManager lee aqui al inicializarse
+
+public static class RunCombatContext
+{
+    //Tipo de run activo, determina la pool de enemies
+    public static MonsterType ThemeType { get; private set; }
+    //Indice del piso actual, determina la dificultad del encuentro
+    public static int FloorIndex { get; private set; }
+    //Tipo de nodo que originó el combate (Battle, Elite, Boss)
+    public static NodeType NodeType { get; private set; }
+    //ID del nodo origen para notificar al RunManager al volver
+    public static string NodeId { get; private set; }
+    //True si hay contexto activo pendiente de ser leido
+    public static bool IsSet { get; private set; }
+
+    //Escribe el contextro antes de cargar la CombatScene
+    public static void Set(MonsterType themeType, int floorIndex, NodeType nodeType, string nodeId)
+    {
+        ThemeType  = themeType;
+        FloorIndex = floorIndex;
+        NodeType   = nodeType;
+        NodeId     = nodeId;
+        IsSet      = true;
+    }
+
+    //Limpia el contexto una vez el CombatManager lo ha leido
+    public static void Clear()
+    {
+        IsSet = false;
+    }
+}

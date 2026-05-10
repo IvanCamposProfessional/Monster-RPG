@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -152,6 +153,9 @@ public class RunNode : MonoBehaviour, IPointerClickHandler
 
     private void LoadCombat()
     {
+        //Escribimos el contexto del combate antes de cambiar de escena
+        RunCombatContext.Set(RunManager.Instance.RunType.themeType, RunManager.Instance.CurrentFloorIndex, NodeData.nodeType, NodeData.nodeId);
+
         SceneManager.LoadScene(combatSceneName);
     }
 }
