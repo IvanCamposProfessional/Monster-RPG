@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RunScene.unity
     guid: dad4c836522e03d48a33b37f12eff749
+  - enabled: 1
+    path: Assets/Scenes/Run/RunEventScene.unity
+    guid: 90c922ccd2d5b2f42babf0139a466ca7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

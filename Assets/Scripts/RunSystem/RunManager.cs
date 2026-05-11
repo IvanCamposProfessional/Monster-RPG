@@ -19,6 +19,9 @@ public class RunManager : MonoBehaviour
     //Datos del piso actualmente activos
     public RunFloorData CurrentFloor { get; private set; }
 
+    //Lista de eventos disponibles en el piso actual
+    [SerializeField] private List<EventEncounterData> eventEncounterList;
+
     private void Awake()
     {
         if (Instance != null) { Destroy(gameObject); return; }
@@ -167,6 +170,34 @@ public class RunManager : MonoBehaviour
         //Refrescamos los nodos
         if (RunMapManager.Instance != null)
             RunMapManager.Instance.RefreshNodes();
+    }
+
+    // ─────────────────────────────────────────
+    // EVENTOS
+    // ─────────────────────────────────────────
+
+    //Selecciona el EventData elegible para el nodo del evento actual
+    public EventData ResolveEvent()
+    {
+        // Comprobacion de seguridad
+        if (eventEncounterList == null || eventEncounterList.Count == 0)
+        {
+            Debug.LogWarning("RunManager: eventEncounterList no configurada");
+            return null;
+        }
+
+        //Buscamos el EventEncounterData que coincide con el tema de la run actual
+        EventEncounterData encounterData = eventEncounterList.Find(e => e.themeType == runType.themeType);
+
+        //Comprobacion de seguridad
+        if (encounterData == null)
+        {
+            Debug.LogWarning("RunManager: no hay EventEncounterData para el tema " + runType.themeType);
+            return null;
+        }
+
+        //Delegamos la seleccion ponderada y el filtrado de Flags al EventEncounterData
+        return encounterData.GetElegibleEvent(CurrentFloorIndex);
     }
 
     // ─────────────────────────────────────────

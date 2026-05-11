@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -29,6 +30,7 @@ public class RunNode : MonoBehaviour, IPointerClickHandler
 
     [Header("Nombres de escena")]
     [SerializeField] private string combatSceneName = "CombatScene";
+    [SerializeField] private string eventSceneName  = "RunEventScene";
 
     // ─────────────────────────────────────────
     // SETUP
@@ -146,7 +148,7 @@ public class RunNode : MonoBehaviour, IPointerClickHandler
                 break;
  
             case NodeType.Event:
-                Debug.Log("RunNode: nodo Event — pendiente de implementar");
+                LoadEvent();
                 break;
         }
     }
@@ -157,5 +159,22 @@ public class RunNode : MonoBehaviour, IPointerClickHandler
         RunCombatContext.Set(RunManager.Instance.RunType.themeType, RunManager.Instance.CurrentFloorIndex, NodeData.nodeType, NodeData.nodeId);
 
         SceneManager.LoadScene(combatSceneName);
+    }
+
+    private void LoadEvent()
+    {
+        //Pedimos al RunManager que resuelva el evento el evento elegible para el piso y tema actuales
+        EventData selectedEvent = RunManager.Instance.ResolveEvent();
+
+        //Comprobacion de seguridad
+        if (selectedEvent == null)
+        {
+            Debug.LogWarning("RunNode: no se encontro ningun evento elegible para el nodo " + NodeData.nodeId);
+            return;
+        }
+
+        //Escribimos el contexto del evento antes de cambiar de escena
+        RunEventContext.Set(selectedEvent, NodeData.nodeId);
+        SceneManager.LoadScene(eventSceneName);
     }
 }
