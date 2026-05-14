@@ -41,25 +41,24 @@ public class EventEncounterData : ScriptableObject
             return null;
         }
 
+        //Guardamos el KnowledgeSystem
+        KnowledgeSystem knowledge = GameManager.Instance.Knowledge;
+
         //Paso 1: filtrar eventos elegibles segun las flags actuales del jugador
         List<EventData> elegible = new List<EventData>();
 
         //Recorremos con un bucle los PossibleEvents dentro de la pool del piso
         foreach(EventData ev in pool.possibleEvents)
         {
-            //Si tiene requiredFlag el jugador debe tener la flag lo que significa que si PlayerHasFlag devuelve False (el jugador no ha desbloqueado la flag)
+            //Si tiene requiredFlag el jugador debe tener la flag lo que significa que si HasFlag devuelve False (el jugador no ha desbloqueado la flag)
             //se hace Continue (no se elige el evento)
-            if(!string.IsNullOrEmpty(ev.requiredFlag) && !PlayerHasFlag(ev.requiredFlag))
-            {
+            if (ev.requiredFlag != KnowledgeFlag.None && !knowledge.HasFlag(ev.requiredFlag))
                 continue;
-            }
 
-            //Si tiene blockedByFlag el jugador NO debe tenerla lo que significa que si PlayerHasFlag devuelve True (el jugador si ha desbloqueado la flag)
+            //Si tiene blockedByFlag el jugador NO debe tenerla lo que significa que si HasFlag devuelve True (el jugador si ha desbloqueado la flag)
             //se hace Continue (no se elige el evento))
-            if(!string.IsNullOrEmpty(ev.blockedByFlag) && PlayerHasFlag(ev.blockedByFlag))
-            {
+            if (ev.blockedByFlag != KnowledgeFlag.None && knowledge.HasFlag(ev.blockedByFlag))
                 continue;
-            }
 
             //En caso de haber superado las 2 comprobaciones de flags se añade el evento a la lista de elegibles
             elegible.Add(ev);
@@ -95,16 +94,5 @@ public class EventEncounterData : ScriptableObject
 
         //Fallback: devolver el ultimo elegible
         return elegible[elegible.Count - 1];
-    }
-
-    // ─────────────────────────────────────────
-    // PRIVADOS
-    // ─────────────────────────────────────────
-
-    //Comprueba si el jugador tiene una flag, revisando tanto NPC como World knowledge
-    private bool PlayerHasFlag(string flag)
-    {
-        KnowledgeSystem knowledge = GameManager.Instance.Knowledge;
-        return knowledge.HasNPCKnowledge(flag) || knowledge.HasWorldKnowledge(flag);
     }
 }

@@ -20,17 +20,17 @@ public class EventData : ScriptableObject
     // CONDICIONES DE APARICION
     // ─────────────────────────────────────────
 
-    //Flag que DEBE tener el jugador para que este evento pueda aparecer, si está vacio no hay requisito
-    public string requiredFlag;
-    //Flag que BLOQUEA este evento si el jugador ya la tiene, si está vacio no hay bloqueo
-    public string blockedByFlag;
+    //Flag que DEBE tener el jugador para que este evento pueda aparecer, None = sin requisito
+    public KnowledgeFlag requiredFlag;
+    //Flag que BLOQUEA este evento si el jugador ya la tiene, None = sin bloqueo
+    public KnowledgeFlag blockedByFlag;
 
     // ─────────────────────────────────────────
     // RECOMPENSAS
     // ─────────────────────────────────────────
 
-    //Flag que se otorga al jugador al completar este evento, si esta vacio no se otorga ninguna Flag
-    public string flagToGrant;
+    //Flag que se otorga al jugador al completar este evento, None = no se otorga ninguna flag
+    public KnowledgeFlag flagToGrant;
     //Item que se entrega al jugador al completar este evento, si es null no se entrega ningun Item
     public ItemData itemReward;
     //Cantidad del item que se otorga, solo relevante si el itemReward no es null

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd11c5285d2bb9e48827bdce335a81fa, type: 3}
+  m_Name: AnnabelLee
+  m_EditorClassIdentifier: Assembly-CSharp::NPCData
+  npcId: annabel
+  npcName: Annabel Lee
+  portrait: {fileID: 2894555879038325245, guid: 01b456c5eedb53c40837a8f8627de79b, type: 3}
+  requiredFlag: 7
+  dialogueEntries:
+  - requiredFlag: 7
+    lines:
+    - 'I was a child and She was a child,  '
+    - 'In this kingdom by the sea, '
+    - 'But we loved with a love that was more than love '
+    - 'I and my ANNABEL LEE  '
+    - "With a love that the wing\xE9d seraphs of Heaven "
+    - 'Coveted her and me.   '
+  - requiredFlag: 8
+    lines:
+    - 'The angels, not half so happy in Heaven, '
+    - 'Went envying her and me; '
+    - 'Yes! that was the reason (as all men know, '
+    - In this kingdom by the sea)
+    - 'That the wind came out of the cloud, chilling '
+    - 'And killing my ANNABEL LEE. '

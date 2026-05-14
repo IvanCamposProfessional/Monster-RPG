@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f49308bb3f69e444861de77b149a84e, type: 3}
+  m_Name: AnnabelLeeMet
+  m_EditorClassIdentifier: Assembly-CSharp::EventData
+  eventId: annabellee_met
+  eventType: 0
+  eventWeight: 2
+  requiredFlag: 0
+  blockedByFlag: 7
+  flagToGrant: 7
+  itemReward: {fileID: 0}
+  itemRewardQuantity: 1
+  npcId: annabel
+  dialogueLines:
+  - It was many and many a year ago
+  - 'In a kingdom by the sea,  '
+  - That a maiden lived whom you may know
+  - 'By the name of ANNABEL LEE; '
+  - And this maiden she lived with no other thought
+  - Than to love and be loved by me

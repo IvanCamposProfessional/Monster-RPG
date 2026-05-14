@@ -60,7 +60,7 @@ public class HubZone : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         if(zoneData.unlockedByDefault) return true;
 
         //Devolvemos true o false segun si el World Knowledge que tenemos contiene la flag necesaria para desbloquear la zona
-        return GameManager.Instance.Knowledge.HasWorldKnowledge(zoneData.unlockFlag); 
+        return GameManager.Instance.Knowledge.HasFlag(zoneData.unlockFlag); 
     }
 
     private void ApplySprite()

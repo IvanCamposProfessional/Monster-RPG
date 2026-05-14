@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f49308bb3f69e444861de77b149a84e, type: 3}
+  m_Name: AnnabelLeeLore1
+  m_EditorClassIdentifier: Assembly-CSharp::EventData
+  eventId: annabellore1
+  eventType: 0
+  eventWeight: 1
+  requiredFlag: 7
+  blockedByFlag: 8
+  flagToGrant: 8
+  itemReward: {fileID: 0}
+  itemRewardQuantity: 1
+  npcId: annabel
+  dialogueLines:
+  - 'And this was the reason that, long ago, '
+  - In this kingdom by the sea,
+  - 'A wind blew out of a cloud by night '
+  - 'Chilling my ANNABEL LEE;  '
+  - So that her high-born kinsmen came
+  - 'And bore her away from me, '
+  - 'To shut her up, in a sepulchre  '
+  - 'In this kingdom by the sea '

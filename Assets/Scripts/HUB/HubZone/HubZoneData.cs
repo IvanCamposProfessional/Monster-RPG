@@ -18,9 +18,9 @@ public class HubZoneData : ScriptableObject
     [Header("Desbloqueo")]
     //Si es true la zona esta disponible desde el inicio y se ignora unlockFlag
     public bool unlockedByDefault;
-    //Flag de KnowledgeFlags.World que desbloquea esta zona
-    public string unlockFlag;
-    //Mensaje que se muestra cuando cuando el jugador intenta entrar y la zona esta bloqueada
+    //Flag que desbloquea la zona, None = sin requisito de flag
+    public KnowledgeFlag unlockFlag;
+    // Mensaje que se muestra cuando el jugador intenta entrar y la zona esta bloqueada
     [TextArea(1, 3)]
     public string lockedMessage;
 }

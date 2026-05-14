@@ -19,5 +19,5 @@ MonoBehaviour:
   zoneIcon: {fileID: -4377630124058152969, guid: 06c31fa408d104d48b4d9bccbaea6aa8, type: 3}
   sceneName: RunZone
   unlockedByDefault: 1
-  unlockFlag: start_run
+  unlockFlag: 0
   lockedMessage: Aun no puedes empezar una run
