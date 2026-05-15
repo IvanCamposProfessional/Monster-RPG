@@ -6,6 +6,7 @@ public class SummonInteractable : MonoBehaviour, IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData eventData)
     {
-         SummonUIManager.Instance.OpenSummonPanel();
+        //Notificamos que el jugador quiere abrir el panel de invocacion
+        GameEvents.RaiseSummonPanelRequested();
     }
 }

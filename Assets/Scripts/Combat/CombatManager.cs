@@ -24,9 +24,8 @@ public class CombatManager : MonoBehaviour
     private BattleState state;
     public List<GameObject> AllySpawnAreas;
     public List<GameObject> EnemySpawnAreas;
-    Enemy enemy;
-    [SerializeField]
-    private GameObject monsterPrefab;
+    [SerializeField] private Enemy enemy;
+    [SerializeField] private GameObject monsterPrefab;
     //Variable para almacenar la unidad a la que le corresponde el turno
     private MonsterUnit currentUnit;
     //Lista para contener todos los monster units del combate
@@ -57,15 +56,13 @@ public class CombatManager : MonoBehaviour
     private List<TimelineIcon> timelineIcons = new List<TimelineIcon>();
 
     [Header("CombatUI")]
-    //Variable para guardar el Script del Combat Menu
-    [SerializeField]
-    private CombatMenu combatMenu;
     //Variable para saber si se ha elegido un movimiento
     [HideInInspector]
     public bool moveChosen = false;
     //Variable para saber que movimiento se ha elegido 
     [HideInInspector]
     public MoveData chosenMove;
+
     //Variable para saber si la coroutine del player se está ejecutando
     private bool isPlayerActionCoroutineRunning = false;
 
@@ -79,14 +76,27 @@ public class CombatManager : MonoBehaviour
     {
         //Inicializamos el Singleton
         Instance = this;
+        GameEvents.OnMoveChosen += HandleMoveChosen;
+        GameEvents.OnUnitClicked += HandleUnitClicked;
+        GameEvents.OnTimelineNeedsRefresh  += ForceUpdateTimelineUI;
+    }
+
+    void OnDestroy()
+    {
+        GameEvents.OnMoveChosen -= HandleMoveChosen;
+        GameEvents.OnUnitClicked -= HandleUnitClicked;
+        GameEvents.OnTimelineNeedsRefresh  -= ForceUpdateTimelineUI;
+    }
+
+    private void HandleMoveChosen(MoveData move)
+    {
+        chosenMove = move;
+        moveChosen = true;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Guardamos el objeto enemy en la variable
-        enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
-
         //Ponemos el estado del combate en Battle Start
         state = BattleState.BattleStart;
         Debug.Log(state);
@@ -110,8 +120,6 @@ public class CombatManager : MonoBehaviour
                 //Si no se está ejecutando ya la coroutine
                 if (!isPlayerActionCoroutineRunning)
                 {
-                    //Mostramos el panel del Combat Menu
-                    combatMenu.gameObject.SetActive(true);
                     //Indicamos que se va a ejecutar
                     isPlayerActionCoroutineRunning = true;
                     //Lanzamos la coroutine
@@ -146,8 +154,8 @@ public class CombatManager : MonoBehaviour
         InitializeTimeline();
         //Hacemos Setup de la UI de la Timeline
         SetupTimelineUI();
-        //Ocultamos el Combat Menu
-        combatMenu.HideMenu();
+        //Invocamos la action que se llama al empezar el combate
+        GameEvents.RaiseCombatStarted();
         //Ponemos el estado del combate en TimeLineUpdate
         state = BattleState.TimelineUpdate;
         Debug.Log(state);
@@ -174,8 +182,8 @@ public class CombatManager : MonoBehaviour
         //Procesamos los modifiers del inicio de turno
         currentUnit.monster.ProcessModifiers(ModifierTiming.OnTurnStart);
 
-        //Refrescamos la UI inmediatamente despues de procesar para que los estados que expiren en este tick desaparezcan visualmente
-        CombatUIManager.UIManager.RefreshIfVisible(currentUnit.monster);
+        //Notificamos que ha cambiado el estado del monster
+        GameEvents.RaiseMonsterStateChanged(currentUnit.monster);
 
         UpdateHighlight(currentUnit);
 
@@ -203,8 +211,8 @@ public class CombatManager : MonoBehaviour
             //Procesamos los modifiers del fin de turno
             currentUnit.monster.ProcessModifiers(ModifierTiming.OnTurnEnd);
 
-            //Refrescamos la UI inmediatamente despues de procesar para que los estados que expiren en este tick desaparezcan visualmente
-            CombatUIManager.UIManager.RefreshIfVisible(currentUnit.monster);
+            //Notificamos que ha cambiado el estado del monster
+            GameEvents.RaiseMonsterStateChanged(currentUnit.monster);
 
             //Al terminar el turno reseteamos el timeline progress de la unidad que ha hecho el turno
             currentUnit.timelineProgress = 0f;
@@ -388,7 +396,7 @@ public class CombatManager : MonoBehaviour
     }
     
     //Funcion para forzar la UI de la Timeline, el MoveEffect de Delay lo usa y se puede usar a futuro
-    public void ForceUpdateTimelineUI()
+    private void ForceUpdateTimelineUI()
     {
         //Actualiza la posicion cada icono
         foreach (var icon in timelineIcons)
@@ -428,7 +436,7 @@ public class CombatManager : MonoBehaviour
     }
 
     //Funcion llamada desde MonsterUnit.OnPointerClick y solo procesa el click si estamos esperando un target, añade las unidades clickadas a selected targets
-    public void OnUnitClicked(MonsterUnit unit)
+    public void HandleUnitClicked(MonsterUnit unit)
     {
         //Si no estamos esperando recibir ningun target por el click del Player
         if (!isWaitingForTarget)
@@ -558,8 +566,8 @@ public class CombatManager : MonoBehaviour
         moveChosen = false;
         chosenMove = null;
 
-        //Mostramos el menu con los ataques del monstruo al cual le corresponde el turno
-        combatMenu.SetCurrentUnit(currentUnit);
+        //Indicamos que ha empezado el turno del player y la monster unit que tiene el turno
+        GameEvents.RaisePlayerTurnStarted(currentUnit);
 
         //Esperar hasta que el jugador seleccione un Move
         while (!moveChosen)
@@ -567,8 +575,8 @@ public class CombatManager : MonoBehaviour
             yield return null;
         }
 
-        //Una vez el player ha seleccionado un Move
-        combatMenu.HideMenu();
+        //Una vez el player ha seleccionado un Move indicamos que ha terminado el turno del player
+        GameEvents.RaisePlayerTurnEnded();
         Debug.Log("Movimiento elegido : " + chosenMove.MoveName);
 
         //Gestionamos el targeting segun el tipo de move

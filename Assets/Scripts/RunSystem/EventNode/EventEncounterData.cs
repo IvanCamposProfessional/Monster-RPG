@@ -26,7 +26,7 @@ public class EventEncounterData : ScriptableObject
     // ─────────────────────────────────────────
 
     //Devuelve un EventData elegible para el piso indicado usando seleccion ponderada, filtra por requiredFlag y blockedByFlag antes de hacer el roll
-    public EventData GetElegibleEvent(int floorIndex)
+    public EventData GetElegibleEvent(int floorIndex, KnowledgeSystem knowledge)
     {
         //Comprobacion de seguridad
         if (poolsByFloor == null) return null;
@@ -40,9 +40,6 @@ public class EventEncounterData : ScriptableObject
             Debug.LogWarning("EventEncounterData: no hay eventos para el piso " + floorIndex + " en tema " + themeType);
             return null;
         }
-
-        //Guardamos el KnowledgeSystem
-        KnowledgeSystem knowledge = GameManager.Instance.Knowledge;
 
         //Paso 1: filtrar eventos elegibles segun las flags actuales del jugador
         List<EventData> elegible = new List<EventData>();

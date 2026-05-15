@@ -82,6 +82,6 @@ public class EventNPCPanel : MonoBehaviour, IPointerClickHandler
     //Notifica al EventManager que el jugador ha terminado el evento
     private void OnFinish()
     {
-        EventManager.Instance.OnEventCompleted();
+        GameEvents.RaisePlayerFinishedEvent();
     }
 }

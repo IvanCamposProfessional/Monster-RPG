@@ -31,6 +31,15 @@ public class KnowledgeSystem
                 Debug.LogWarning("KnowledgeSystem: flag desconocida en el save — " + flagName);
             }
         }
+
+        //Suscripcion al evento de recompensa de flag
+        GameEvents.OnFlagGranted += AddFlag;
+    }
+
+    //Cancela la suscripcion a eventos globales
+    public void Unsuscribe()
+    {
+        GameEvents.OnFlagGranted -= AddFlag;
     }
 
     // ─────────────────────────────────────────

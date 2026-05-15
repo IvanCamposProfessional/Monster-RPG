@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 //Singleton que gestiona el panel de invocacion en la escena
@@ -37,6 +36,16 @@ public class SummonUIManager : MonoBehaviour
         //El panel empieza oculto
         summonPanel.SetActive(false);
         feedbackPanel.SetActive(false);
+
+        //Suscripcion a eventos
+        GameEvents.OnSummonPanelRequested += OpenSummonPanel;
+        GameEvents.OnSummonAttempted      += HandleSummonAttempted;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnSummonPanelRequested -= OpenSummonPanel;
+        GameEvents.OnSummonAttempted      -= HandleSummonAttempted;
     }
 
     // ─────────────────────────────────────────
@@ -102,6 +111,25 @@ public class SummonUIManager : MonoBehaviour
         {
             //Refrescamos el color de la card
             if(card != null) card.Refresh();
+        }
+    }
+
+    // ─────────────────────────────────────────
+    // HANDLERS DE EVENTOS
+    // ─────────────────────────────────────────
+
+    //Reacciona al resultado de un intento de invocacion
+    private void HandleSummonAttempted(bool success, string monsterName)
+    {
+        if (success)
+        {
+            //Refrescamos las cards porque el inventario ha cambiado
+            RefreshAllCards();
+            ShowFeedback("¡" + monsterName + " invocado con exito!", true);
+        }
+        else
+        {
+            ShowFeedback("No puedes invocar a " + monsterName + ".", false);
         }
     }
 

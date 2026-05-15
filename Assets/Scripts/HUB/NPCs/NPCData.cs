@@ -34,13 +34,10 @@ public class NPCData : ScriptableObject
     // ─────────────────────────────────────────
 
     //Devuelve las lineas del bloque de dialogo mas avanzado disponible para el jugador
-    public List<string> GetCurrrentDialogue()
+    public List<string> GetCurrrentDialogue(KnowledgeSystem knowledge)
     {
         //Comprobacion de seguridad
         if (dialogueEntries == null || dialogueEntries.Count == 0) return null;
-
-        //Guardamos el Knowledge del Player
-        KnowledgeSystem knowledge = GameManager.Instance.Knowledge;
 
         //Recorremos en orden inverso para devolver el bloque mas avanzado posible
         for(int i = dialogueEntries.Count -1; i >= 0; i--)

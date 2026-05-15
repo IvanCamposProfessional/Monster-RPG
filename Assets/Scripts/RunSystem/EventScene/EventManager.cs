@@ -26,6 +26,9 @@ public class EventManager : MonoBehaviour
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
 
+        //Suscripcion al evento de fin de subsistema
+        GameEvents.OnPlayerFinishedEvent += OnEventCompleted;
+
         // Comprobacion de seguridad
         if (!RunEventContext.IsSet)
         {
@@ -38,6 +41,11 @@ public class EventManager : MonoBehaviour
         RunEventContext.Clear();
 
         ActivateSubsystems();
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnPlayerFinishedEvent -= OnEventCompleted;
     }
 
     // ─────────────────────────────────────────
@@ -78,16 +86,15 @@ public class EventManager : MonoBehaviour
     // COMPLETAR EVENTO
     // ─────────────────────────────────────────
 
-    //Llamado por el subsistema activo cuando el jugador termina el evento
-    public void OnEventCompleted()
+    private void OnEventCompleted()
     {
         // Otorgar flag si el evento la concede
         if (currentEvent.flagToGrant != KnowledgeFlag.None)
-            GameManager.Instance.Knowledge.AddFlag(currentEvent.flagToGrant);
+            GameEvents.RaiseFlagGranted(currentEvent.flagToGrant);
         
         //Otorga item si el evento lo concede
         if(currentEvent.itemReward != null)
-            GameManager.Instance.Inventory.AddItem(currentEvent.itemReward.ItemID, currentEvent.itemRewardQuantity);
+            GameEvents.RaiseItemGranted(currentEvent.itemReward.ItemID, currentEvent.itemRewardQuantity);
 
          //Volver a la run
         SceneManager.LoadScene(runScene);

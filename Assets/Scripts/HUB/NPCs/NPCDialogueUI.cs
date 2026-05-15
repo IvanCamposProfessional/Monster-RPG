@@ -38,7 +38,7 @@ public class NPCDialogueUI : MonoBehaviour, IPointerClickHandler
         if (npcData == null) return;
 
         //Obtenemos el bloque de dialogo mas avanzado que el jugador puede ver
-        lines = npcData.GetCurrrentDialogue();
+        lines = npcData.GetCurrrentDialogue(GameManager.Instance.Knowledge);
         currentLine = 0;
 
         //Aplicamos los datos visuales del NPC

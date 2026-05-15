@@ -10,10 +10,20 @@ public class NPCInteractable : MonoBehaviour, IPointerClickHandler
     // ─────────────────────────────────────────
     // INICIALIZACION
     // ─────────────────────────────────────────
+
+    private void Awake()
+    {
+        GameEvents.OnFlagGranted += OnFlagGranted;
+    }
  
     private void Start()
     {
         RefreshVisibility();
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnFlagGranted -= OnFlagGranted;
     }
 
     // ─────────────────────────────────────────
@@ -31,6 +41,11 @@ public class NPCInteractable : MonoBehaviour, IPointerClickHandler
 
         //Activamos el NPC segun el resultado de la comprobacion anterior de flags
         gameObject.SetActive(visible);
+    }
+
+    private void OnFlagGranted(KnowledgeFlag flag)
+    {
+        RefreshVisibility();
     }
 
     // ─────────────────────────────────────────

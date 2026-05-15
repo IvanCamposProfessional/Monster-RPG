@@ -10,6 +10,15 @@ public class InventorySystem
     public InventorySystem(List<InventoryItemSaveData> items)
     {
         this.items = items;
+
+        //Suscripcion al evento de recompensa de item
+        GameEvents.OnItemGranted += AddItem;
+    }
+
+    //Cancela la suscripcion a eventos globales
+    public void Unsuscribe()
+    {
+        GameEvents.OnItemGranted -= AddItem;
     }
 
     // ─────────────────────────────────────────

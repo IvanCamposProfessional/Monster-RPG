@@ -23,11 +23,23 @@ public class HubUIManager : MonoBehaviour
         if(Instance != null) { Destroy(gameObject); return; }
         Instance = this;
 
-        /*zoneTooltipPanel.SetActive(false);
-        lockedPanel.SetActive(false);*/
+        //Suscripcion a eventos de zonas
+        GameEvents.OnZoneHoverEnter += ShowZoneTooltip;
+        GameEvents.OnZoneHoverExit += HideZoneTooltip;
+        GameEvents.OnZoneLockedClicked += ShowLockedMessage;
     }
 
-    //---- Tooltip ----
+     private void OnDestroy()
+    {
+        GameEvents.OnZoneHoverEnter -= ShowZoneTooltip;
+        GameEvents.OnZoneHoverExit -= HideZoneTooltip;
+        GameEvents.OnZoneLockedClicked -= ShowLockedMessage;
+    }
+
+    // ─────────────────────────────────────────
+    // TOOLTIP
+    // ─────────────────────────────────────────
+
     public void ShowZoneTooltip(string zoneName, bool isUnlocked)
     {
         //Cambiamos el texto de la Zone Tooltip segun isUnlocked
@@ -42,7 +54,10 @@ public class HubUIManager : MonoBehaviour
         zoneTooltipPanel.SetActive(false);
     }
 
-    //---- Locked Panel ----
+    // ─────────────────────────────────────────
+    // LOCKED PANEL
+    // ─────────────────────────────────────────
+
     public void ShowLockedMessage(string title, string body)
     {
         //Cambiamos el texto del titulo del mensaje de locked

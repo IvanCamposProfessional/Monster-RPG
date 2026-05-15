@@ -197,7 +197,7 @@ public class RunManager : MonoBehaviour
         }
 
         //Delegamos la seleccion ponderada y el filtrado de Flags al EventEncounterData
-        return encounterData.GetElegibleEvent(CurrentFloorIndex);
+        return encounterData.GetElegibleEvent(CurrentFloorIndex, GameManager.Instance.Knowledge);
     }
 
     // ─────────────────────────────────────────
