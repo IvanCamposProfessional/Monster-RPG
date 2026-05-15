@@ -46,12 +46,14 @@ public class MonsterUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        CombatUIManager.UIManager.ShowAllyPanel(monster);
+        //Notificamos que el puntero ha entrado en el monster
+        GameEvents.RaiseUnitHoverEnter(monster);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        CombatUIManager.UIManager.HideAllyPanel();
+        //Notificamos que el puntero ha salido del monster
+        GameEvents.RaiseUnitHoverExit();
     }
 
     //Funcion para indicar si es aliado o enemigo
@@ -60,9 +62,9 @@ public class MonsterUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         IsAlly = isAlly;
     }
 
-    //Creamos la funcion para saber si la Monster Unit ha sido clickada para seleccionarla como target y se lo pasamos al Combat Manager con la funcion On Unit Clicked
+    //Publica que esta unidad ha sido clickada
     public void OnPointerClick(PointerEventData eventData)
     {
-        CombatManager.Instance.OnUnitClicked(this);
+        GameEvents.RaiseUnitClicked(this);
     }
 }

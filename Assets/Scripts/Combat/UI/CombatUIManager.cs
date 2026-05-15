@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class CombatUIManager : MonoBehaviour
 {
-    public static CombatUIManager UIManager;
     [SerializeField]
     private GameObject MonsterPanel;
 
@@ -32,9 +31,23 @@ public class CombatUIManager : MonoBehaviour
 
     private void Awake()
     {
-        UIManager = this;
         HideAllyPanel();
+
+        GameEvents.OnUnitHoverEnter    += ShowAllyPanel;
+        GameEvents.OnUnitHoverExit     += HideAllyPanel;
+        GameEvents.OnMonsterStateChanged += RefreshIfVisible;
     }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnUnitHoverEnter    -= ShowAllyPanel;
+        GameEvents.OnUnitHoverExit     -= HideAllyPanel;
+        GameEvents.OnMonsterStateChanged -= RefreshIfVisible;
+    }
+
+    // ─────────────────────────────────────────
+    // PANEL
+    // ─────────────────────────────────────────
 
     public void ShowAllyPanel(Monster monster)
     {
@@ -57,6 +70,17 @@ public class CombatUIManager : MonoBehaviour
     {
         MonsterPanel.SetActive(false);
     }
+
+    // Refresca el panel solo si el monster que se muestra es el actual
+    public void RefreshIfVisible(Monster monster)
+    {
+        if (MonsterPanel.activeSelf)
+            ShowAllyPanel(monster);
+    }
+
+    // ─────────────────────────────────────────
+    // ICONOS DE ESTADO
+    // ─────────────────────────────────────────
 
     //Funcion para refrescar los state icons
     private void RefreshStateIcons(Monster monster)
@@ -88,12 +112,5 @@ public class CombatUIManager : MonoBehaviour
             obj.GetComponent<MonsterStateIcon>().SetupStatModifier(modifier);
             activeStateIcons.Add(obj);
         }
-    }
-
-    // Refresca el panel solo si el monster que se muestra es el actual
-    public void RefreshIfVisible(Monster monster)
-    {
-        if (MonsterPanel.activeSelf)
-            ShowAllyPanel(monster);
     }
 }

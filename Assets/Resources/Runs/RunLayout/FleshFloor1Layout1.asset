@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3727ee3d34d5a1343b54e39ad1d84c25, type: 3}
+  m_Name: FleshFloor1Layout1
+  m_EditorClassIdentifier: Assembly-CSharp::FloorLayoutData
+  layoutId: flesh_floor1_layout1
+  backgroundSprite: {fileID: 8729985092696002005, guid: d236d340d31276d429983630684a4af6, type: 3}
+  nodes:
+  - nodeId: node_start
+    gridPosition: {x: 0, y: -2}
+    connectedNodesIds:
+    - normal_node_1
+    - normal_node_2
+    nodeRole: 0
+  - nodeId: normal_node_1
+    gridPosition: {x: -2, y: 0}
+    connectedNodesIds:
+    - normal_node_3
+    - normal_node_4
+    nodeRole: 1
+  - nodeId: normal_node_2
+    gridPosition: {x: 2, y: 0}
+    connectedNodesIds:
+    - normal_node_5
+    - normal_node_6
+    nodeRole: 1
+  - nodeId: normal_node_3
+    gridPosition: {x: -3, y: 2}
+    connectedNodesIds:
+    - normal_node_7
+    nodeRole: 1
+  - nodeId: normal_node_4
+    gridPosition: {x: -1, y: 2}
+    connectedNodesIds:
+    - normal_node_7
+    nodeRole: 1
+  - nodeId: normal_node_5
+    gridPosition: {x: 1, y: 2}
+    connectedNodesIds:
+    - normal_node_8
+    nodeRole: 1
+  - nodeId: normal_node_6
+    gridPosition: {x: 3, y: 2}
+    connectedNodesIds:
+    - normal_node_8
+    nodeRole: 1
+  - nodeId: normal_node_7
+    gridPosition: {x: -2, y: 4}
+    connectedNodesIds:
+    - boss_node
+    nodeRole: 1
+  - nodeId: normal_node_8
+    gridPosition: {x: 2, y: 4}
+    connectedNodesIds:
+    - boss_node
+    nodeRole: 1
+  - nodeId: boss_node
+    gridPosition: {x: 0, y: 6}
+    connectedNodesIds: []
+    nodeRole: 2

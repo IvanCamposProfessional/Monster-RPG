@@ -5,13 +5,12 @@ using TMPro;
 
 public class CombatMenu : MonoBehaviour
 {
-    //Variable para guardar el Combat Manager
-    public CombatManager combatManager;
+     [Header("Referencias UI")]
     //Variable para guardar el Prefab del boton de Move
-    public GameObject moveButtonPrefab;
+    [SerializeField] private GameObject moveButtonPrefab;
     //Panel Combat Menu
-    public Transform buttonContainer;
-    public GameObject movesButton;
+    [SerializeField] private Transform buttonContainer;
+    [SerializeField] private GameObject movesButton;
 
     //Variable para saber la current unit del turno
     private MonsterUnit currentUnit;
@@ -19,26 +18,62 @@ public class CombatMenu : MonoBehaviour
     //Lista para guardar los botones que se instancian en el Combat Menu
     public List<GameObject> currentButtons = new List<GameObject>();
 
-    //Funcion para que el Menu sepa la Unit de la cual es el turno y se llama desde el Battle Manager
-    public void SetCurrentUnit(MonsterUnit unit)
+    // ─────────────────────────────────────────
+    // SUSCRIPCIONES
+    // ─────────────────────────────────────────
+
+    private void Awake()
+    {
+        GameEvents.OnCombatStarted += HandleCombatStarted;
+        GameEvents.OnPlayerTurnStarted += HandlePlayerTurnStarted;
+        GameEvents.OnPlayerTurnEnded += HandlePlayerTurnEnded;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnCombatStarted    -= HandleCombatStarted;
+        GameEvents.OnPlayerTurnStarted -= HandlePlayerTurnStarted;
+        GameEvents.OnPlayerTurnEnded  -= HandlePlayerTurnEnded;
+    }
+
+    // ─────────────────────────────────────────
+    // HANDLERS
+    // ─────────────────────────────────────────
+
+    //Oculta el menu al arrancar el combate
+    private void HandleCombatStarted()
+    {
+        HideMenu();
+    }
+
+    //Recibe la unidad actuva y muestra el panel para que el jugador elija
+    private void HandlePlayerTurnStarted(MonsterUnit unit)
     {
         currentUnit = unit;
+        ResetToInitialState();
+        gameObject.SetActive(true);
     }
+
+    //Oculta el menu una vez el jugador ha elegido movimiento
+    private void HandlePlayerTurnEnded()
+    {
+        HideMenu();
+    }
+
+    // ─────────────────────────────────────────
+    // MENU DE MOVIMIENTOS
+    // ─────────────────────────────────────────
 
     //Funcion para definir lo que ocurre cuando se muestre el menu, tenemos que pasarle una Monster Unit para saber los moves que tiene
     public void ShowMenu()
     {
         //Por seguridad
         if(currentUnit == null)
-        {
             return;
-        }
 
         //Limpiar botones anteriores
         foreach (var button in currentButtons)
-        {
             Destroy(button);
-        }
 
         //Limpiar la lista de los botones anteriores
         currentButtons.Clear();
@@ -54,13 +89,14 @@ public class CombatMenu : MonoBehaviour
             //Cambiamos el texto del boton al nombre del Move
             moveBtn.GetComponentInChildren<TMP_Text>().text = move.MoveName;
 
+            //Capturamos move en variable local para el closure del listener
+            MoveData capturedMove = move;
+
             //Añadimos un listener al boton
             moveBtn.GetComponent<Button>().onClick.AddListener(() =>
             {
-                //Decimos que move ha elegido el player
-                combatManager.chosenMove = move;
-                //Indicamos que el Player ya ha elegido accion
-                combatManager.moveChosen = true;
+                //Publica el movimiento elegido y el CombatManager escucha y reacciona
+                GameEvents.RaiseMoveChosen(capturedMove);
             });
 
             //Guardamos el boton en la lista de los botones activos
@@ -76,5 +112,16 @@ public class CombatMenu : MonoBehaviour
     {
         //Ocultamos el panel
         gameObject.SetActive(false);
+    }
+
+    private void ResetToInitialState()
+    {
+        //Destruimos los botones de moves del turno anterior
+        foreach (var button in currentButtons)
+            Destroy(button);
+        currentButtons.Clear();
+
+        //Volvemos a mostrar el boton principal de Moves
+        movesButton.SetActive(true);
     }
 }

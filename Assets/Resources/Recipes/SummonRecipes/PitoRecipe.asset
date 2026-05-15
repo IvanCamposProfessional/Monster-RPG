@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d65e15b67016749b96c1248cddb0ef, type: 3}
+  m_Name: PitoRecipe
+  m_EditorClassIdentifier: Assembly-CSharp::SummonRecipe
+  outputMonster: {fileID: 11400000, guid: bd9f164ab3e5bca4a97f6e8fc8d480ad, type: 2}
+  requiredKnowledgeLevel: 1
+  mainIngredient:
+    item: {fileID: 11400000, guid: 0a60cf452020d2645b9e53601eb5f38c, type: 2}
+    quantity: 4
+  secondaryIngredients:
+  - item: {fileID: 11400000, guid: 7dd0b0b994b08a94290a08714e0475c7, type: 2}
+    quantity: 1
+  - item: {fileID: 11400000, guid: e72d375ed4c2c9b4a90a7e43666fe49a, type: 2}
+    quantity: 2

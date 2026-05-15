@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b32630b16a5dc4eb3a71b6146d0e90, type: 3}
+  m_Name: FleshCombatEncounterData
+  m_EditorClassIdentifier: Assembly-CSharp::CombatEncounterData
+  themeType: 2
+  poolsByFloor:
+  - floorIndex: 0
+    posibleEncounters:
+    - encounterId: encounter_1
+      enemies:
+      - monsterId: pito
+        level: 1
+        moveIDs:
+        - ember
+      - monsterId: pito
+        level: 1
+        moveIDs:
+        - ember
+      - monsterId: pito
+        level: 1
+        moveIDs:
+        - ember
+      - monsterId: pito
+        level: 1
+        moveIDs:
+        - ember
+      - monsterId: pito
+        level: 1
+        moveIDs:
+        - ember
+    - encounterId: encounter_2
+      enemies:
+      - monsterId: 2
+        level: 1
+        moveIDs:
+        - ember
+      - monsterId: 2
+        level: 1
+        moveIDs:
+        - ember
+      - monsterId: 2
+        level: 1
+        moveIDs:
+        - ember
+      - monsterId: 2
+        level: 1
+        moveIDs:
+        - ember
+      - monsterId: 2
+        level: 1
+        moveIDs:
+        - ember

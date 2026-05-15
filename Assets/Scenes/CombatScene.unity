@@ -687,13 +687,13 @@ MonoBehaviour:
   - {fileID: 1202555396}
   - {fileID: 681736843}
   - {fileID: 2042798747}
+  enemy: {fileID: 1819257326}
   monsterPrefab: {fileID: 5670382565368117035, guid: 3ba5cf537aa48df498ef7007cefe56e4, type: 3}
   timelineSpeed: 7
   timelinePanel: {fileID: 1336332657}
   iconContainer: {fileID: 1491359956}
   timelineIconPrefab: {fileID: 443441219859964175, guid: 391599c63222fc246baf809b59ba30a3, type: 3}
   currentHighlightedIcon: {fileID: 0}
-  combatMenu: {fileID: 2005198598}
   moveChosen: 0
   chosenMove: {fileID: 0}
 --- !u!4 &403252745
@@ -2766,6 +2766,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   monsterDatabase: {fileID: 11400000, guid: d90bfc1e4d7ef9347a77b0d6d6b0dae2, type: 2}
+  moveDatabase: {fileID: 11400000, guid: e747d1703db1a774bb8a45d8e9e835e1, type: 2}
+  encounterDataList:
+  - {fileID: 11400000, guid: 0cfa750c890ce8b4f997fd33c6c544ab, type: 2}
 --- !u!1 &1833706753
 GameObject:
   m_ObjectHideFlags: 0
@@ -3207,7 +3210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87f4ce24101b374fb2cd8cb67ec7dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatMenu
-  combatManager: {fileID: 403252744}
   moveButtonPrefab: {fileID: 1891399439423915536, guid: 66b79bfa30670444cb07dfda6762ba7f, type: 3}
   buttonContainer: {fileID: 2005198595}
   movesButton: {fileID: 993701923}

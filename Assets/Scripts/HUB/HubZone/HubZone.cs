@@ -14,6 +14,16 @@ public class HubZone : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
     private SpriteRenderer sr;
 
+    private void Awake()
+    {
+        GameEvents.OnFlagGranted += OnFlagGranted;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnFlagGranted -= OnFlagGranted;
+    }
+
     private void Start()
     {
         //Inicializamos el SpriteRenderer
@@ -26,7 +36,10 @@ public class HubZone : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         RefreshVisual();
     }
 
-    //OnValidate se ejecuta en el editor cada vez que se modifica el inspector asi el Sprite se asigna sin necesidad de entrar en el 
+    private void OnFlagGranted(KnowledgeFlag flag)
+    {
+        RefreshVisual();
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -34,7 +47,7 @@ public class HubZone : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         if (!IsUnlocked())
         {
             //Lanzamos el mensaje en la UI que indica que la zona está bloqueada
-            HubUIManager.Instance.ShowLockedMessage(zoneData.zoneName, zoneData.lockedMessage);
+            GameEvents.RaiseZoneLockedClicked(zoneData.zoneName, zoneData.lockedMessage);
             return;
         }
 
@@ -44,14 +57,14 @@ public class HubZone : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //Mostramos el Tooltip de la zona desde Hub UI Manager
-        HubUIManager.Instance.ShowZoneTooltip(zoneData.zoneName, IsUnlocked());
+        //Notificamos que el cursor ha entrado en esta zona
+        GameEvents.RaiseZoneHoverEnter(zoneData.zoneName, IsUnlocked());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        //Ocultamos el Tooltip de la zona desde Hub UI Manager
-        HubUIManager.Instance.HideZoneTooltip();
+        //Notificamos que el cursor ha salido de esta zona
+        GameEvents.RaiseZoneHoverExit();
     }
 
     public bool IsUnlocked()
@@ -60,7 +73,7 @@ public class HubZone : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         if(zoneData.unlockedByDefault) return true;
 
         //Devolvemos true o false segun si el World Knowledge que tenemos contiene la flag necesaria para desbloquear la zona
-        return GameManager.Instance.Knowledge.HasWorldKnowledge(zoneData.unlockFlag); 
+        return GameManager.Instance.Knowledge.HasFlag(zoneData.unlockFlag); 
     }
 
     private void ApplySprite()

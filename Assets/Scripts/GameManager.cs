@@ -155,6 +155,10 @@ public class GameManager : MonoBehaviour
     //Inicializamos todos los sistemas con los datos del CurrentPlayer
     private void InitializeSystems()
     {
+        //Desuscribir instancias anteriores antes de reemplazarlas
+        Knowledge?.Unsuscribe();
+        Inventory?.Unsuscribe();
+
         Knowledge = new KnowledgeSystem(CurrentPlayer.knowledge, monsterDatabase);
         Inventory = new InventorySystem(CurrentPlayer.inventory);
         Summon = new SummonSystem(CurrentPlayer, Inventory, Knowledge);

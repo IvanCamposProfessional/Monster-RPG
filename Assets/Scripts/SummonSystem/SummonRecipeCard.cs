@@ -136,19 +136,7 @@ public class SummonRecipeCard : MonoBehaviour, IPointerClickHandler
         //Intentamos hacer summon del monster y guardamos si se puede hacer o no
         bool success = GameManager.Instance.Summon.TrySummon(recipe);
         
-        //Si success es true
-        if (success)
-        {
-            //Si ha tenido exito refrescamos el color de todas las cartas ya que el inventario ha cambiado
-            SummonUIManager.Instance.RefreshAllCards();
-            //Mostramos el feedback del summon
-            SummonUIManager.Instance.ShowFeedback("¡" + recipe.outputMonster.MonsterName + " invocado con exito!", true);
-        }
-        //Si success es false
-        else
-        {
-            //Mostramos el feedback del summon
-            SummonUIManager.Instance.ShowFeedback("No puedes invocar a " + recipe.outputMonster.MonsterName + ".", false);
-        }
+        //Notificamos el resultado de la invocacion con el nombre del monstruo
+        GameEvents.RaiseSummonAttempted(success, recipe.outputMonster.MonsterName);
     }
 }

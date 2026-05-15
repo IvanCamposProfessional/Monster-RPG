@@ -34,8 +34,8 @@ public class DelayEffect : MoveEffect
 
             Debug.Log(target.monster.data.MonsterName + " ha sido retrasado en la timeline " + delay + " puntos");
 
-            //Forzamos que se actualicen los iconos en la Timeline
-            CombatManager.Instance.ForceUpdateTimelineUI();
+            //Notificamos que la timeline necesita refrescar sus iconos
+            GameEvents.RaiseTimelineNeedsRefresh();
 
             yield return new WaitForSeconds(0.3f);
         }

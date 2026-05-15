@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class KnowledgeSystem
@@ -6,56 +8,65 @@ public class KnowledgeSystem
     private KnowledgeSaveData data;
     //Variable para almacenar la base de datos de Monsters
     private MonsterDatabase monsterDatabase;
+    //HashSet en memoria para consultas
+    private HashSet<KnowledgeFlag> flagSet;
 
     //Creamos el constructor
     public KnowledgeSystem(KnowledgeSaveData data, MonsterDatabase monsterDatabase)
     {
         this.data = data;
         this.monsterDatabase = monsterDatabase;
+
+        //Reconstruimos el HashSet desde los datos serializados al cargar
+        flagSet = new HashSet<KnowledgeFlag>();
+
+        foreach(string flagName in data.flags)
+        {
+            if(Enum.TryParse(flagName, out KnowledgeFlag flag))
+            {
+                flagSet.Add(flag);
+            }
+            else
+            {
+                Debug.LogWarning("KnowledgeSystem: flag desconocida en el save — " + flagName);
+            }
+        }
+
+        //Suscripcion al evento de recompensa de flag
+        GameEvents.OnFlagGranted += AddFlag;
+    }
+
+    //Cancela la suscripcion a eventos globales
+    public void Unsuscribe()
+    {
+        GameEvents.OnFlagGranted -= AddFlag;
     }
 
     // ─────────────────────────────────────────
-    // WORLD KNOWLEDGE
+    // FLAGS DE PROGRESION
     // ─────────────────────────────────────────
 
-    //Creamos una funcion para añadir conocimiento del mundo al cual le pasamos la flag que queremos añadir
-    public void AddWorldKnowledge(string flag)
+    //Otorga una flag al jugador si no la tenia ya
+    public void AddFlag(KnowledgeFlag flag)
     {
-        //Si el Save Data no contiene la flag que le pasamos
-        if (!data.worldFlags.Contains(flag))
+        //None no es una flag valida
+        if(flag == KnowledgeFlag.None) return;
+
+        //Añadimos al HashSet y, si es nueva, la persisitimos en el Save Data
+        if (flagSet.Add(flag))
         {
-            //Añadimos la flag
-            data.worldFlags.Add(flag);
-            Debug.Log("WorldKnowledge desbloqueada: " + flag);
+            data.flags.Add(flag.ToString());
+            Debug.Log("Flag desbloqueada: " + flag);
         }
     }
 
-    //Funcion para asaber si la data contiene una flag
-    public bool HasWorldKnowledge(string flag)
+    //Devuelve true si el jugador tiene la flag indicada
+    public bool HasFlag(KnowledgeFlag flag)
     {
-        return data.worldFlags.Contains(flag);
-    }
-
-    // ─────────────────────────────────────────
-    // NPC KNOWLEDGE
-    // ─────────────────────────────────────────
-
-    //Creamos una funcion para añadir conocimiento del NPC al cual le pasamos la flag que queremos añadir
-    public void AddNPCKnowledge(string flag)
-    {
-        //Si el Save Data no contiene la flag que le pasamos
-        if (!data.npcFlags.Contains(flag))
-        {
-            //Añadimos la flag
-            data.npcFlags.Add(flag);
-            Debug.Log("NPCKnowledge desbloqueada: " + flag);
-        }
-    }
-
-    //Funcion para asaber si la data contiene una flag
-    public bool HasNPCKnowledge(string flag)
-    {
-        return data.npcFlags.Contains(flag);
+        //None nunca se considera activa
+        if (flag == KnowledgeFlag.None) return false;
+        
+        return flagSet.Contains(flag);
     }
 
     // ─────────────────────────────────────────

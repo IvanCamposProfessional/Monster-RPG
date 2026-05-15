@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d05f449f9f0f7ff4ba26141abb602a3f, type: 3}
+  m_Name: FleshRun
+  m_EditorClassIdentifier: Assembly-CSharp::RunTypeData
+  runTypeId: flesh_run
+  runTypeName: Flesh Run
+  themeType: 2
+  layoutsByFloor:
+  - floorIndex: 0
+    layouts:
+    - {fileID: 11400000, guid: f3e34686728fcb94bb5918bb9cf9940b, type: 2}
+  defaultEventWeights:
+  - nodeType: 1
+    weight: 40
+  - nodeType: 2
+    weight: 15
+  - nodeType: 3
+    weight: 25
+  - nodeType: 4
+    weight: 20
+  perFloorWeightOverrides: []
