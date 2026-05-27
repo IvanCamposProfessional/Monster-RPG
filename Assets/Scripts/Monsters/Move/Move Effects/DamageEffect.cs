@@ -40,10 +40,10 @@ public class DamageEffect : MoveEffect
         float baseDamage = (attack * move.Power / defense);
 
         //Multiplicador de tipo (tabla de tipos), se va a la clase de la tabla de tipos y recorre el diccionario para saber el multiplicador correspondiente
-        float typeMultiplier = TypeChart.GetMultiplier(move.MoveType, defender.data.Type);
+        float typeMultiplier = TypeChart.GetMultiplier(move.DamageType, defender.data.Type);
 
         //STAB: bonus si el tipo del move coincide con el tipo del atacante, si el tipo del move coincide con el del attacker devuelve stab multiplier, si no devuelve 1
-        float stab = move.MoveType == attacker.data.Type ? stabMultiplier : 1f;
+        float stab = move.DamageType == attacker.data.Type ? stabMultiplier : 1f;
         
         //Generamos un numero random y si es menor que critChance guardamos critMultiplier en la variable, si no guardamos 1
         float crit = Random.value < critChance ? critMultiplier : 1f;

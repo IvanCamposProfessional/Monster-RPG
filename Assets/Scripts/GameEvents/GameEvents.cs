@@ -25,6 +25,14 @@ public static class GameEvents
     //Se invoca cuando el jugador selecciona un movimiento en el menu de combate
     public static event Action<MoveData> OnMoveChosen;
     public static void RaiseMoveChosen(MoveData move) => OnMoveChosen?.Invoke(move);
+
+    // ─────────────────────────────────────────
+    // EVENTOS DE COMBATE — ESSENCE
+    // ─────────────────────────────────────────
+
+    //Se invoca cuando cambia el estado de una Essence Pool, el bool indica si la pool es aliada (true) o enemiga (false)
+    public static event Action<bool> OnEssencePoolChanged;
+    public static void RaiseEssencePoolChanged(bool isAlly) => OnEssencePoolChanged?.Invoke(isAlly);
  
     // ─────────────────────────────────────────
     // EVENTOS DE COMBATE — UNIDADES

@@ -15,9 +15,14 @@ MonoBehaviour:
   MoveID: watergun
   MoveName: Water Gun
   MoveDescription: Moja al enemigo
-  MoveType: 0
+  ActionType: 0
   Category: 0
-  Power: 0
+  Power: 20
   TargetType: 0
-  Effects: []
   TargetCount: 0
+  Effects:
+  - {fileID: 11400000, guid: 32cb18d81a88e5a42a039a7080b1dab2, type: 2}
+  EssenceAmountToPool:
+  - Type: 5
+    Amount: 1
+  EssenceAmountToUse: []

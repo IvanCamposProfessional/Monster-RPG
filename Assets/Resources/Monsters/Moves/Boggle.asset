@@ -15,9 +15,15 @@ MonoBehaviour:
   MoveID: boggle
   MoveName: Boggle
   MoveDescription: Te pega un moco
-  MoveType: 5
+  ActionType: 1
   Category: 1
   Power: 2
   TargetType: 0
-  Effects: []
   TargetCount: 0
+  Effects: []
+  EssenceAmountToPool: []
+  EssenceAmountToUse:
+  - Type: 5
+    Amount: 3
+  - Type: 2
+    Amount: 3

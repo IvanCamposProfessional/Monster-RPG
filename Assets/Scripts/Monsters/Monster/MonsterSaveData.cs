@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class MonsterSaveData
@@ -8,7 +7,9 @@ public class MonsterSaveData
     public string monsterID;
     public int level;
     public int currentHP;
-    public int currentBP;
-    //Lista de IDs de los Moves que el Monster tiene aprendidos, el MoveDatabase los resuelve a MoveData al cargar
-    public List<string> learnedMoveIDs = new List<string>();
+
+    //ID de los Basic Moves aprendidos
+    public List<string> learnedBasicMoveIDs = new List<string>();
+    //ID de los Essence Moves aprendidos
+    public List<string> learnedEssenceMoveIDs = new List<string>();
 }

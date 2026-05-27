@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Monster
@@ -7,17 +8,21 @@ public class Monster
 
     public int currentHP { get; set; }
     public int maxHP { get; set; }
-    public int currentBP;
-    public int maxBP;
     public int currentAttack { get; set; }
     public int currentDefense { get; set; }
     public int currentSpecialAttack { get; set; }
     public int currentSpecialDefense { get; set; }
     public int level;
     public int currentSpeed { get; set; }
-    //Los ataques que el monstruo actualmente sabe
-    public List<MoveData> learnedMoves;
-    //Lista de stat modifiers activos
+
+    //Los Basic Moves que el monstruo actualmente sabe
+    public List<MoveData> learnedBasicMoves;
+    //Los Essence Moves que el monstruo actualmente sabe
+    public List<MoveData> learnedEssenceMoves;
+    //Propiedad de conveniencia que combina ambas listas, usada por los AI Behaviours que necesitan iterar sobre todos los Moves del Monster
+    public IEnumerable<MoveData> AllLearnedMoves => learnedBasicMoves.Concat(learnedEssenceMoves);
+
+    //Lista de Stat Modifiers activos
     public List<StatModifierInstance> statModifiers = new List<StatModifierInstance>();
     //Lista de Altered States activos
     public List<AlteredStateInstance> alteredStates = new List<AlteredStateInstance>(); 
@@ -28,30 +33,26 @@ public class Monster
     //Flag que el StuntInstance activa para bloquear el turno
     public bool actionBlocked = false;
 
-    public Monster(MonsterData data, int level, int currentHP, int currentBP){
+    public Monster(MonsterData data, int level, int currentHP){
         this.data = data;
         this.level = level;
         this.currentHP = currentHP;
-        this.currentBP = currentBP;
         currentSpeed = data.BaseSpeed;
         currentAttack = data.BaseAttack;
         currentDefense = data.BaseDefense;
         currentSpecialAttack = data.BaseSpecialAttack;
         currentSpecialDefense = data.BaseSpecialDefense;
         maxHP = CalculateMaxHP();
-        maxBP = CalculateMaxBP();
-        //Inicializamos la lista de los Learned Moves
-        learnedMoves = new List<MoveData>();
+        
+        //Inicializamos ambas listas de moves
+        learnedBasicMoves = new List<MoveData>();
+        learnedEssenceMoves = new List<MoveData>();
     }
 
     public bool IsAlive => currentHP > 0;
 
     int CalculateMaxHP(){
         return data.BaseHP + level * 5;
-    }
-
-    int CalculateMaxBP(){
-        return data.BaseBP + level * 5;
     }
 
     //Funcion para que el Monster reciba daño, utilizamos Mathf.Max para que la vida nunca baje de 0

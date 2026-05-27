@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MoveData", menuName = "Scriptable Objects/MoveData")]
@@ -7,13 +8,49 @@ public class MoveData : ScriptableObject
     public string MoveID;
     public string MoveName;
     public string MoveDescription;
-    public MonsterType MoveType;
+
+    //Define si el Move genera Essence (basic) o la counsume (Essence)
+    public MoveActionType ActionType;
+
+    //Define si el daño escala con ataque fisico o especial contra las defensas
     public MoveCategory Category;
+
     public int Power;
-    //Variable target type para poder definir que tipo de target utiliza (single, multi, etc)
+
+    //Variable Target Type para poder definir que tipo de target utiliza
     public TargetType TargetType;
-    //Lista de efectos del move en orden de ejecucion, se crea una lista porque un Move puede realizar mas de un efecto (ej: daño al enemigo y curar al ally)
-    public List<MoveEffect> Effects;
-    //Variable para almacenar el numero de tarjets en caso de que el Target Type sea Multiple
+    //Varibale para almacenar el numero de targets en caso de que el Target Type sea Multiple
     public int TargetCount;
+
+    //Lista de efectos del move en orden de ejecucion
+    public List<MoveEffect> Effects;
+
+    //Essence generada al ejecutar, solo se rellena en Basic Moves, debe quedar vacia en Essence Moves
+    public List<EssenceAmount> EssenceAmountToPool;
+    //Essence consumida al ejecutar, solo se rellena en Essence Moves, debe quedar vacia en Basic Moves
+    public List<EssenceAmount> EssenceAmountToUse;
+
+    //Tipo de daño del Move que se va a usar para el calculo de efectividad, en Basic Moves se deriva del tipo enm AmountToPool y en EssenceMoves, 
+    // deriva del primer elemento de AmountToUse
+    public MonsterType DamageType
+    {
+        get
+        {
+            if(ActionType == MoveActionType.Basic)
+                return EssenceAmountToPool != null && EssenceAmountToPool.Count > 0 ? EssenceAmountToPool[0].Type : MonsterType.Normal;
+            else
+                return EssenceAmountToUse != null && EssenceAmountToUse.Count > 0 ? EssenceAmountToUse[0].Type : MonsterType.Normal;
+        }
+    }
+
+    //Lista de todos los Types del Move
+    public List< MonsterType> MoveTypes
+    {
+        get
+        {
+            var source = ActionType == MoveActionType.Basic ? EssenceAmountToPool : EssenceAmountToUse;
+            if(source != null) return new List <MonsterType>();
+            return source.Select(e => e.Type). ToList();
+        }
+    }
 }

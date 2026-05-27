@@ -16,14 +16,12 @@ public class BuffBehaviour : AIBehaviour
         //Si el procentaje es menor que el umbral devolvemos false ya que se tiene que ejecutar cuando tenga mas del 70% de vida
         if(hpPercent < hpThreshold) return false;
 
-        //Buscamos un move con ApllyModifierEffect de tipo Buff
-        MoveData buffMove = enemy.monster.learnedMoves.FirstOrDefault(m =>
+        //Buscamos en ambas listas un move con ApplyModifierEffect de tipo Buff
+        MoveData buffMove = enemy.monster.AllLearnedMoves.FirstOrDefault(m =>
         {
-            //Si no tiene el effect de Apply Modifier devuelve false
-            if(!MoveHasEffect<ApplyModifierEffect>(m)) return false;
-            //Guardamos el effect para compararlo
+            if (!MoveHasEffect<ApplyModifierEffect>(m)) return false;
+
             ApplyModifierEffect effect = m.Effects.OfType<ApplyModifierEffect>().First();
-            //Devuelve true o false segun si es buff o no
             return effect.modifierType == ModifierType.Buff;
         });
 
@@ -43,8 +41,8 @@ public class BuffBehaviour : AIBehaviour
 
     public override AIDecision Execute(MonsterUnit enemy, List<MonsterUnit> allyTargets)
     {
-        //Guarda el primer movimiento que contenga un ApplyModifierEffect de tipo Buff
-        MoveData buffMove = enemy.monster.learnedMoves.First(m =>
+        //Buscamos en ambas listas el primer Move con ApplyModifierEffect tipo Buff
+        MoveData buffMove = enemy.monster.AllLearnedMoves.First( m =>
         {
             //Comoprobacion de seguridad aunque si llega a Execute ya debe haber comprobado que tenga un Move que lo pueda aplicar
             if(!MoveHasEffect<ApplyModifierEffect>(m)) return false;
