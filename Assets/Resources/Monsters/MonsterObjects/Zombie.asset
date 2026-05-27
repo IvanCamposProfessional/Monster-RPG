@@ -19,7 +19,6 @@ MonoBehaviour:
   MonsterIcon: {fileID: 3672760022411200171, guid: dd8eccd457004994d909b80c0ddf7667, type: 3}
   MonsterSprite: {fileID: 2454163601580650797, guid: 27095da26687d124dbef0b7387c4c66b, type: 3}
   BaseHP: 5
-  BaseBP: 10
   BaseLevel: 1
   MaxLevel: 150
   BaseAttack: 5
@@ -28,7 +27,7 @@ MonoBehaviour:
   BaseSpecialDefense: 5
   BaseSpeed: 1
   LerneableMoves:
-  - Move: {fileID: 11400000, guid: b263d2e3f6256f44688dbfc3754c9656, type: 2}
+  - Move: {fileID: 11400000, guid: 553837b7850d6b446810f2995727b509, type: 2}
     LevelLearned: 1
   - Move: {fileID: 11400000, guid: c6a92e2b808523743820d22805171d95, type: 2}
     LevelLearned: 6

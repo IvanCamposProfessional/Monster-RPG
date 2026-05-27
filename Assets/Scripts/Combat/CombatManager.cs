@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using System;
 
 public enum BattleState
 {
@@ -26,17 +27,27 @@ public class CombatManager : MonoBehaviour
     public List<GameObject> EnemySpawnAreas;
     [SerializeField] private Enemy enemy;
     [SerializeField] private GameObject monsterPrefab;
+
     //Variable para almacenar la unidad a la que le corresponde el turno
     private MonsterUnit currentUnit;
+
     //Lista para contener todos los monster units del combate
     List<MonsterUnit> allMonsters;
+
     //Lista para manejar los monsters aliados
     List<MonsterUnit> allyMonsters = new List<MonsterUnit>();   
     //Lista para manejar los monsters enemigos
     List<MonsterUnit> enemyMonsters = new List<MonsterUnit>();  
+
     //Variable para definir a que velocidad avanzan las unidades en la TimeLine
     [SerializeField] 
     private float timelineSpeed = 20f;
+
+    [Header("Essence")]
+    //Pool de Essence del bando aliado
+    public EssencePool AllyEssencePool { get; private set; }
+    //Pool de Essence del bando enemigo
+    public EssencePool EnemyEssencePool { get; private set; }
 
     [Header("TimelineUI")]
     //Variable para guardar el transform del panel de la timeline
@@ -76,6 +87,11 @@ public class CombatManager : MonoBehaviour
     {
         //Inicializamos el Singleton
         Instance = this;
+
+        //Inicializamos las pools de Essence de ambos bandos
+        AllyEssencePool = new EssencePool();
+        EnemyEssencePool = new EssencePool();
+        
         GameEvents.OnMoveChosen += HandleMoveChosen;
         GameEvents.OnUnitClicked += HandleUnitClicked;
         GameEvents.OnTimelineNeedsRefresh  += ForceUpdateTimelineUI;
@@ -487,6 +503,15 @@ public class CombatManager : MonoBehaviour
         selectedTargets.Add(unit);
     }
 
+    //Devuelve si el move indicado es ejecutable por el bando aliado segun su Essence Pool
+    public bool CanAllyAffordMove(MoveData move)
+    {
+        //Si el tipo del move es basic no tiene coste de Essence
+        if(move.ActionType == MoveActionType.Basic) return true;
+
+        return AllyEssencePool.CanAfford(move.EssenceAmountToUse);
+    }
+
     //Funcion para esperar hasta que el jugar clicke exactamente 1 target
     private IEnumerator WaitForSingleTarget()
     {
@@ -569,13 +594,32 @@ public class CombatManager : MonoBehaviour
         //Indicamos que ha empezado el turno del player y la monster unit que tiene el turno
         GameEvents.RaisePlayerTurnStarted(currentUnit);
 
-        //Esperar hasta que el jugador seleccione un Move
-        while (!moveChosen)
+        //Esperar hasta que el jugador seleccione un Move ejecutable, si elige un Essence Move que no puede pagar se rechaza y se vuelve a esperar
+        bool moveIsValid = false;
+
+        while (!moveIsValid)
         {
-            yield return null;
+            //Esperar hasta que el jugador seleccione un Move
+            while (!moveChosen)
+            {
+                yield return null;
+            }
+
+            //Validar que pueda pagar el Move elegido, si el move es de tipo Essence y el Player no puede hacer Afford
+            if(chosenMove.ActionType == MoveActionType.Essence && !AllyEssencePool.CanAfford(chosenMove.EssenceAmountToUse))
+            {
+                Debug.LogWarning("No hay suficiente Essence para ejecutar " + chosenMove.MoveName);
+                moveChosen = false;
+                chosenMove = null;
+            }
+            else
+            //Si el move es de tipo Basic o el player puede pagar el coste
+            {
+                moveIsValid = true;
+            }
         }
 
-        //Una vez el player ha seleccionado un Move indicamos que ha terminado el turno del player
+        //Una vez el player ha seleccionado un Move valido indicamos que ha terminado el turno del player
         GameEvents.RaisePlayerTurnEnded();
         Debug.Log("Movimiento elegido : " + chosenMove.MoveName);
 
@@ -605,7 +649,7 @@ public class CombatManager : MonoBehaviour
         //Gestionamos las muertes antes de cambiar de estado
         yield return StartCoroutine(HandleDeaths());
 
-        // Solo cambiamos a TurnEnd si el combate no ha terminado
+        //Solo cambiamos a TurnEnd si el combate no ha terminado
         if (state != BattleState.BattleWon && state != BattleState.BattleLost)
         {
             //Cambiamos al estado Turn End
@@ -617,14 +661,35 @@ public class CombatManager : MonoBehaviour
         isPlayerActionCoroutineRunning = false;
     }
 
-    //Coroutine para ejecutar los Move Effects en orden
+    //Coroutine que gestiona la logica de Essence y ejecuta los efectos del Move en orden
+    //Si es Basic: ejecuta efectos y luego genera Essence
+    //Si es Essence: gasta Essence y luego ejecuta efectos
     private IEnumerator ExecuteMove(MonsterUnit user, MoveData move, List<MonsterUnit> targets)
     {
+        //Determinamos la pool del bando del usuario
+        EssencePool pool = user.IsAlly ? AllyEssencePool : EnemyEssencePool;
+
+        //Si es Essence Move gastamos la Essence antes de ejecutar los efectos
+        if(move.ActionType == MoveActionType.Essence)
+        {
+            pool.Spend(move.EssenceAmountToUse);
+            //Notificamos que ha cambiado una pool de essence
+            GameEvents.RaiseEssencePoolChanged(user.IsAlly);
+        }
+
         //Por cada efecto en el move
         foreach(var effect in move.Effects)
         {
             //Ejecutamos la coroutine del MoveEffect Execute
             yield return StartCoroutine(effect.Execute(user, targets, move));
+        }
+
+        //Si es Basic Move genera generamos Essence despues de ejecutar los efectos
+        if(move.ActionType == MoveActionType.Basic)
+        {
+            pool.Add(move.EssenceAmountToPool[0].Type, move.EssenceAmountToPool[0].Amount);
+            //Notificamos que ha cambiado una pool de essence
+            GameEvents.RaiseEssencePoolChanged(user.IsAlly);
         }
     }
 
@@ -719,6 +784,7 @@ public class CombatManager : MonoBehaviour
         //Si todas las Enemy Units han muerto
         if(enemyMonsters.All(u => !u.IsAlive))
         {
+            ResetEssencePools();
             //Cambiamos el estado a Battle Won
             state = BattleState.BattleWon;
             Debug.Log(state);
@@ -726,9 +792,19 @@ public class CombatManager : MonoBehaviour
         //Si todas las Ally Units han muerto
         else if (allyMonsters.All(u => !u.IsAlive))
         {
+            ResetEssencePools();
             //Cambiamos el estado a Battle Lost
             state = BattleState.BattleLost;
             Debug.Log(state);
         }
+    }
+
+    //Resetea ambas pools de Essence al terminar el combate
+    private void ResetEssencePools()
+    {
+        AllyEssencePool.Reset();
+        EnemyEssencePool.Reset();
+        GameEvents.RaiseEssencePoolChanged(true);
+        GameEvents.RaiseEssencePoolChanged(false);
     }
 }

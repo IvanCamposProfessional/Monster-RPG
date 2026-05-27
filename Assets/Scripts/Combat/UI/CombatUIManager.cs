@@ -15,8 +15,6 @@ public class CombatUIManager : MonoBehaviour
     private TextMeshProUGUI MonsterNameText;
     [SerializeField]
     private TextMeshProUGUI MonsterHPText;
-    [SerializeField]
-    private TextMeshProUGUI MonsterBPText;
 
     [Header("StatesUI")]
     //Contenedor donde instanciaremos los iconos del estado
@@ -59,8 +57,6 @@ public class CombatUIManager : MonoBehaviour
         MonsterIcon.sprite = monster.data.MonsterSprite;
         //Modificamos el texto de la HP del panel con 2 datos, el currentHP del monster ya que es variable y el BaseHP del monster
         MonsterHPText.text = "HP: " + monster.currentHP + "/" + monster.maxHP;
-        //Modificamos el texto de la BP del panel con 2 datos, el currentBP del monster ya que es variable y el BaseBP del monster
-        MonsterBPText.text = "BP: " + monster.currentBP + "/" + monster.maxBP;
 
         //Actualizamos los iconos de estado
         RefreshStateIcons(monster);
@@ -87,10 +83,9 @@ public class CombatUIManager : MonoBehaviour
     {
         //Limpiamos los iconos anteriores
         foreach(var icon in activeStateIcons)
-        {
             //Destruimos el game object
             Destroy(icon);
-        }
+        
         //Limpiamos la lista
         activeStateIcons.Clear();
 

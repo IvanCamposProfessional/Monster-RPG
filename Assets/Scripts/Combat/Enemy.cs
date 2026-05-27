@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     public MonsterDatabase monsterDatabase;
     public MoveDatabase moveDatabase;
+
     //Lista de combat encounter disponible
     public List<CombatEncounterData>  encounterDataList;
     public List<Monster> party { get; private set; } = new List<Monster>();
@@ -75,17 +76,23 @@ public class Enemy : MonoBehaviour
             return null;
         }
 
-        Monster monster = new Monster(data, entry.level, data.BaseHP, data.BaseBP);
+        Monster monster = new Monster(data, entry.level, data.BaseHP);
 
         //Añadimos los moves definidos en el encuentro
         foreach(string moveId in entry.moveIDs)
         {
             MoveData move = moveDatabase.GetMoveByID(moveId);
 
-            if (move != null)
-                monster.learnedMoves.Add(move);
-            else
+            if (move == null)
+            {
                 Debug.LogWarning("Enemy: MoveData no encontrada para ID " + moveId);
+                continue;
+            }
+
+            if(move.ActionType == MoveActionType.Basic)
+                monster.learnedBasicMoves.Add(move);
+            else
+                monster.learnedEssenceMoves.Add(move);
         }
 
         // Cargamos la AI del monster
@@ -97,14 +104,26 @@ public class Enemy : MonoBehaviour
     //Fallback para poder testear la CombatScene sin pasar por la RunScene
     private void LoadFallbackParty()
     {
-         if (monsterDatabase == null) return;
-
+        if (monsterDatabase == null) return;
+ 
         MonsterData fallbackData = monsterDatabase.GetMonsterByID("1");
         if (fallbackData == null) return;
-
-        Monster fallback = new Monster(fallbackData, 1, fallbackData.BaseHP, fallbackData.BaseBP);
+ 
+        Monster fallback = new Monster(fallbackData, 1, fallbackData.BaseHP);
+ 
+        // Añadimos el primer move disponible a la lista correcta segun su ActionType
         if (fallbackData.LerneableMoves != null && fallbackData.LerneableMoves.Count > 0)
-            fallback.learnedMoves.Add(fallbackData.LerneableMoves[0].Move);
+        {
+            MoveData firstMove = fallbackData.LerneableMoves[0].Move;
+            if (firstMove != null)
+            {
+                if (firstMove.ActionType == MoveActionType.Basic)
+                    fallback.learnedBasicMoves.Add(firstMove);
+                else
+                    fallback.learnedEssenceMoves.Add(firstMove);
+            }
+        }
+ 
         fallback.enemyAI = Resources.Load<EnemyAI>("Monsters/EnemyAI/GenericEnemyAI");
  
         party.Add(fallback);

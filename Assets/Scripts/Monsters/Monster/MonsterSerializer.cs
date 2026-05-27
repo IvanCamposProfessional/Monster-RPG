@@ -18,20 +18,24 @@ public static class MonsterSerializer
         save.monsterID = data.MonsterID;
         //Ponemos el Level del Monster Save Data a 1
         save.level = 1;
+
         //HP y BP iniciales son el valor maximo (mismo calculo que Monster.CalculateMaxHP)
         save.currentHP = data.BaseHP + 1 * 5;
-        save.currentBP = data.BaseBP + 1 * 5;
 
-        //Añadimos los moves que se aprenden en nivel 1
-        //Recorremos los Lerneable Moves dentro del Monster Data
-        foreach(LerneableMove learneableMove in data.LerneableMoves)
+        //Añadimos los Basic Moves que se aprenden en nivel 1 via LerneableMove
+        foreach(LerneableMove lerneableMove in data.LerneableMoves)
         {
-            //Si el nivel al que se aprende el move es 1 y Lerneable Move contiene el ataque (seguridad)
-            if(learneableMove.LevelLearned <= 1 && learneableMove.Move != null)
-            {
-                //Guardamos el Move en el Monster Save Data
-                save.learnedMoveIDs.Add(learneableMove.Move.MoveID);
-            }
+            //Si el nivel para aprender el Move es mayor que 1 o el Move es nulo el bucle pasa a la siguiente iteracion
+            if (lerneableMove.LevelLearned > 1 || lerneableMove.Move == null) continue;
+
+            //Si el Move que ha pasado el filtro anterior (se aprende a nivel 1) es de tipo Basic
+            if(lerneableMove.Move.ActionType == MoveActionType.Basic)
+                //Se guarda en la lista de Moves aprendidos de tipo Basic
+                save.learnedBasicMoveIDs.Add(lerneableMove.Move.MoveID);
+                //Si no (el Move es de tipo Essence)
+            else
+                //Se guarda en la lista de Moves aprendidos de tipo Essence
+                save.learnedEssenceMoveIDs.Add(lerneableMove.Move.MoveID);
         }
 
         //Devolvemos el Monster Save Data que hemos creado
@@ -52,9 +56,12 @@ public static class MonsterSerializer
         //Guardamos en el Monster Save Data el Level, la HP y la BP del Monster
         save.level = monster.level;
         save.currentHP = monster.currentHP;
-        save.currentBP = monster.currentBP;
-        //Guardamos los IDs de los Moves aprendidos
-        save.learnedMoveIDs = monster.learnedMoves.Where(m => m != null && !string.IsNullOrEmpty(m.MoveID)).Select(m => m.MoveID).ToList();
+
+        //Guardamos los IDs de los Basic Moves aprendidos
+        save.learnedBasicMoveIDs = monster.learnedBasicMoves.Where(m => m != null && !string.IsNullOrEmpty(m.MoveID)).Select(m => m.MoveID).ToList();
+        //Guardamos los IDs de los Essence Moves aprendidos
+        save.learnedEssenceMoveIDs = monster.learnedEssenceMoves.Where(m => m != null && !string.IsNullOrEmpty(m.MoveID)).Select(m => m.MoveID).ToList();
+
         //Devolvemos el Monster Save Data que hemos creado
         return save;
     }
@@ -77,24 +84,28 @@ public static class MonsterSerializer
         }
 
         //Creamos el Monster con los valores guardados
-        Monster monster = new Monster(data, save.level, save.currentHP, save.currentBP);
+        Monster monster = new Monster(data, save.level, save.currentHP);
 
-        //Resolvemos y añadimos los moves aprendidos desde la base de datos
-        //Recorremos los Learned Moves IDs en el Monster Save Data
-        foreach(string moveID in save.learnedMoveIDs)
+        //Resolvemos y añadimos los Basic Moves desde la base de datos
+        foreach (string moveID in save.learnedBasicMoveIDs)
         {
-            //Creamos el move que queremos añadir al monster buscandolo en la base de datos de Moves
+            MoveData move = moveDatabase.GetMoveByID(moveID);
+            
+            if(move != null)
+                monster.learnedBasicMoves.Add(move);
+            else
+                Debug.LogWarning("MonsterSerializer: MoveData no encontrada para ID: " + moveID);
+        }
+
+        //Resolvemos y añadimos los Essence Moves desde la base de datos
+        foreach(string moveID in save.learnedEssenceMoveIDs)
+        {
             MoveData move = moveDatabase.GetMoveByID(moveID);
 
-            //Comprobacion de seguridad
-            if (move != null)
-            {
-                monster.learnedMoves.Add(move);
-            }
+            if(move != null)
+                monster.learnedEssenceMoves.Add(move);
             else
-            {
                 Debug.LogWarning("MonsterSerializer: MoveData no encontrada para ID: " + moveID);
-            }
         }
 
         //Devolvemos el Monster que hemos creado

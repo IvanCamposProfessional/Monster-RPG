@@ -8,7 +8,7 @@ public class AttackBehaviour : AIBehaviour
     public override bool CanExecute(MonsterUnit enemy, List<MonsterUnit> allyTargets)
     {
         //Devuelve un target aleatorio que esté vivo y un move que tenga el damage effect
-        return allyTargets.Any(u => u.IsAlive) && enemy.monster.learnedMoves.Any(m => MoveHasEffect<DamageEffect>(m));
+        return allyTargets.Any(u => u.IsAlive) && GetAffordableDamageMoves(enemy).Any();
     }
 
     public override AIDecision Execute(MonsterUnit enemy, List<MonsterUnit> allyTargets)
@@ -16,14 +16,14 @@ public class AttackBehaviour : AIBehaviour
         //Creamos una lista con los aliados vivos
         List<MonsterUnit> livingAllies = allyTargets.Where(u => u.IsAlive).ToList();
         //Creamos una lista con los moves que tienen efecto de daño
-        List<MoveData> damageMoves = enemy.monster.learnedMoves.Where(m => MoveHasEffect<DamageEffect>(m)).ToList();
+        List<MoveData> damageMoves = GetAffordableDamageMoves(enemy);
 
          // Paso 1: buscar combinacion move con STAB + ventaja x2 contra el ally con menos HP
          //Recorremos la lista de monster unit aliados vivos y los ordenamos por current HP
          foreach(var ally in livingAllies.OrderBy(u => u.monster.currentHP))
         {
             //Guardamos el primer move que detecte que tiene stab (el tipo del movimiento == al tipo del monster) y guarda primero el que tenga x2 recorriendo el TypeChart y buscando el tipo del ally monster target
-            MoveData stabAdvantageMove = damageMoves.Where(m => m.MoveType == enemy.monster.data.Type).FirstOrDefault(m => TypeChart.GetMultiplier(m.MoveType, ally.monster.data.Type) == 2f);
+            MoveData stabAdvantageMove = damageMoves.Where(m => m.DamageType == enemy.monster.data.Type).FirstOrDefault(m => TypeChart.GetMultiplier(m.DamageType, ally.monster.data.Type) == 2f);
             //Si ha guardado algun movimiento que tenga stab
             if (stabAdvantageMove != null)
             {
@@ -37,7 +37,7 @@ public class AttackBehaviour : AIBehaviour
          foreach(var ally in livingAllies.OrderBy(u => u.monster.currentHP))
         {
             //Guardamos el que tenga x2 recorriendo el TypeChart y buscando el tipo del ally monster target
-            MoveData advantageMove = damageMoves.FirstOrDefault(m => TypeChart.GetMultiplier(m.MoveType, ally.monster.data.Type) == 2f);
+            MoveData advantageMove = damageMoves.FirstOrDefault(m => TypeChart.GetMultiplier(m.DamageType, ally.monster.data.Type) == 2f);
             //Si ha guardado algun movimiento que sea x2
             if (advantageMove != null)
             {
@@ -51,5 +51,15 @@ public class AttackBehaviour : AIBehaviour
         MoveData anyDamageMove = damageMoves.First();
 
         return new AIDecision(anyDamageMove, new List<MonsterUnit> { weakestAlly });
+    }
+
+    //Devuelve los moves de daño ejecutables por el enemy segun su Essence Pool, combina Basic y Essence Moves, filtra los Essence que no puede pagar
+    private List<MoveData> GetAffordableDamageMoves(MonsterUnit enemy)
+    {
+        //Accedemos a la pool del Enemy en el Combat
+        EssencePool enemyPool = CombatManager.Instance.EnemyEssencePool;
+
+        //Devuelve los Moves que tengan DamageEffect y sean Basic Type o Essence Type que sean affordables
+        return enemy.monster.AllLearnedMoves.Where(m => MoveHasEffect<DamageEffect>(m)).Where(m => m.ActionType == MoveActionType.Basic || enemyPool.CanAfford(m.EssenceAmountToUse)).ToList();
     }
 }

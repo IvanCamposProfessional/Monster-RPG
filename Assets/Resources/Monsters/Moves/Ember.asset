@@ -15,11 +15,15 @@ MonoBehaviour:
   MoveID: ember
   MoveName: Ember
   MoveDescription: Quema al enemigo
-  MoveType: 5
+  ActionType: 0
   Category: 1
   Power: 2
-  TargetType: 6
+  TargetType: 5
+  TargetCount: 2
   Effects:
   - {fileID: 11400000, guid: 32cb18d81a88e5a42a039a7080b1dab2, type: 2}
   - {fileID: 11400000, guid: 134147e03d4ad024e97ce8d8ed907190, type: 2}
-  TargetCount: 2
+  EssenceAmountToPool:
+  - Type: 6
+    Amount: 3
+  EssenceAmountToUse: []

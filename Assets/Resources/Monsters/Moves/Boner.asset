@@ -15,9 +15,16 @@ MonoBehaviour:
   MoveID: boner
   MoveName: Boner
   MoveDescription: Te pega con el hueso
-  MoveType: 0
+  ActionType: 1
   Category: 0
-  Power: 0
+  Power: 20
   TargetType: 0
-  Effects: []
   TargetCount: 0
+  Effects:
+  - {fileID: 11400000, guid: 7db147b724cafe848b13c9366b6dab61, type: 2}
+  EssenceAmountToPool: []
+  EssenceAmountToUse:
+  - Type: 2
+    Amount: 3
+  - Type: 6
+    Amount: 3

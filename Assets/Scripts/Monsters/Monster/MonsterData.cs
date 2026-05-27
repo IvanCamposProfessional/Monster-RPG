@@ -14,7 +14,6 @@ public class MonsterData : ScriptableObject
     public Sprite MonsterIcon;
     public Sprite MonsterSprite;
     public int BaseHP;
-    public int BaseBP;
     public int BaseLevel;
     public int MaxLevel;
     public int BaseAttack;
@@ -23,6 +22,7 @@ public class MonsterData : ScriptableObject
     public int BaseSpecialDefense;
     public int BaseSpeed;
 
+    //Moves que el Monster puede aprender por nivel, solo contiene los Basic Moves
     public List<LerneableMove> LerneableMoves;
 
     public int timesDefeatedForLevel2;
