@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -23,6 +22,9 @@ public class PlayerPanelManager : MonoBehaviour
     //Variable para saber si el panel está abierto
     private bool isOpen = false;
 
+    //Variable para saber si el panel esta bloqueado al estar activo el panel de Exchange
+    private bool isBlockedByExchange = false;
+
     //Nombre de escenas donde el player panel no debe funcionar
     private static readonly string[] nonPlayerPanelScenes = { "MainMenuScene" };
 
@@ -33,6 +35,8 @@ public class PlayerPanelManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
  
         playerPanel.SetActive(false);
+
+        GameEvents.OnExchangePanelToggled += HandleExchangePanelToggled;
     }
 
     private void OnEnable()
@@ -47,6 +51,11 @@ public class PlayerPanelManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    private void OnDestroy()
+    {
+        GameEvents.OnExchangePanelToggled -= HandleExchangePanelToggled;
+    }
+
     //Al cambiar de escena reseteamos el estado de pausa por seguridad
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -59,6 +68,9 @@ public class PlayerPanelManager : MonoBehaviour
     {
         //Si estamos en una escena donde el panel esta bloqueado no procesamos input
         if (IsNonPlayerPanelScene(SceneManager.GetActiveScene().name)) return;
+
+        //Si el panel de Exchange esta activo hacemos return ya que no podemos abrir este
+        if (isBlockedByExchange) return;
 
         //Comprobacion de seguridad
         if (Keyboard.current == null) return;
@@ -122,5 +134,14 @@ public class PlayerPanelManager : MonoBehaviour
             if (name == sceneName) return true;
         }
         return false;
+    }
+
+    //Funcion para gestionar y bloquear este panel si esta el panel de Exchange abierto
+    private void HandleExchangePanelToggled (bool exchangeOpen)
+    {
+        isBlockedByExchange = exchangeOpen;
+
+        //Si el player panel estaba abierto cuando se abre el exchange, lo cerramos
+        if(exchangeOpen && isOpen) ClosePanel();
     }
 }

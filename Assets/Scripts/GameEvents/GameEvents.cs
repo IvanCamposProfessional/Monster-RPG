@@ -105,4 +105,15 @@ public static class GameEvents
     //Se invoca cuando el jugador completa la interaccion con un subsistema de evento
     public static event Action OnPlayerFinishedEvent;
     public static void RaisePlayerFinishedEvent() => OnPlayerFinishedEvent?.Invoke();
+
+    // ─────────────────────────────────────────
+    // EVENTOS DE EXCHANGE (GESTIÓN DE PARTY Y RESERVA)
+    // ─────────────────────────────────────────
+
+    public static event Action OnExchangePanelRequested;
+    public static void RaiseExchangePanelRequested() => OnExchangePanelRequested?.Invoke();
+
+    //Se invoca cuando el jugador abre/cierra el panel de gestión, true = abierto
+    public static event Action<bool> OnExchangePanelToggled;
+    public static void RaiseExchangePanelToggled(bool isOpen) => OnExchangePanelToggled?.Invoke(isOpen);
 }
