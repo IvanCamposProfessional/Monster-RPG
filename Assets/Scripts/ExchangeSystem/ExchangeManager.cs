@@ -37,6 +37,9 @@ public class ExchangeManager : MonoBehaviour
     private ExchangeSlot dragSource;
     private ExchangeSlot pendingDeleteSlot;
 
+    //Variable para saber si el filtro de favorites esta activo
+    private bool favoritesFilterActive = false;
+
     private void Awake()
     {
         //Inicializamos la Instance
@@ -167,6 +170,7 @@ public class ExchangeManager : MonoBehaviour
         }
 
         RefreshReserveCount();
+        ApplyFavoriteFilter();
     }
 
     private void RefreshReserveCount()
@@ -218,6 +222,9 @@ public class ExchangeManager : MonoBehaviour
     {
         //Si hemos soltado en un espacio vacio o hemos dejado el slot en la misma posicion hacemos return
         if (dragSource == null || dragSource == target) return;
+
+        //No se puede intercambiar con un monster bloqueado
+        if (!target.IsEmpty && target.SaveData.isLocked) return;
 
          //Ejecutamos el swap or move del slot y si devuelve true, lo que quiere decir que se ha hecho correctamente, refresca los slots
         if(ExecuteSwapOrMove(dragSource, target))
@@ -299,6 +306,33 @@ public class ExchangeManager : MonoBehaviour
         slot.SaveData.isFavorite = !slot.SaveData.isFavorite;
         //Refrescamos el visual del slot
         slot.RefreshVisual();
+    }
+
+    public void ToggleFavoriteFilter()
+    {
+        //Cambiamos el booleano que indica si está activo al valor contrario (si es true a false y viceversa)
+        favoritesFilterActive = !favoritesFilterActive;
+        ApplyFavoriteFilter();
+    }
+
+    private void ApplyFavoriteFilter()
+    {
+        //Creamos un bucle que recorra los slots de la reserve
+        foreach (ExchangeSlot slot in reserveSlots)
+        {
+            //Si el filtro no esta activo se muestran todos los slots
+            if (!favoritesFilterActive)
+            {
+                slot.gameObject.SetActive(true);
+            }
+            //Si el filtro esta activo
+            else
+            {
+                //Muestra solo los slots ocupados con monster favorito
+                bool show = !slot.IsEmpty && slot.SaveData.isFavorite;
+                slot.gameObject.SetActive(show);
+            }
+        }
     }
 
     // ─────────────────────────────────────────

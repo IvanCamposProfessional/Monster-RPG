@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +7,7 @@ using UnityEngine.UI;
 //Componente del prefab de cada slot de monster en la pestaña de Monsters, muestra la info basica o EMPTY si esta el slot vacio
 public class MonsterSlotCard : MonoBehaviour, IPointerClickHandler
 {
+    [Header("Elementos UI")]
     private Image monsterIcon;
     private Image typeIcon;
     private TMP_Text nameText;
@@ -16,21 +16,29 @@ public class MonsterSlotCard : MonoBehaviour, IPointerClickHandler
     private GameObject emptyLabel;
     private GameObject monsterContent;
 
+    [Header("Estados")]
+    [SerializeField] private GameObject filledState;
+    [SerializeField] private GameObject emptyState;
+
     //Monster que representa este slot (null si es vacio)
     private Monster monster;
 
     //Panel de detalle al que se le pasa el monster al hacer click
     private MonsterDetailPanel detailPanel;
 
+    //Posicion de este slot en la active party
+    private int slotPosition;
+
     // ─────────────────────────────────────────
     // SETUP
     // ─────────────────────────────────────────
 
     //Funcion que se llama desde Monster Tab Manager.Build Slots cuando detecta que si hay un monster en el slot de activeParty
-    public void Setup(Monster monster, MonsterDetailPanel detailPanel)
+    public void Setup(Monster monster, MonsterDetailPanel detailPanel, int slotPosition)
     {
         this.monster = monster;
         this.detailPanel = detailPanel;
+        this.slotPosition = slotPosition;
 
         //Resuelve las referencias de los GameObjects privados en el prefab por nombre de hijo
         ResolveReferences();
@@ -61,8 +69,9 @@ public class MonsterSlotCard : MonoBehaviour, IPointerClickHandler
     }
 
     //Funcion que se llama desde Monster Tab Manager.Build Slots cuando detecta que no hay un monster en el slot de activeParty
-    public void SetupEmpty()
+    public void SetupEmpty(int slotPosition)
     {
+        this.slotPosition = slotPosition;
         monster = null;
         detailPanel = null;
  

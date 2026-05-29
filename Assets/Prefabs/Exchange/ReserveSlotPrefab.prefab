@@ -120,8 +120,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1837026734763356723}
-        m_TargetAssemblyTypeName: ExchangeSlot, Assembly-CSharp
+      - m_Target: {fileID: 3750197369679289678}
+        m_TargetAssemblyTypeName: ReserveExchangeSlot, Assembly-CSharp
         m_MethodName: OnDeleteButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -327,8 +327,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1837026734763356723}
-        m_TargetAssemblyTypeName: ExchangeSlot, Assembly-CSharp
+      - m_Target: {fileID: 3750197369679289678}
+        m_TargetAssemblyTypeName: ReserveExchangeSlot, Assembly-CSharp
         m_MethodName: OnFavoriteButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 2121944870660273502}
   - component: {fileID: 7560143295016271814}
   - component: {fileID: 8523229206507134044}
-  - component: {fileID: 1837026734763356723}
+  - component: {fileID: 3750197369679289678}
   - component: {fileID: 2500378590987922530}
   m_Layer: 5
   m_Name: ReserveSlotPrefab
@@ -424,7 +424,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1837026734763356723
+--- !u!114 &3750197369679289678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -433,18 +433,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4430340668022861689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84261d6558f32c14bb1acb83be4e31cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 6676f7bd01c114c45891baf88c0e6468, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ExchangeSlot
-  isPartySlot: 0
+  m_EditorClassIdentifier: Assembly-CSharp::ReserveExchangeSlot
   monsterIconImage: {fileID: 4124106765888323156}
   levelText: {fileID: 5102598793938948154}
   emptyVisual: {fileID: 8248355450348808742}
   lockedOverlay: {fileID: 4592361681677568595}
   favoriteActiveIcon: {fileID: 2241979822013083542}
-  nameText: {fileID: 0}
-  hpText: {fileID: 0}
   deleteButton: {fileID: 1969109638452937532}
+  lockButton: {fileID: 8822861722023829766}
+  favoriteButton: {fileID: 4045834712826193605}
 --- !u!225 &2500378590987922530
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1001,8 +1000,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1837026734763356723}
-        m_TargetAssemblyTypeName: ExchangeSlot, Assembly-CSharp
+      - m_Target: {fileID: 3750197369679289678}
+        m_TargetAssemblyTypeName: ReserveExchangeSlot, Assembly-CSharp
         m_MethodName: OnLockButtonClicked
         m_Mode: 1
         m_Arguments:
