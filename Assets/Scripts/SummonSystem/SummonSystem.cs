@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SummonSystem
@@ -23,6 +24,13 @@ public class SummonSystem
     {
         //Comprobacion de seguridad
         if (recipe == null || recipe.outputMonster == null) return false;
+
+        if (playerData.activeParty.Count >= PlayerData.MAX_ACTIVE_PARTY &&
+        playerData.reserve.Count >= playerData.reserveCapacity)
+        {
+            Debug.Log("Party y reserva llenas. No se puede invocar.");
+            return false;
+        }
 
         //Comprobamos si el jugador tiene el nivel de conocimiento requerido
         if(knowledge.GetKnowledgeLevel(recipe.outputMonster.MonsterID) < recipe.requiredKnowledgeLevel)
@@ -93,16 +101,32 @@ public class SummonSystem
         //Si hay hueco en la party activa lo añadimos ahi
         if(playerData.activeParty.Count < PlayerData.MAX_ACTIVE_PARTY)
         {
+            //Guardamos el Slot de la party en el que se crea el monster
+            newMonster.slotIndex = FindFirstAvailableSlot(playerData.activeParty, PlayerData.MAX_ACTIVE_PARTY);
             playerData.activeParty.Add(newMonster);
             Debug.Log("Monster invocado: " + recipe.outputMonster.MonsterName + " → party activa");
         }
         //Si no, va a la reserva
         else
         {
+            //Guardamos el Slot de la reserve en el que se crea el monster
+            newMonster.slotIndex = FindFirstAvailableSlot(playerData.reserve, playerData.reserveCapacity);
             playerData.reserve.Add(newMonster);
             Debug.Log("Monster invocado: " + recipe.outputMonster.MonsterName + " → reserva");
         }
  
         return true;
+    }
+
+    private int FindFirstAvailableSlot(List<MonsterSaveData> list, int maxSlots)
+    {
+        //Recorremos los slots
+        for (int i = 0; i < maxSlots; i++)
+        {
+            //Devolvemos el slot vacio que encuentre
+            if (!list.Exists(m => m.slotIndex == i)) return i;
+        }
+        //Devolvemos 0
+        return 0;
     }
 }

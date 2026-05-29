@@ -36,18 +36,18 @@ public class MonstersTabManager : MonoBehaviour
             //Guardamos el script del slot card
             MonsterSlotCard card = slotObj.GetComponent<MonsterSlotCard>();
 
-            //Si la posicion actual de la party contiene un monster
-            if(i < activeParty.Count && activeParty[i] != null)
+            //Guardamos el monster save data del slot correspondiente
+            MonsterSaveData saveData = activeParty.Find(m => m.slotIndex == i);
+            //Si contiene un monster lo deseralizamos
+            if(saveData != null)
             {
-                //Deserializamos el MonsterSaveData a Monster Runtime para obtener sus stats
-                Monster monster = MonsterSerializer.Deserialize(activeParty[i],  GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase);
-                //Hacemos setup de la card
-                card.Setup(monster, detailPanel);
+                Monster monster = MonsterSerializer.Deserialize(saveData, GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase);
+                card.Setup(monster, detailPanel, i);
             }
-            //Si la posicion actual de la party no contiene un monster
+            //Si no contiene monster hacemos setup de Empty
             else
             {
-                card.SetupEmpty();
+                card.SetupEmpty(i);
             }
 
             //Añadimos la card que hemos creado a la lista de active slots

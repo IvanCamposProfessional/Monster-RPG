@@ -19,8 +19,9 @@ public static class MonsterSerializer
         //Ponemos el Level del Monster Save Data a 1
         save.level = 1;
 
-        //HP y BP iniciales son el valor maximo (mismo calculo que Monster.CalculateMaxHP)
+        //HP iniciales son el valor maximo
         save.currentHP = data.BaseHP + 1 * 5;
+        save.maxHP = data.BaseHP + 1 * 5;
 
         //Añadimos los Basic Moves que se aprenden en nivel 1 via LerneableMove
         foreach(LerneableMove lerneableMove in data.LerneableMoves)
@@ -56,6 +57,7 @@ public static class MonsterSerializer
         //Guardamos en el Monster Save Data el Level, la HP y la BP del Monster
         save.level = monster.level;
         save.currentHP = monster.currentHP;
+        save.maxHP = monster.maxHP;
 
         //Guardamos los IDs de los Basic Moves aprendidos
         save.learnedBasicMoveIDs = monster.learnedBasicMoves.Where(m => m != null && !string.IsNullOrEmpty(m.MoveID)).Select(m => m.MoveID).ToList();

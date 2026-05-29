@@ -8,6 +8,7 @@ public class PlayerData
 {
     //Tamaño maximo de la party activa en combate
     public const int MAX_ACTIVE_PARTY = 5;
+    public const int INITIAL_RESERVE_CAPACITY = 25;
 
     public string playerName;
     public float playTime;
@@ -15,6 +16,7 @@ public class PlayerData
 
     //Monsters de la party activa
     public List<MonsterSaveData> activeParty;
+    public int reserveCapacity;
     //Monsters en reserva
     public List<MonsterSaveData> reserve;
 
@@ -29,5 +31,6 @@ public class PlayerData
         activeParty = new List<MonsterSaveData>();
         reserve = new List<MonsterSaveData>();
         inventory = new List<InventoryItemSaveData>();
+        reserveCapacity = INITIAL_RESERVE_CAPACITY;
     }
 }
