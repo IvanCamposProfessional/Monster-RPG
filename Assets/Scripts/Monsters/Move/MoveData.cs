@@ -48,8 +48,11 @@ public class MoveData : ScriptableObject
     {
         get
         {
+            //Guardamos los MoveTypes del Move en una variable
             var source = ActionType == MoveActionType.Basic ? EssenceAmountToPool : EssenceAmountToUse;
-            if(source != null) return new List <MonsterType>();
+            //Si es null devuelve una lista de MoveTypes vacial
+            if(source == null) return new List <MonsterType>();
+            //Si no es null devolvemos la lista de MoveTypes
             return source.Select(e => e.Type). ToList();
         }
     }
