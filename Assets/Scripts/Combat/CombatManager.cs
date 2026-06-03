@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public enum BattleState
 {
@@ -83,6 +84,9 @@ public class CombatManager : MonoBehaviour
     //Lista de Monster Unit donde se acumulan los targets clickados por el jugador
     private List<MonsterUnit> selectedTargets = new List<MonsterUnit>();
 
+    [Header("Escenas")]
+    [SerializeField] private string runSceneName = "RunScene";
+
     void Awake()
     {
         //Inicializamos el Singleton
@@ -155,8 +159,12 @@ public class CombatManager : MonoBehaviour
             case BattleState.Busy:
                 break;
             case BattleState.BattleWon:
+                state = BattleState.Busy;
+                HandleBattleWon();
                 break;
             case BattleState.BattleLost:
+                state = BattleState.Busy;
+                HandleBattleLost();
                 break;
         }
     }
@@ -806,5 +814,20 @@ public class CombatManager : MonoBehaviour
         EnemyEssencePool.Reset();
         GameEvents.RaiseEssencePoolChanged(true);
         GameEvents.RaiseEssencePoolChanged(false);
+    }
+
+    //Gestiona el resultado de victoria: escribe el resultado en RunCombatContext y vuelve a RunScene
+    private void HandleBattleWon()
+    {
+        RunCombatContext.SetResult(true);
+        GameEvents.RaiseBattleWon();
+    }
+
+    //Gestiona el resultado de derrota: escribe el resultado en RunCombatContext y vuelve a RunScene
+    private void HandleBattleLost()
+    {
+        GameEvents.RaiseBattleLost();
+        RunCombatContext.SetResult(false);
+        SceneManager.LoadScene(runSceneName);
     }
 }

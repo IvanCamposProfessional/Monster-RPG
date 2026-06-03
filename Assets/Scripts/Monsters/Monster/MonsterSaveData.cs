@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class MonsterSaveData
 {
     public string monsterID;
+    public MonsterType monsterType;
     public int level;
     public int currentHP;
     public int maxHP;

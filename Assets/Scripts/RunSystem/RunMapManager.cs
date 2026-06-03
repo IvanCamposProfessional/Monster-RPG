@@ -36,6 +36,13 @@ public class RunMapManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        //Al volver a RunScene, RunMapManager ya tiene el piso generado en memoria, reconstruimos el mapa visual desde los datos existentes
+        if (RunManager.Instance != null && RunManager.Instance.CurrentFloor != null)
+            BuildMap(RunManager.Instance.CurrentFloor, RunManager.Instance.CurrentLayout);
+    }
+
     // ─────────────────────────────────────────
     // CONSTRUCCION DEL MAPA
     // ─────────────────────────────────────────

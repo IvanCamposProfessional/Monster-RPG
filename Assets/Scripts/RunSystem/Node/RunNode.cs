@@ -18,6 +18,7 @@ public class RunNode : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Sprite shopSprite;
     [SerializeField] private Sprite eventSprite;
     [SerializeField] private Sprite bossSprite;
+    [SerializeField] private Sprite chestSprite;
 
     [Header("Colores de estado")]
     //Color cuando el nodo es clickable
@@ -93,6 +94,7 @@ public class RunNode : MonoBehaviour, IPointerClickHandler
             NodeType.Shop   => shopSprite,
             NodeType.Event  => eventSprite,
             NodeType.Boss   => bossSprite,
+            NodeType.Chest  => chestSprite,
             _               => battleSprite
         };
     }
@@ -138,6 +140,9 @@ public class RunNode : MonoBehaviour, IPointerClickHandler
             case NodeType.Boss:
                 LoadCombat();
                 break;
+            case NodeType.Chest:
+                LoadChest();
+                break;
             case NodeType.Camp:
                 Debug.Log("RunNode: nodo Camp — pendiente de implementar");
                 break;
@@ -154,10 +159,22 @@ public class RunNode : MonoBehaviour, IPointerClickHandler
 
     private void LoadCombat()
     {
+        //Guardamos la posicion Y actual de la camara
+        float cameraY = Camera.main.transform.position.y;
+
+        //Notificamos a RunManager la escena a la que cambiamos
+        RunManager.Instance.LastOrigin = LastSceneOrigin.Combat;
+
         //Escribimos el contexto del combate antes de cambiar de escena
-        RunCombatContext.Set(RunManager.Instance.RunType.themeType, RunManager.Instance.CurrentFloorIndex, NodeData.nodeType, NodeData.nodeId);
+        RunCombatContext.Set(RunManager.Instance.RunType.themeType, RunManager.Instance.CurrentFloorIndex, NodeData.nodeType, NodeData.nodeId, cameraY);
 
         SceneManager.LoadScene(combatSceneName);
+    }
+
+    //Notifica al RunManager para que genere y muestre los rewards del Chest en RunScene
+    private void LoadChest()
+    {
+        RunManager.Instance.OpenChest(NodeData.nodeId);
     }
 
     private void LoadEvent()
@@ -172,8 +189,14 @@ public class RunNode : MonoBehaviour, IPointerClickHandler
             return;
         }
 
+        //Guardamos la posicion Y actual de la camara
+        float cameraY = Camera.main.transform.position.y;
+
+        //Notificamos a RunManager la escena a la que cambiamos
+        RunManager.Instance.LastOrigin = LastSceneOrigin.Event;
+
         //Escribimos el contexto del evento antes de cambiar de escena
-        RunEventContext.Set(selectedEvent, NodeData.nodeId);
+        RunEventContext.Set(selectedEvent, NodeData.nodeId, cameraY);
         SceneManager.LoadScene(eventSceneName);
     }
 }

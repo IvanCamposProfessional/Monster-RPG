@@ -59,9 +59,6 @@ public class Enemy : MonoBehaviour
                 party.Add(monster);
         }
 
-        // Limpiamos el contexto una vez leído
-        RunCombatContext.Clear();
-
         Debug.Log("Enemy: party cargada con " + party.Count + " monsters del encuentro " + encounter.encounterId);
     }
 

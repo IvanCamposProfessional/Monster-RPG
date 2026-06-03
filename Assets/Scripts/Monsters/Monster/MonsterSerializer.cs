@@ -16,6 +16,8 @@ public static class MonsterSerializer
         MonsterSaveData save = new MonsterSaveData();
         //Guardamos la ID del Monster Save Data con la del Monster Data que le pasamos
         save.monsterID = data.MonsterID;
+         //Guardamos el tipo del Monster para que sistemas puros puedan acceder sin consultar la base de datos
+        save.monsterType = data.Type;
         //Ponemos el Level del Monster Save Data a 1
         save.level = 1;
 
@@ -54,6 +56,8 @@ public static class MonsterSerializer
         MonsterSaveData save = new MonsterSaveData();
         //Guardamos la ID del Monster Save Data con la del Monster que le pasamos
         save.monsterID = monster.data.MonsterID;
+        //Guardamos el tipo del Monster para que sistemas puros puedan acceder sin consultar la base de datos
+        save.monsterType = monster.data.Type;
         //Guardamos en el Monster Save Data el Level, la HP y la BP del Monster
         save.level = monster.level;
         save.currentHP = monster.currentHP;

@@ -23,6 +23,9 @@ public class PlayerData
     //Inventario de items del jugador
     public List<InventoryItemSaveData> inventory;
 
+    //IDs de las Essence Runes desbloqueadas permanentemente por el jugador
+    public List<string> unlockedRuneIDs;
+
     public PlayerData(string name)
     {
         playerName = name;
@@ -32,5 +35,6 @@ public class PlayerData
         reserve = new List<MonsterSaveData>();
         inventory = new List<InventoryItemSaveData>();
         reserveCapacity = INITIAL_RESERVE_CAPACITY;
+        unlockedRuneIDs = new List<string>();
     }
 }
