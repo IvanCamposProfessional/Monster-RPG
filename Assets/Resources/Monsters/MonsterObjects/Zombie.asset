@@ -27,7 +27,7 @@ MonoBehaviour:
   BaseSpecialDefense: 5
   BaseSpeed: 1
   LerneableMoves:
-  - Move: {fileID: 11400000, guid: 553837b7850d6b446810f2995727b509, type: 2}
+  - Move: {fileID: 11400000, guid: 8da4f4b7d45fb6e44aeb592cac61d9a3, type: 2}
     LevelLearned: 1
   - Move: {fileID: 11400000, guid: c6a92e2b808523743820d22805171d95, type: 2}
     LevelLearned: 6

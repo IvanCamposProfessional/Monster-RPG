@@ -153,6 +153,7 @@ MonoBehaviour:
   eventEncounterList:
   - {fileID: 11400000, guid: a2b49742390b1634e99acb82ef5faa0f, type: 2}
   runeDatabase: {fileID: 11400000, guid: 46222afb5b931b2468d498856efa75c9, type: 2}
+  LastOrigin: 0
 --- !u!4 &197488900
 Transform:
   m_ObjectHideFlags: 0
@@ -761,8 +762,9 @@ MonoBehaviour:
   runeDatabase: {fileID: 11400000, guid: 46222afb5b931b2468d498856efa75c9, type: 2}
   runSceneName: RunScene
   rewardPanel: {fileID: 1563256803}
-  runePanel: {fileID: 688108186}
-  itemPanel: {fileID: 675065067}
+  rewardContainer: {fileID: 1563256804}
+  runeRewardPanelPrefab: {fileID: 7674899344451597410, guid: 55a2f0d7714d5cf49ba84bf215a28c60, type: 3}
+  itemRewardPanelPrefab: {fileID: 4416356182962506134, guid: 4998acc97ab81524cb5400784629ebb7, type: 3}
 --- !u!4 &387557612
 Transform:
   m_ObjectHideFlags: 0
@@ -1480,6 +1482,7 @@ MonoBehaviour:
   itemIcon: {fileID: 491268074}
   itemNameText: {fileID: 240481751}
   itemDescriptionText: {fileID: 367942625}
+  quantityText: {fileID: 0}
   claimButton: {fileID: 1741312371}
   skipButton: {fileID: 897963197}
 --- !u!114 &675065068
@@ -2483,6 +2486,7 @@ GameObject:
   - component: {fileID: 1563256804}
   - component: {fileID: 1563256806}
   - component: {fileID: 1563256805}
+  - component: {fileID: 1563256807}
   m_Layer: 5
   m_Name: RewardPanel
   m_TagString: Untagged
@@ -2549,6 +2553,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563256803}
   m_CullTransparentMesh: 1
+--- !u!114 &1563256807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563256803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1741312369
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,3 +35,7 @@ MonoBehaviour:
   eliteRewardWeights: {fileID: 11400000, guid: a4219d99731ae5b42b4ee7676bdade92, type: 2}
   bossRewardWeights: {fileID: 11400000, guid: ec3d428959c215942baa145e6e550d48, type: 2}
   chestRewardWeights: {fileID: 11400000, guid: 6cce688cda6caf744ac6cb3d5948e901, type: 2}
+  battleLootTable: {fileID: 11400000, guid: 58b490f12e3f17e4da4696d7a1910cae, type: 2}
+  eliteLootTable: {fileID: 11400000, guid: db1aa4cb7246aa94daad8a0bf03882c9, type: 2}
+  bossLootTable: {fileID: 11400000, guid: 2162a88f003821a4a8a33259e32549bd, type: 2}
+  chestLootTable: {fileID: 11400000, guid: 41ec3c4272dab264ab1e4a5c21d22106, type: 2}
