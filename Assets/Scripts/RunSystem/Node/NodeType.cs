@@ -7,5 +7,6 @@ public enum NodeType
     Elite,
     Shop,
     Event,
-    Boss
+    Boss,
+    Chest
 }

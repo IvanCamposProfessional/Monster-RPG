@@ -23,6 +23,22 @@ public class RunCameraController : MonoBehaviour
     //Variable privada para guardar la ultima posicion del mouse
     private Vector2 lastMousePosition;
 
+    private void Start()
+    {
+        if (RunManager.Instance == null) return;
+
+        float cameraY = RunManager.Instance.LastOrigin == LastSceneOrigin.Event
+            ? RunEventContext.CameraY
+            : RunCombatContext.CameraY;
+
+        if (cameraY != 0f)
+        {
+            Vector3 pos = transform.position;
+            pos.y = Mathf.Clamp(cameraY, minY, maxY);
+            transform.position = pos;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {

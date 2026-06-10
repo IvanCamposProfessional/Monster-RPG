@@ -96,7 +96,8 @@ public class EventManager : MonoBehaviour
         if(currentEvent.itemReward != null)
             GameEvents.RaiseItemGranted(currentEvent.itemReward.ItemID, currentEvent.itemRewardQuantity);
 
-         //Volver a la run
+        //Volver a la run
+        RunEventContext.SetResult(true);
         SceneManager.LoadScene(runScene);
     }
 }

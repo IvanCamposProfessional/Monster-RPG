@@ -50,6 +50,18 @@ public class RunTypeData : ScriptableObject
     //OPCIONAL - Override de pesos por piso, se puede dejar vacio
     public List<FloorWeightOverride> perFloorWeightOverrides;
 
+    [Header("Pesos de reward por nodo")]
+    public RewardWeightsData battleRewardWeights;
+    public RewardWeightsData eliteRewardWeights;
+    public RewardWeightsData bossRewardWeights;
+    public RewardWeightsData chestRewardWeights;
+
+    [Header("Tablas de loot por nodo")]
+    public LootTableData battleLootTable;
+    public LootTableData eliteLootTable;
+    public LootTableData bossLootTable;
+    public LootTableData chestLootTable;
+
     //─────────────────────────────────────────
     //CONSULTAS
     //─────────────────────────────────────────
@@ -101,5 +113,30 @@ public class RunTypeData : ScriptableObject
 
         //Si no existe override para los pesos devuelve Default Event Weights
         return defaultEventWeights;
+    }
+
+    //Devuelve el RewardWeightsData correspondiente al NodeType indicado, null si el nodo no tiene rewards
+    public RewardWeightsData GetRewardWeightsForNode(NodeType nodeType)
+    {
+        switch (nodeType)
+        {
+            case NodeType.Battle: return battleRewardWeights;
+            case NodeType.Elite: return eliteRewardWeights;
+            case NodeType.Boss: return bossRewardWeights;
+            case NodeType.Chest: return chestRewardWeights;
+            default: return null;
+        }
+    }
+
+    public LootTableData GetLootTableForNode(NodeType nodeType)
+    {
+        switch (nodeType)
+        {
+            case NodeType.Battle: return battleLootTable;
+            case NodeType.Elite: return eliteLootTable;
+            case NodeType.Boss: return bossLootTable;
+            case NodeType.Chest: return chestLootTable;
+            default: return null;
+        }
     }
 }

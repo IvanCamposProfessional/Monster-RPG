@@ -61,6 +61,18 @@ public static class GameEvents
     //Se invoca cuando un efecto modifica el progreso de la timeline y necesita refrescar los iconos
     public static event Action OnTimelineNeedsRefresh;
     public static void RaiseTimelineNeedsRefresh() => OnTimelineNeedsRefresh?.Invoke();
+
+    // ─────────────────────────────────────────
+    // EVENTOS DE COMBATE — RESULTADO
+    // ─────────────────────────────────────────
+
+    // Se invoca cuando el jugador gana el combate, RewardManager lo escucha para arrancar el flujo de rewards
+    public static event Action OnBattleWon;
+    public static void RaiseBattleWon() => OnBattleWon?.Invoke();
+
+    // Se invoca cuando el jugador pierde el combate
+    public static event Action OnBattleLost;
+    public static void RaiseBattleLost() => OnBattleLost?.Invoke();
  
     // ─────────────────────────────────────────
     // EVENTOS DE SUMMON
@@ -101,10 +113,22 @@ public static class GameEvents
     //Se invoca cuando un evento otorga un item al jugador
     public static event Action<string, int> OnItemGranted;
     public static void RaiseItemGranted(string itemId, int quantity) => OnItemGranted?.Invoke(itemId, quantity);
+
+    //Se invoca cuando el jugador desbloquea una Essence Rune como reward de la run
+    public static event Action<string> OnRuneUnlocked;
+    public static void RaiseRuneUnlocked(string runeId) => OnRuneUnlocked?.Invoke(runeId);
  
     //Se invoca cuando el jugador completa la interaccion con un subsistema de evento
     public static event Action OnPlayerFinishedEvent;
     public static void RaisePlayerFinishedEvent() => OnPlayerFinishedEvent?.Invoke();
+
+    // ─────────────────────────────────────────
+    // EVENTOS DE REWARD
+    // ─────────────────────────────────────────
+
+    //Se invoca cuando hay rewards listos para mostrar al jugador
+    public static event Action<RewardPackage> OnRewardsReady;
+    public static void RaiseRewardsReady(RewardPackage package) => OnRewardsReady?.Invoke(package);
 
     // ─────────────────────────────────────────
     // EVENTOS DE EXCHANGE (GESTIÓN DE PARTY Y RESERVA)
@@ -116,4 +140,12 @@ public static class GameEvents
     //Se invoca cuando el jugador abre/cierra el panel de gestión, true = abierto
     public static event Action<bool> OnExchangePanelToggled;
     public static void RaiseExchangePanelToggled(bool isOpen) => OnExchangePanelToggled?.Invoke(isOpen);
+
+    // ─────────────────────────────────────────
+    // EVENTOS DE RUNE MANAGER
+    // ─────────────────────────────────────────
+
+    //Se invoca cuando el jugador quiere abrir el panel de gestion de Runes
+    public static event Action OnRunePanelRequested;
+    public static void RaiseRunePanelRequested() => OnRunePanelRequested?.Invoke();
 }

@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public enum LastSceneOrigin { None, Combat, Event }
 
 //Genera los pisos de la run combinando un FloorLayoutData con los pesos del RunTypeData
 //Expone RunType y CurrentLayout para que otros sistemas puedan leer el tema y el visual del piso actual
@@ -22,10 +25,77 @@ public class RunManager : MonoBehaviour
     //Lista de eventos disponibles en el piso actual
     [SerializeField] private List<EventEncounterData> eventEncounterList;
 
+    [Header("Bases de datos")]
+    [SerializeField] private EssenceRuneDatabase runeDatabase;
+
+    private RunRewardSystem rewardSystem;
+
+    public LastSceneOrigin LastOrigin;
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
+
+        rewardSystem = new RunRewardSystem(runeDatabase);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // ─────────────────────────────────────────
+    // RETORNO DE ESCENAS
+    // ─────────────────────────────────────────
+
+    //Se ejecuta cada vez que se carga una nueva escena, detecta el retorno
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        //Si el combat context tiene result
+        if (RunCombatContext.HasResult)
+        {
+            //Diferenciamos entre Battle Won y Battle Lost
+            if (RunCombatContext.BattleWon)
+                OnReturnFromCombatVictory();
+            else
+                OnReturnFromCombatDefeat();
+
+            RunCombatContext.ClearResult();
+        }
+
+        //Si el Event Context tiene result
+        if (RunEventContext.HasResult)
+        {
+            //Y el evento esta completado marcamos el nodo como visitado
+            if (RunEventContext.EventCompleted)
+                OnNodeVisited(RunEventContext.NodeId);
+
+            RunEventContext.ClearResult();
+        }
+    }
+
+    //El jugador ha ganado el combate: marcamos el nodo como visitado
+    private void OnReturnFromCombatVictory()
+    {
+        string nodeId = RunCombatContext.NodeId;
+ 
+        if (!string.IsNullOrEmpty(nodeId))
+            OnNodeVisited(nodeId);
+ 
+        Debug.Log("RunManager: victoria en nodo " + nodeId);
+    }
+
+    //El jugador ha perdido el combate: pendiente de implementar (permadeath vs retry)
+    private void OnReturnFromCombatDefeat()
+    {
+        Debug.Log("RunManager: derrota — comportamiento pendiente de diseño");
     }
 
     // ─────────────────────────────────────────
@@ -170,6 +240,23 @@ public class RunManager : MonoBehaviour
         //Refrescamos los nodos
         if (RunMapManager.Instance != null)
             RunMapManager.Instance.RefreshNodes();
+    }
+
+    // ─────────────────────────────────────────
+    // CHEST
+    // ─────────────────────────────────────────
+
+    //Genera los rewards y los emite via OnRewardsReady para que la UI los muestre
+    public void OpenChest(string nodeId)
+    {
+        //Marcamos que el node ha sido visitado
+        OnNodeVisited(nodeId);
+ 
+        //Guardamos la informacion del PlayerData
+        PlayerData playerData = GameManager.Instance.CurrentPlayer;
+
+        //Generamos el Reward
+        rewardSystem.GenerateChestReward(CurrentFloorIndex, runType, playerData);
     }
 
     // ─────────────────────────────────────────

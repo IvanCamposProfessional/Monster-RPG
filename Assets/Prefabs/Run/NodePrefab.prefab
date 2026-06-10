@@ -89,9 +89,12 @@ MonoBehaviour:
   shopSprite: {fileID: -1151905075149521417, guid: b6444ffdfc014204d9e4e3f6caf7ef33, type: 3}
   eventSprite: {fileID: -2273958870705210090, guid: 50666b915a0b5ba43809089f763fbef5, type: 3}
   bossSprite: {fileID: -6248741079362886434, guid: 374f19aec97dceb4c9648079bc96e132, type: 3}
+  chestSprite: {fileID: -5281422124547630143, guid: 846f1b2b0fe8a9a4f84e3d7f174fac7b, type: 3}
   reachableColor: {r: 0.07111299, g: 1, b: 0, a: 0.64705884}
   lockedColor: {r: 1, g: 0, b: 0, a: 0.5372549}
   visitedColor: {r: 1, g: 1, b: 1, a: 0.6}
+  combatSceneName: CombatScene
+  eventSceneName: RunEventScene
 --- !u!1 &6165503238273501921
 GameObject:
   m_ObjectHideFlags: 0

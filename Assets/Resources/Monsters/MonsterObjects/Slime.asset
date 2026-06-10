@@ -15,7 +15,7 @@ MonoBehaviour:
   MonsterID: 3
   MonsterName: Slime
   MonsterDescription: Es un moco
-  Type: 1
+  Type: 9
   MonsterIcon: {fileID: 7577362364831567780, guid: 3cda162e0b0b7a84092a73c29cd8a321, type: 3}
   MonsterSprite: {fileID: -205763474477811735, guid: 58b609fc40a70d64a8e41e5b349bc726, type: 3}
   BaseHP: 5

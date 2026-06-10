@@ -23,7 +23,7 @@ MonoBehaviour:
   Effects: []
   EssenceAmountToPool: []
   EssenceAmountToUse:
-  - Type: 5
+  - Type: 8
     Amount: 3
   - Type: 2
     Amount: 3

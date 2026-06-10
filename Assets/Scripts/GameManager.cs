@@ -22,11 +22,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ItemDatabase itemDatabase;
     [SerializeField] private RecipeDatabase recipeDatabase;
     [SerializeField] private TypeIconDatabase typeIconDatabase;
+    [SerializeField] private EssenceRuneDatabase essenceRuneDatabase;
 
     //Sistemas de juego accesibles globalmente
     public KnowledgeSystem Knowledge { get; private set; }
     public InventorySystem Inventory { get; private set; }
     public SummonSystem Summon { get; private set; }
+    public EssenceRuneSystem Runes { get; private set; }
 
     //Referencias publicas a las bases de datos para que otros sistemas puedan usarlas
     public MonsterDatabase MonsterDatabase => monsterDatabase;
@@ -34,6 +36,7 @@ public class GameManager : MonoBehaviour
     public ItemDatabase ItemDatabase => itemDatabase;
     public RecipeDatabase RecipeDatabase => recipeDatabase;
     public TypeIconDatabase TypeIconDatabase => typeIconDatabase;
+    public EssenceRuneDatabase EssenceRuneDatabase => essenceRuneDatabase;
 
     private bool isTrackingTime = false;
 
@@ -162,6 +165,7 @@ public class GameManager : MonoBehaviour
         Knowledge = new KnowledgeSystem(CurrentPlayer.knowledge, monsterDatabase);
         Inventory = new InventorySystem(CurrentPlayer.inventory);
         Summon = new SummonSystem(CurrentPlayer, Inventory, Knowledge);
+        Runes = new EssenceRuneSystem(essenceRuneDatabase, CurrentPlayer);
     }
 
      private void UnlockAllMonsterKnowledge()

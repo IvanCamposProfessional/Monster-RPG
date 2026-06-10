@@ -16,20 +16,42 @@ public static class RunCombatContext
     public static string NodeId { get; private set; }
     //True si hay contexto activo pendiente de ser leido
     public static bool IsSet { get; private set; }
+    //Resultado del combate: true = victoria, false = derrota
+    public static bool BattleWon { get; private set; }
+    //True si hay resultado pendiente de ser procesado por RunManager
+    public static bool HasResult { get; private set; }
+    // Posicion Y de la camara al salir de RunScene, para restaurarla al volver
+    public static float CameraY { get; private set; }
 
     //Escribe el contextro antes de cargar la CombatScene
-    public static void Set(MonsterType themeType, int floorIndex, NodeType nodeType, string nodeId)
+    public static void Set(MonsterType themeType, int floorIndex, NodeType nodeType, string nodeId, float cameraY)
     {
+        Debug.Log("RunCombatContext.Set llamado — nodeType: " + nodeType + " | nodeId: " + nodeId);
+
         ThemeType  = themeType;
         FloorIndex = floorIndex;
         NodeType   = nodeType;
         NodeId     = nodeId;
         IsSet      = true;
+        CameraY = cameraY;
+    }
+
+    //Escribe el resultado del combate antes de volver a RunScene
+    public static void SetResult(bool battleWon)
+    {
+        BattleWon = battleWon;
+        HasResult = true;
     }
 
     //Limpia el contexto una vez el CombatManager lo ha leido
     public static void Clear()
     {
         IsSet = false;
+    }
+
+    //Limpia el resultado una vez RunManager lo ha procesado
+    public static void ClearResult()
+    {
+        HasResult = false;
     }
 }
