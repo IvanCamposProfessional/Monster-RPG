@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1c2f351dabedf148858c95c77e75421, type: 3}
-  m_Name: BossRewardWeights
+  m_Name: RewardWeightsElite
   m_EditorClassIdentifier: Assembly-CSharp::RewardWeightsData
-  runeDropChance: 0.6
+  runeDropChance: 0.8
   defaultRarityWeights:
+  - rarityType: 1
+    weight: 70
   - rarityType: 2
-    weight: 2
-  - rarityType: 3
-    weight: 1
+    weight: 30
   perFloorOverrides: []

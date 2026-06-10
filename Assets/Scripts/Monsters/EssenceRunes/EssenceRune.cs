@@ -9,4 +9,5 @@ public class EssenceRune : ScriptableObject
     //Move que esta Rune desbloquea al equipar en un Monster compatible
     public MoveData MoveData;
     public RarityType Rarity;
+    public MonsterType MainType => MoveData != null && MoveData.EssenceAmountToUse != null && MoveData.EssenceAmountToUse.Count > 0 ? MoveData.EssenceAmountToUse[0].Type : default;
 }

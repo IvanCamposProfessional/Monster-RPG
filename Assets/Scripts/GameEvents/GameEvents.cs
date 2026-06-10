@@ -140,4 +140,12 @@ public static class GameEvents
     //Se invoca cuando el jugador abre/cierra el panel de gestión, true = abierto
     public static event Action<bool> OnExchangePanelToggled;
     public static void RaiseExchangePanelToggled(bool isOpen) => OnExchangePanelToggled?.Invoke(isOpen);
+
+    // ─────────────────────────────────────────
+    // EVENTOS DE RUNE MANAGER
+    // ─────────────────────────────────────────
+
+    //Se invoca cuando el jugador quiere abrir el panel de gestion de Runes
+    public static event Action OnRunePanelRequested;
+    public static void RaiseRunePanelRequested() => OnRunePanelRequested?.Invoke();
 }

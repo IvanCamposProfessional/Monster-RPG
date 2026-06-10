@@ -28,14 +28,11 @@ public class EssenceRuneDatabase : ScriptableObject
             //Filtro 2: no desbloqueada todavia
             if(unlockedRuneIDs.Contains(rune.RuneID)) return false;
 
-            //Filtro 3: el primer tipo del Move debe estar presente en el equipo activo
-            //Guarddamos la EssenceAmount del MoveData de la rune
-            List<EssenceAmount> essenceToUse = rune.MoveData.EssenceAmountToUse;
-            //Comprobacion de seguridad
-            if (essenceToUse == null || essenceToUse.Count == 0) return false;
-
             //Guardamos el tipo principal del MoveData cogiendo la primera posicion de EssenceToUse
-            MonsterType primaryType = essenceToUse[0].Type;
+            MonsterType primaryType = rune.MainType;
+            //Si MainType no pudo resolverse, descartamos la Rune
+            if (primaryType == default) return false; 
+
             return teamTypes.Contains(primaryType);
 
         }).ToList();

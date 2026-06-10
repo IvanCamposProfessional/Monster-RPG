@@ -5800,6 +5800,7 @@ MonoBehaviour:
   itemDatabase: {fileID: 11400000, guid: e62fd29c1516f214093b5d3dd22bc0fb, type: 2}
   recipeDatabase: {fileID: 11400000, guid: 70b66b0d6d1a44c45be274a8afd57cc7, type: 2}
   typeIconDatabase: {fileID: 11400000, guid: 6ebc17ed204a0df4697d739bd9236bab, type: 2}
+  essenceRuneDatabase: {fileID: 11400000, guid: 46222afb5b931b2468d498856efa75c9, type: 2}
 --- !u!1 &1869902968
 GameObject:
   m_ObjectHideFlags: 0

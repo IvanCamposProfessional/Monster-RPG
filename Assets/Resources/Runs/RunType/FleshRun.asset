@@ -21,20 +21,20 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f3e34686728fcb94bb5918bb9cf9940b, type: 2}
   defaultEventWeights:
   - nodeType: 1
-    weight: 50
+    weight: 3
   - nodeType: 2
-    weight: 15
+    weight: 2
   - nodeType: 3
-    weight: 25
+    weight: 1
   - nodeType: 4
-    weight: 20
+    weight: 1
   - nodeType: 6
-    weight: 50
+    weight: 2
   perFloorWeightOverrides: []
-  battleRewardWeights: {fileID: 11400000, guid: 4461adf004edf204fa002385f98e49dc, type: 2}
-  eliteRewardWeights: {fileID: 11400000, guid: a4219d99731ae5b42b4ee7676bdade92, type: 2}
-  bossRewardWeights: {fileID: 11400000, guid: ec3d428959c215942baa145e6e550d48, type: 2}
-  chestRewardWeights: {fileID: 11400000, guid: 6cce688cda6caf744ac6cb3d5948e901, type: 2}
+  battleRewardWeights: {fileID: 0}
+  eliteRewardWeights: {fileID: 11400000, guid: 6a83375ffb4a9aa4e94aed8b88a3199c, type: 2}
+  bossRewardWeights: {fileID: 11400000, guid: 995c29405609b0141a7668b7ffe87f84, type: 2}
+  chestRewardWeights: {fileID: 11400000, guid: 619883ebbce672f4195b6cfbe06fda54, type: 2}
   battleLootTable: {fileID: 11400000, guid: 58b490f12e3f17e4da4696d7a1910cae, type: 2}
   eliteLootTable: {fileID: 11400000, guid: db1aa4cb7246aa94daad8a0bf03882c9, type: 2}
   bossLootTable: {fileID: 11400000, guid: 2162a88f003821a4a8a33259e32549bd, type: 2}

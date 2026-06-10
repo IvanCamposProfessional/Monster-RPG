@@ -24,9 +24,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 32cb18d81a88e5a42a039a7080b1dab2, type: 2}
   EssenceAmountToPool: []
   EssenceAmountToUse:
-  - Type: 3
-    Amount: 4
-  - Type: 4
+  - Type: 9
     Amount: 4
   - Type: 8
+    Amount: 4
+  - Type: 1
     Amount: 4
