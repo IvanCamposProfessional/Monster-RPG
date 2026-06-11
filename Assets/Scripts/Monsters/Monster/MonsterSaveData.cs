@@ -16,8 +16,6 @@ public class MonsterSaveData
 
     //ID de los Basic Moves aprendidos
     public List<string> learnedBasicMoveIDs = new List<string>();
-    //ID de los Essence Moves aprendidos
-    public List<string> learnedEssenceMoveIDs = new List<string>();
 
     public const int MAX_RUNE_SLOTS = 5;
     //IDs de las Essence Runes equipadas en este Monster (maximo 5)

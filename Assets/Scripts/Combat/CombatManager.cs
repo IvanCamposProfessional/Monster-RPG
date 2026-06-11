@@ -271,7 +271,7 @@ public class CombatManager : MonoBehaviour
                 if (saveData == null) continue;
 
                 //Deserializamos el Monster Save Data a Monster Runtime
-                Monster monster = MonsterSerializer.Deserialize(activeParty[i], GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase);
+                Monster monster = MonsterSerializer.Deserialize(activeParty[i], GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase, GameManager.Instance.EssenceRuneDatabase);
 
                 if(monster == null) continue; //Slot de la party vacio, no hacemos nada
                 

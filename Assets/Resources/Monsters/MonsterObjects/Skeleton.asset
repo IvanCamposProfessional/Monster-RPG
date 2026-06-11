@@ -30,7 +30,7 @@ MonoBehaviour:
   - Move: {fileID: 11400000, guid: 553837b7850d6b446810f2995727b509, type: 2}
     LevelLearned: 1
   - Move: {fileID: 11400000, guid: b02399821daf377459d87a1819aa9f6c, type: 2}
-    LevelLearned: 1
+    LevelLearned: 6
   timesDefeatedForLevel2: 0
   timesDefeatedForLevel3: 0
   timesSummonedForLevel2: 0
