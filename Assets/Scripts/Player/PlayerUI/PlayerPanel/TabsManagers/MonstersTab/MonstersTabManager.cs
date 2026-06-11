@@ -41,7 +41,7 @@ public class MonstersTabManager : MonoBehaviour
             //Si contiene un monster lo deseralizamos
             if(saveData != null)
             {
-                Monster monster = MonsterSerializer.Deserialize(saveData, GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase);
+                Monster monster = MonsterSerializer.Deserialize(saveData, GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase, GameManager.Instance.EssenceRuneDatabase);
                 card.Setup(monster, detailPanel, i);
             }
             //Si no contiene monster hacemos setup de Empty

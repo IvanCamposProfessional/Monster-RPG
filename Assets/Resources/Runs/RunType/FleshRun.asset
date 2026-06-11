@@ -21,13 +21,13 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f3e34686728fcb94bb5918bb9cf9940b, type: 2}
   defaultEventWeights:
   - nodeType: 1
-    weight: 3
+    weight: 4
   - nodeType: 2
-    weight: 2
+    weight: 1
   - nodeType: 3
-    weight: 1
+    weight: 2
   - nodeType: 4
-    weight: 1
+    weight: 2
   - nodeType: 6
     weight: 2
   perFloorWeightOverrides: []

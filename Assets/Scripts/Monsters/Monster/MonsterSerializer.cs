@@ -28,17 +28,8 @@ public static class MonsterSerializer
         //Añadimos los Basic Moves que se aprenden en nivel 1 via LerneableMove
         foreach(LerneableMove lerneableMove in data.LerneableMoves)
         {
-            //Si el nivel para aprender el Move es mayor que 1 o el Move es nulo el bucle pasa a la siguiente iteracion
             if (lerneableMove.LevelLearned > 1 || lerneableMove.Move == null) continue;
-
-            //Si el Move que ha pasado el filtro anterior (se aprende a nivel 1) es de tipo Basic
-            if(lerneableMove.Move.ActionType == MoveActionType.Basic)
-                //Se guarda en la lista de Moves aprendidos de tipo Basic
-                save.learnedBasicMoveIDs.Add(lerneableMove.Move.MoveID);
-                //Si no (el Move es de tipo Essence)
-            else
-                //Se guarda en la lista de Moves aprendidos de tipo Essence
-                save.learnedEssenceMoveIDs.Add(lerneableMove.Move.MoveID);
+            save.learnedBasicMoveIDs.Add(lerneableMove.Move.MoveID);
         }
 
         //Devolvemos el Monster Save Data que hemos creado
@@ -65,8 +56,6 @@ public static class MonsterSerializer
 
         //Guardamos los IDs de los Basic Moves aprendidos
         save.learnedBasicMoveIDs = monster.learnedBasicMoves.Where(m => m != null && !string.IsNullOrEmpty(m.MoveID)).Select(m => m.MoveID).ToList();
-        //Guardamos los IDs de los Essence Moves aprendidos
-        save.learnedEssenceMoveIDs = monster.learnedEssenceMoves.Where(m => m != null && !string.IsNullOrEmpty(m.MoveID)).Select(m => m.MoveID).ToList();
 
         //Devolvemos el Monster Save Data que hemos creado
         return save;
@@ -77,7 +66,7 @@ public static class MonsterSerializer
     // ─────────────────────────────────────────
 
     //Reconstruye un Monster en runtime desde su MonsterSaveData usando las bases de datos
-    public static Monster Deserialize(MonsterSaveData save, MonsterDatabase monsterDatabase, MoveDatabase moveDatabase)
+    public static Monster Deserialize(MonsterSaveData save, MonsterDatabase monsterDatabase, MoveDatabase moveDatabase, EssenceRuneDatabase essenceRuneDatabase)
     {
         //Buscamos la MonsterData en la base de datos
         MonsterData data = monsterDatabase.GetMonsterByID(save.monsterID);
@@ -104,14 +93,14 @@ public static class MonsterSerializer
         }
 
         //Resolvemos y añadimos los Essence Moves desde la base de datos
-        foreach(string moveID in save.learnedEssenceMoveIDs)
+        foreach(string runeID in save.equippedRuneIDs)
         {
-            MoveData move = moveDatabase.GetMoveByID(moveID);
-
-            if(move != null)
-                monster.learnedEssenceMoves.Add(move);
+            if (string.IsNullOrEmpty(runeID)) continue;
+            EssenceRune rune = essenceRuneDatabase.GetRuneByID(runeID);
+            if (rune != null && rune.MoveData != null)
+                monster.learnedEssenceMoves.Add(rune.MoveData);
             else
-                Debug.LogWarning("MonsterSerializer: MoveData no encontrada para ID: " + moveID);
+                Debug.LogWarning("MonsterSerializer: Rune no encontrada para ID: " + runeID);
         }
 
         //Devolvemos el Monster que hemos creado
