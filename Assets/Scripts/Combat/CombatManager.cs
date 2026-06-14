@@ -87,6 +87,8 @@ public class CombatManager : MonoBehaviour
     [Header("Escenas")]
     [SerializeField] private string runSceneName = "RunScene";
 
+    private float timelineIconWidth;
+
     void Awake()
     {
         //Inicializamos el Singleton
@@ -365,6 +367,8 @@ public class CombatManager : MonoBehaviour
             //Guardamos el icono en la lista
             timelineIcons.Add(icon);
         }
+
+        timelineIconWidth = timelineIcons[0].HighlightWidth;
     }
 
     //Funcion para avanzar en la timeline cada unidad
@@ -407,7 +411,7 @@ public class CombatManager : MonoBehaviour
         foreach (var icon in timelineIcons)
         {
             //Movemos el icono en el Width del timelinePanel
-            icon.UpdatePosition(timelineIcons);
+            UpdateTimelinePositions();
         }
 
         //Si ya hemos asignado a que unidad corresponde el siguiente turno cambia de estado
@@ -425,7 +429,47 @@ public class CombatManager : MonoBehaviour
         //Actualiza la posicion cada icono
         foreach (var icon in timelineIcons)
         {
-            icon.UpdatePosition(timelineIcons);
+            UpdateTimelinePositions();
+        }
+    }
+
+    private void UpdateTimelinePositions()
+    {
+        if (timelineIcons.Count == 0) return;
+
+        //Guardamos el container width, el minx y el maxx en la timeline
+        float containerWidth = ((RectTransform)iconContainer).rect.width;
+        float minX = timelineIconWidth * 0.5f;
+        const float pivotCorrection = 0.7f;
+        float maxX = containerWidth - timelineIconWidth * pivotCorrection;
+
+        //Ordenamos de mayor a menor; en empate el Ally tiene prioridad (el enemy se va hacia la izquierda)
+        var sorted = timelineIcons.OrderByDescending(i => i.unit.timelineProgress).ThenBy(i => i.unit.IsAlly ? 0 : 1).ToList();
+
+        var resolvedX = new float[sorted.Count];
+
+        for (int i = 0; i < sorted.Count; i++)
+        {
+            float normalized = sorted[i].unit.timelineProgress / 100f;
+            float x = Mathf.Lerp(minX, maxX, normalized);
+
+            //Comprobamos colision con todos los iconos ya resueltos
+            for (int j = 0; j < i; j++)
+            {
+                if (Mathf.Abs(resolvedX[j] - x) < timelineIconWidth )
+                {
+                    // Desplazamos a la izquierda del icono con el que colisiona
+                    x = resolvedX[j] - timelineIconWidth ;
+                }
+            }
+
+            resolvedX[i] = Mathf.Clamp(x, minX, maxX);
+        }
+
+        //Aplicamos las posiciones calculadas
+        for (int i = 0; i < sorted.Count; i++)
+        {
+            sorted[i].SetPosition(resolvedX[i], 30f);
         }
     }
 
