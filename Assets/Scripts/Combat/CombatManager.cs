@@ -89,6 +89,12 @@ public class CombatManager : MonoBehaviour
 
     private float timelineIconWidth;
 
+    [Header("MonsterPanels")]
+    [SerializeField] private RectTransform allyMonsterPanels;
+    [SerializeField] private RectTransform enemyMonsterPanels;
+    [SerializeField] private GameObject monsterPanelPrefab;
+    [SerializeField] private Camera combatCamera;
+
     void Awake()
     {
         //Inicializamos el Singleton
@@ -289,6 +295,10 @@ public class CombatManager : MonoBehaviour
                 //Guardamos la unidad en la lista de Monster Ally
                 allyMonsters.Add(unit);
 
+                //Instanciamos el panel de info fijo para este monster
+                GameObject panelObj = Instantiate(monsterPanelPrefab, allyMonsterPanels);
+                panelObj.GetComponent<MonsterPanel>().Setup(unit, AllySpawnAreas[i].transform, combatCamera);
+
                 //Cambiamos el nombre al Ally instanciado
                 monsterInstance.name = "Ally " + monster.data.MonsterName;
             }
@@ -315,6 +325,10 @@ public class CombatManager : MonoBehaviour
             unit.SetSide(false);
             //Guardamos la unidad en la lista de Monster Ally
             enemyMonsters.Add(unit);
+
+            //Instanciamos el panel de info fijo para este monster
+            GameObject panelObj = Instantiate(monsterPanelPrefab, enemyMonsterPanels);
+            panelObj.GetComponent<MonsterPanel>().Setup(unit, EnemySpawnAreas[i].transform, combatCamera);
 
             //Cambiamos el nombre al Ally instanciado
             monsterInstance.name = "Enemy " + enemy.party[i].data.MonsterName;

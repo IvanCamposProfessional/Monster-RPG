@@ -42,6 +42,9 @@ public class DamageEffect : MoveEffect
         //Multiplicador de tipo (tabla de tipos), se va a la clase de la tabla de tipos y recorre el diccionario para saber el multiplicador correspondiente
         float typeMultiplier = TypeChart.GetMultiplier(move.DamageType, defender.data.Type);
 
+        //Si el tipo es inmune (multiplicador 0), el daño es 0 sin excepcion
+        if (typeMultiplier <= 0f) return 0;
+
         //STAB: bonus si el tipo del move coincide con el tipo del atacante, si el tipo del move coincide con el del attacker devuelve stab multiplier, si no devuelve 1
         float stab = move.DamageType == attacker.data.Type ? stabMultiplier : 1f;
         
@@ -55,7 +58,9 @@ public class DamageEffect : MoveEffect
         //Calculamos el Multiplier (tipo * STAB * Crititico * Variacion)
         float Multiplier = typeMultiplier * stab * crit * variance;
 
+        Debug.LogWarning("Daño calculado: " + Mathf.Max(1, Mathf.RoundToInt(baseDamage * Multiplier)));
+
         //Daño final redondeado, minimo 0
-        return Mathf.Max(0, Mathf.RoundToInt(baseDamage * Multiplier));
+        return Mathf.Max(1, Mathf.RoundToInt(baseDamage * Multiplier));
     }
 }

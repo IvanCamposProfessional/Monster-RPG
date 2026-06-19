@@ -15,6 +15,13 @@ public class Monster
     public int level;
     public int currentSpeed { get; set; }
 
+    //Snapshot de los stats con los que el monster entra al combate, antes de que ningun StatModifier los altere
+    public int baseAttackInCombat { get; private set; }
+    public int baseDefenseInCombat { get; private set; }
+    public int baseSpecialAttackInCombat { get; private set; }
+    public int baseSpecialDefenseInCombat { get; private set; }
+    public int baseSpeedInCombat { get; private set; }
+
     //Los Basic Moves que el monstruo actualmente sabe
     public List<MoveData> learnedBasicMoves;
     //Los Essence Moves que el monstruo actualmente sabe
@@ -43,6 +50,13 @@ public class Monster
         currentSpecialAttack = data.BaseSpecialAttack;
         currentSpecialDefense = data.BaseSpecialDefense;
         maxHP = CalculateMaxHP();
+
+        //Guardamos el snapshot de stats de entrada a combate antes de que ningun modifier los altere
+        baseAttackInCombat = currentAttack;
+        baseDefenseInCombat = currentDefense;
+        baseSpecialAttackInCombat = currentSpecialAttack;
+        baseSpecialDefenseInCombat = currentSpecialDefense;
+        baseSpeedInCombat = currentSpeed;
         
         //Inicializamos ambas listas de moves
         learnedBasicMoves = new List<MoveData>();
@@ -59,12 +73,14 @@ public class Monster
     public void TakeDamage(int damage)
     {
         currentHP = Mathf.Max(0, currentHP - damage);
+        GameEvents.RaiseMonsterStateChanged(this);
     }
 
     //Funcion para que el Monster reciba curacion, utilizamos Mathf.Min para que la vida nunca suba del maximoq
     public void Heal(int amount)
     {
         currentHP = Mathf.Min(maxHP, currentHP + amount);
+        GameEvents.RaiseMonsterStateChanged(this);
     }
 
     //Aplica un stat modifier

@@ -31,6 +31,8 @@ public class CombatMenu : MonoBehaviour
     //Lista para guardar los botones que se instancian en el Combat Menu
     public List<GameObject> currentButtons = new List<GameObject>();
 
+    private CanvasGroup canvasGroup;
+
     // ─────────────────────────────────────────
     // SUSCRIPCIONES
     // ─────────────────────────────────────────
@@ -40,6 +42,8 @@ public class CombatMenu : MonoBehaviour
         GameEvents.OnCombatStarted += HandleCombatStarted;
         GameEvents.OnPlayerTurnStarted += HandlePlayerTurnStarted;
         GameEvents.OnPlayerTurnEnded += HandlePlayerTurnEnded;
+
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     private void OnDestroy()
@@ -56,7 +60,8 @@ public class CombatMenu : MonoBehaviour
     //Oculta el menu al arrancar el combate
     private void HandleCombatStarted()
     {
-        HideMenu();
+        ShowBaseState();
+        SetInteractable(false);
     }
 
     //Recibe la unidad actuva y muestra el panel para que el jugador elija
@@ -64,13 +69,14 @@ public class CombatMenu : MonoBehaviour
     {
         currentUnit = unit;
         ShowBaseState();
-        gameObject.SetActive(true);
+        SetInteractable(true);
     }
 
     //Oculta el menu una vez el jugador ha elegido movimiento
     private void HandlePlayerTurnEnded()
     {
-        HideMenu();
+        ShowBaseState();
+        SetInteractable(false);
     }
 
     // ─────────────────────────────────────────
@@ -296,9 +302,17 @@ public class CombatMenu : MonoBehaviour
     }
     
     //Funcion para ocultar el Combat Menu
-    public void HideMenu()
+    /*public void HideMenu()
     {
         //Ocultamos el panel
         gameObject.SetActive(false);
+    }*/
+
+    //Funcion para hacer interactable o no el CombatMenu
+    private void SetInteractable(bool interactable)
+    {
+        canvasGroup.interactable = interactable;
+        canvasGroup.blocksRaycasts = interactable;
+        canvasGroup.alpha = interactable ? 1f : 0.4f;
     }
 }

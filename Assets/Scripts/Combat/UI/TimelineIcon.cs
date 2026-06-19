@@ -25,8 +25,6 @@ public class TimelineIcon : MonoBehaviour
         unit = monsterUnit;
         IconImage.sprite = unit.monster.data.MonsterIcon; 
         backgroundImage.color = unit.IsAlly ? Color.green : Color.red;
-
-        Debug.Log($"Highlight width: {Highlight.rectTransform.rect.width}, Root width: {GetComponent<RectTransform>().rect.width}");
     }
 
     //Funcion para setear la position en la timeline del icon
