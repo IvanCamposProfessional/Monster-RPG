@@ -25,14 +25,16 @@ public class StunInstance : AlteredStateInstance
 
     public override void OnApply(Monster monster)
     {
-        Debug.Log(monster.data.MonsterName + " ha sido stunneado por " + duration + " turnos");
+        //Lanzamos el mensaje de aplicar estado alterado de Feedback en combate
+        CombatLogHelper.Raise(monster.data.MonsterName + " queda " + stateNameAdjective + " durante " + duration, CombatLogType.Status );
     }
 
     public override void OnRemove(Monster monster)
     {
         // Al expirar nos aseguramos de limpiar el flag
         monster.actionBlocked = false;
-        Debug.Log(monster.data.MonsterName + " ya no está stunneado");
+        //Lanzamos el mensaje de que se ha quitado el estado alterado
+        CombatLogHelper.Raise(monster.data.MonsterName + " ya no está " + stateNameAdjective, CombatLogType.Status);
     }
 
     public override bool OnTick(Monster monster)
@@ -41,6 +43,9 @@ public class StunInstance : AlteredStateInstance
         monster.actionBlocked = true;
 
         duration--;
+
+        //Lanzamos el mensaje de el tick del estado alterado
+        CombatLogHelper.Raise(stateNameAdjective + monster.data.MonsterName + " Turnos restantes: " + duration, CombatLogType.Status);
 
         // Si expira limpiamos el flag
         if (duration <= 0)

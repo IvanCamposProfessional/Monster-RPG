@@ -28,19 +28,22 @@ public class RecoveryInstance : AlteredStateInstance
 
     public override void OnApply(Monster monster)
     {
-        Debug.Log(monster.data.MonsterName + " tiene Recovery con intensidad " + intensity);
+        //Lanzamos el mensaje de aplicar estado alterado de Feedback en combate
+        CombatLogHelper.Raise(monster.data.MonsterName + " queda " + stateNameAdjective + " durante " + duration, CombatLogType.Status );
     }
 
     public override void OnRemove(Monster monster)
     {
-        Debug.Log(monster.data.MonsterName + " ya no tiene Recovery");
+        //Lanzamos el mensaje de que se ha quitado el estado alterado
+        CombatLogHelper.Raise(monster.data.MonsterName + " ya no está " + stateNameAdjective, CombatLogType.Status);
     }
 
     public override bool OnTick(Monster monster)
     {
         //La curación es igual a la intensidad actual
         monster.Heal(intensity);
-        Debug.Log(monster.data.MonsterName + " recupera " + intensity + " HP por Recovery");
+        //Lanzamos el mensaje de el tick del estado alterado
+        CombatLogHelper.Raise(monster.data.MonsterName + " se cura " + intensity + " Turnos restantes: " + duration, CombatLogType.Status);
 
         //Reducimos intensidad
         duration--;

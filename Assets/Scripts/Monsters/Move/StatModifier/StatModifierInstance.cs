@@ -37,11 +37,29 @@ public class StatModifierInstance
                 //Calculamos el nuevo value modificado del Speed
                 monster.currentDefense = CalculateNewValue(monster.currentDefense);
                 break;
+             case StatType.SpecialAttack:
+                //Guardamos el valor original del SpecialAttack
+                originalValue = monster.currentSpecialAttack;
+                //Calculamos el nuevo value modificado del SpecialAttack
+                monster.currentSpecialAttack = CalculateNewValue(monster.currentSpecialAttack);
+                break;
+            case StatType.SpecialDefense:
+                //Guardamos el valor original del SpecialDefense
+                originalValue = monster.currentSpecialDefense;
+                //Calculamos el nuevo value modificado del SpecialDefense
+                monster.currentSpecialDefense = CalculateNewValue(monster.currentSpecialDefense);
+                break;
             case StatType.Speed:
                 //Guardamos el valor original del Speed
                 originalValue = monster.currentSpeed;
                 //Calculamos el nuevo value modificado del Speed
                 monster.currentSpeed = CalculateNewValue(monster.currentSpeed);
+                break;
+            case StatType.Evasion:
+                //Guardamos el valor original de la Evasion
+                originalValue = monster.currentEvasion;
+                //Calculamos el nuevo value modificado de la Evasion
+                monster.currentEvasion = CalculateNewValue(monster.currentEvasion);
                 break;
         }
     }
@@ -51,14 +69,23 @@ public class StatModifierInstance
         //Recalculamos restaurando el valor original
         switch (data.statAffected)
         {
-             case StatType.Attack:
+            case StatType.Attack:
                 monster.currentAttack = originalValue;
                 break;
             case StatType.Defense:
                 monster.currentDefense = originalValue;
                 break;
+            case StatType.SpecialAttack:
+                monster.currentSpecialAttack = originalValue;
+                break;
+            case StatType.SpecialDefense:
+                monster.currentSpecialDefense = originalValue;
+                break;
             case StatType.Speed:
                 monster.currentSpeed = originalValue;
+                break;
+            case StatType.Evasion:
+                monster.currentEvasion = originalValue;
                 break;
         }
     }

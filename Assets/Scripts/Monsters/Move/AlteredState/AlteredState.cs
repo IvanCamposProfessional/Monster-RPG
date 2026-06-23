@@ -5,6 +5,7 @@ public abstract class AlteredState : ScriptableObject
 {
     public string stateId;
     public string stateName;
+    public string stateNameAdjective;
     public ModifierTiming timing;
     public bool stackable;
     public Sprite icon;

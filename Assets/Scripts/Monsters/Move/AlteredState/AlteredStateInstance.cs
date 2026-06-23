@@ -15,6 +15,8 @@ public abstract class AlteredStateInstance
     public Sprite icon => stateData.icon;
     //Creamos el name del state y guardamos el de la data
     public string stateName => stateData.stateName;
+    //Forma adjetiva del estado, usada en mensajes de log (ej. "paralizado", "envenenado")
+    public string stateNameAdjective => stateData.stateNameAdjective;
 
     //Creamos el constructor
     protected AlteredStateInstance(AlteredState data, int intensity, int duration)

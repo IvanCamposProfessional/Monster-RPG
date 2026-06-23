@@ -17,6 +17,11 @@ public class MoveData : ScriptableObject
 
     public int Power;
 
+    //Probabilidad base de acierto del Move (0-100)
+    public int Accuracy = 100;
+    //Si es true, el Move se salta el check de acierto por completo, para Heals o Buffs a Allys que no pueden fallar
+    public bool ignoresAccuracyCheck = false;
+
     //Variable Target Type para poder definir que tipo de target utiliza
     public TargetType TargetType;
     //Varibale para almacenar el numero de targets en caso de que el Target Type sea Multiple

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using System;
 using UnityEngine.SceneManagement;
 
 public enum BattleState
@@ -42,7 +41,7 @@ public class CombatManager : MonoBehaviour
 
     //Variable para definir a que velocidad avanzan las unidades en la TimeLine
     [SerializeField] 
-    private float timelineSpeed = 20f;
+    private float timelineSpeed = 30f;
 
     [Header("Essence")]
     //Pool de Essence del bando aliado
@@ -188,6 +187,8 @@ public class CombatManager : MonoBehaviour
         SetupTimelineUI();
         //Invocamos la action que se llama al empezar el combate
         GameEvents.RaiseCombatStarted();
+        //Llamamos a la Action que indica que el combate ha comenzado
+        CombatLogHelper.Raise("¡El combate comienza!", CombatLogType.System);
         //Ponemos el estado del combate en TimeLineUpdate
         state = BattleState.TimelineUpdate;
         Debug.Log(state);
@@ -219,6 +220,10 @@ public class CombatManager : MonoBehaviour
 
         UpdateHighlight(currentUnit);
 
+        //Guardamos si el side del turno es Ally o Enemy y lanzamos la Action para el mensaje de Feedback
+        string side = currentUnit.IsAlly ? "Turno del jugador" : "Turno del enemigo";
+        CombatLogHelper.Raise(side + ". Turno de " + currentUnit.monster.data.MonsterName, CombatLogType.Turn);
+
         // Si la unidad está stunneada saltamos directamente a TurnEnd
         if (currentUnit.monster.actionBlocked)
         {
@@ -245,6 +250,10 @@ public class CombatManager : MonoBehaviour
 
             //Notificamos que ha cambiado el estado del monster
             GameEvents.RaiseMonsterStateChanged(currentUnit.monster);
+
+            //Guardamos si el side del turno es Ally o Enemy y lanzamos la Action para el mensaje de Feedback
+            string side = currentUnit.IsAlly ? "Fin del turno del Ally Monster " : "Fin del turno del Enemy Monster";
+            CombatLogHelper.Raise(side + currentUnit.monster.data.MonsterName, CombatLogType.Turn);
 
             //Al terminar el turno reseteamos el timeline progress de la unidad que ha hecho el turno
             currentUnit.timelineProgress = 0f;
@@ -732,6 +741,9 @@ public class CombatManager : MonoBehaviour
     //Si es Essence: gasta Essence y luego ejecuta efectos
     private IEnumerator ExecuteMove(MonsterUnit user, MoveData move, List<MonsterUnit> targets)
     {
+        //Anunciamos en el log de combate que el usuario ha utilizado este Move
+        CombatLogHelper.Raise(user.monster.data.MonsterName + " usa " + move.MoveName, CombatLogType.Action);
+
         //Determinamos la pool del bando del usuario
         EssencePool pool = user.IsAlly ? AllyEssencePool : EnemyEssencePool;
 
@@ -743,11 +755,37 @@ public class CombatManager : MonoBehaviour
             GameEvents.RaiseEssencePoolChanged(user.IsAlly);
         }
 
-        //Por cada efecto en el move
-        foreach(var effect in move.Effects)
+        //Resolvemos el check de acierto por target, separando los que son alcanzados de los que esquivan
+        //Si el Move ignora el check (Heals, Buffs propios, etc.) todos los targets se consideran alcanzados
+        //Creamos una lista de los targets a los que se hace hit
+        List<MonsterUnit> hitTargets = new List<MonsterUnit>();
+        List<string> missLogFragments = new List<string>();
+
+        //Creamos un bucle que recorre los targets
+        foreach (var target in targets)
         {
-            //Ejecutamos la coroutine del MoveEffect Execute
-            yield return StartCoroutine(effect.Execute(user, targets, move));
+            //Si se ignora la accuracy o devuelve true RollAccuracy, si que se ejecuta
+            if (move.ignoresAccuracyCheck || RollAccuracy(move, target))
+            {
+                //Añadimos el target a la lista de targets
+                hitTargets.Add(target);
+            }else
+            {
+                missLogFragments.Add(user.monster.data.MonsterName + " falla el ataque contra " + target.monster.data.MonsterName);
+            }
+        }
+
+        CombatLogHelper.RaiseGrouped(missLogFragments, CombatLogType.Miss);
+
+        //Si ningun target ha sido afectado los efetos se saltan
+        if(hitTargets.Count > 0)
+        {
+            //Por cada efecto en el move
+            foreach(var effect in move.Effects)
+            {
+                //Ejecutamos la coroutine del MoveEffect Execute a los hitTargets
+                yield return StartCoroutine(effect.Execute(user, hitTargets, move));
+            }
         }
 
         //Si es Basic Move genera generamos Essence despues de ejecutar los efectos
@@ -757,6 +795,18 @@ public class CombatManager : MonoBehaviour
             //Notificamos que ha cambiado una pool de essence
             GameEvents.RaiseEssencePoolChanged(user.IsAlly);
         }
+    }
+
+    //Tira la probabilidad de acierto de un Move contra un target concreto
+    //Formula: Accuracy del Move - Evasion del Target clampeado con el minAccuracy como minimo y 100 como maximo
+    private bool RollAccuracy(MoveData move, MonsterUnit target)
+    {
+        const int minAccuracyFloor = 5;
+
+        int chanceToHit = Mathf.Clamp(move.Accuracy - target.monster.currentEvasion, minAccuracyFloor, 100);
+
+        //Creamos un random de golpear, si es menor que el ChanceToHit devuelve true por lo que si acierta, si es mayor o igual no acierta ya que se sale del chance
+        return UnityEngine.Random.Range(0, 100) < chanceToHit;
     }
 
     private IEnumerator EnemyActionRoutine()
@@ -822,6 +872,10 @@ public class CombatManager : MonoBehaviour
         //Por cada unidad que ha muerto
         foreach(var unit in deadUnits)
         {
+            //Guardamos si el KO es de Ally o Enemy y lanzamos la Action del Mensaje
+            string koMessage = unit.IsAlly ? unit.monster.data.MonsterName + " cae en combate." : unit.monster.data.MonsterName + " ha sido derrotado.";
+            CombatLogHelper.Raise(koMessage, CombatLogType.KO);
+
             //Buscamos y eliminamos el icono de la TimeLine donde la unidad del icono == a la unidad que se esta comprobando de la lista de muertos
             TimelineIcon icon = timelineIcons.Find(i => i.unit == unit);
 
@@ -877,6 +931,7 @@ public class CombatManager : MonoBehaviour
     //Gestiona el resultado de victoria: escribe el resultado en RunCombatContext y vuelve a RunScene
     private void HandleBattleWon()
     {
+        CombatLogHelper.Raise("¡Victoria! Has ganado el combate.", CombatLogType.System);
         RunCombatContext.SetResult(true);
         GameEvents.RaiseBattleWon();
     }
@@ -884,6 +939,7 @@ public class CombatManager : MonoBehaviour
     //Gestiona el resultado de derrota: escribe el resultado en RunCombatContext y vuelve a RunScene
     private void HandleBattleLost()
     {
+        CombatLogHelper.Raise("Has sido derrotado.", CombatLogType.System);
         GameEvents.RaiseBattleLost();
         RunCombatContext.SetResult(false);
         SceneManager.LoadScene(runSceneName);

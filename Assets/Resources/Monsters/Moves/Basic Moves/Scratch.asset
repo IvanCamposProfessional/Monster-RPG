@@ -18,6 +18,8 @@ MonoBehaviour:
   ActionType: 0
   Category: 0
   Power: 1
+  Accuracy: 80
+  ignoresAccuracyCheck: 0
   TargetType: 0
   TargetCount: 0
   Effects:

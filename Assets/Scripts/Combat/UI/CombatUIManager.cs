@@ -22,6 +22,7 @@ public class CombatUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI SpecialAttackText;
     [SerializeField] private TextMeshProUGUI SpecialDefenseText;
     [SerializeField] private TextMeshProUGUI SpeedText;
+    [SerializeField] private TextMeshProUGUI EvasionText;
 
     [Header("StatesUI")]
     //Contenedor donde instanciaremos los iconos del estado
@@ -76,6 +77,8 @@ public class CombatUIManager : MonoBehaviour
             SpecialDefenseText.text = "SP.DEF: " + FormatStat(monster.baseSpecialDefenseInCombat, monster.currentSpecialDefense);
         if (SpeedText != null)
             SpeedText.text = "SPD: " + FormatStat(monster.baseSpeedInCombat, monster.currentSpeed);
+        if (EvasionText != null)
+            EvasionText.text = "EVA: " + FormatStat(monster.baseEvasionInCombat, monster.currentEvasion);
 
         //Actualizamos los iconos de estado
         RefreshStateIcons(monster);

@@ -21,6 +21,7 @@ public class MonsterData : ScriptableObject
     public int BaseSpecialAttack;
     public int BaseSpecialDefense;
     public int BaseSpeed;
+    public int BaseEvasion;
 
     //Moves que el Monster puede aprender por nivel, solo contiene los Basic Moves
     public List<LerneableMove> LerneableMoves;
