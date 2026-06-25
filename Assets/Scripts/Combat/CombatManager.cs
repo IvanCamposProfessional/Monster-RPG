@@ -237,8 +237,6 @@ public class CombatManager : MonoBehaviour
         state = currentUnit.IsAlly ? BattleState.PlayerAction : BattleState.EnemyAction;
 
         Debug.Log(state);
-
-        Debug.Log(currentUnit.IsAlly ? "Turno del Ally " + currentUnit.name : "Turno del Enemy " + currentUnit.name);
     }
 
     void HandleTurnEnd()
@@ -696,7 +694,6 @@ public class CombatManager : MonoBehaviour
 
         //Una vez el player ha seleccionado un Move valido indicamos que ha terminado el turno del player
         GameEvents.RaisePlayerTurnEnded();
-        Debug.Log("Movimiento elegido : " + chosenMove.MoveName);
 
         //Gestionamos el targeting segun el tipo de move
         switch (chosenMove.TargetType)
@@ -845,8 +842,6 @@ public class CombatManager : MonoBehaviour
             state = BattleState.TurnEnd;
             yield break;
         }
-
-        Debug.Log("Enemy " + currentUnit.name + " usa " + decision.move.MoveName);
 
         //Ejecutamos el move elegido a los targets elegidos
         yield return StartCoroutine(ExecuteMove(currentUnit, decision.move, decision.targets));

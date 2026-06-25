@@ -136,29 +136,31 @@ public class Monster
     }
 
     //Elimina un stat modifier por ID
-    public void RemoveStatModifier(string modifierId)
+    public bool RemoveStatModifier(string modifierId)
     {
         //Buscamos el stat modifier por id
         StatModifierInstance modifier = statModifiers.Find(m => m.modifierId == modifierId);
         //Si no esta el stat modifier (es null) salimos de la funcion
-        if (modifier == null) return;
+        if (modifier == null) return false;
 
         //Eliminamos el stat modifier
         modifier.OnRemove(this);
         statModifiers.Remove(modifier);
+        return true;
     }
 
     //Elimina un AlteredState por ID
-    public void RemoveAlteredState(string stateId)
+    public bool RemoveAlteredState(string stateId)
     {
         //Buscamos el altered state por id
         AlteredStateInstance state = alteredStates.Find(s => s.stateId == stateId);
         //Si no esta el altered state (es null) salimos de la funcion
-        if (state == null) return;
+        if (state == null) return false;
 
         //Eliminamos el altered state
         state.OnRemove(this);
         alteredStates.Remove(state);
+        return true;
     }
 
     //Procesa todos los stat modifiers y altered states segun el timing
