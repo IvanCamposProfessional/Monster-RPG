@@ -73,6 +73,14 @@ public static class GameEvents
     // Se invoca cuando el jugador pierde el combate
     public static event Action OnBattleLost;
     public static void RaiseBattleLost() => OnBattleLost?.Invoke();
+
+    // ─────────────────────────────────────────
+    // EVENTOS DE COMBATE — FEEDBACK LOG
+    // ─────────────────────────────────────────
+
+    //Se invoca cada vez que ocurre algo en combate que el jugador deba poder leer en el Combat Feedback Panel
+    public static event Action<string, CombatLogType> OnCombatLogMessage;
+    public static void RaiseCombatLogMessage(string message, CombatLogType type) => OnCombatLogMessage?.Invoke(message, type);
  
     // ─────────────────────────────────────────
     // EVENTOS DE SUMMON

@@ -13,13 +13,15 @@ public class MonsterStateIcon : MonoBehaviour
     public void SetupAlteredState(AlteredStateInstance state)
     {
         iconImage.sprite = state.icon;
-        valueText.text = state.duration.ToString();
+        if (valueText != null)
+            valueText.text = state.duration.ToString();
     }
 
     //Para los stat modifiers mostramos los turnos restantes
     public void SetupStatModifier(StatModifierInstance modifier)
     {
         iconImage.sprite = modifier.icon;
-        valueText.text = modifier.remainingDuration.ToString();
+        if (valueText != null)
+            valueText.text = modifier.remainingDuration.ToString();
     }
 }

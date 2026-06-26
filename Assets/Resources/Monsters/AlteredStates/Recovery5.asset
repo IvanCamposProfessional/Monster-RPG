@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Recovery5
   m_EditorClassIdentifier: Assembly-CSharp::RecoveryState
   stateId: recovery
-  stateName: Recovery5
+  stateName: Recovery
+  stateNameAdjective: recovered
   timing: 1
   stackable: 1
   icon: {fileID: 3816872718279818841, guid: 870615a8927862a4ab5fe58226b0cf20, type: 3}

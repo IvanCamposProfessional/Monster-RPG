@@ -30,23 +30,27 @@ public class PoisonInstance : AlteredStateInstance
     {
         // Sincronizamos duracion con intensidad ya que en el veneno son iguales
         duration = intensity;
-        Debug.Log(monster.data.MonsterName + " ha sido envenenado con intensidad " + intensity);
+        //Lanzamos el mensaje de aplicar estado alterado de Feedback en combate
+        CombatLogHelper.Raise(monster.data.MonsterName + " queda " + stateNameAdjective + " durante " + duration, CombatLogType.Status );
     }
 
     public override void OnRemove(Monster monster)
     {
-        Debug.Log(monster.data.MonsterName + " ya no está envenenado");
+        //Lanzamos el mensaje de que se ha quitado el estado alterado
+        CombatLogHelper.Raise(monster.data.MonsterName + " ya no está " + stateNameAdjective, CombatLogType.Status);
     }
 
     public override bool OnTick(Monster monster)
     {
         // El daño es igual a la intensidad actual
         monster.TakeDamage(intensity);
-        Debug.Log(monster.data.MonsterName + " recibe " + intensity + " de daño por veneno");
 
         // Reducimos tanto intensidad como duracion juntas
         intensity--;
         duration--;
+
+        //Lanzamos el mensaje de el tick del estado alterado
+        CombatLogHelper.Raise("El veneno inflige " + intensity + " de daño a " + monster.data.MonsterName + " Turnos restantes: " + duration, CombatLogType.Status);
 
         return duration <= 0;
     }

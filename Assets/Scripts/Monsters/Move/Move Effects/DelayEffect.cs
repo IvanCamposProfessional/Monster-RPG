@@ -32,10 +32,11 @@ public class DelayEffect : MoveEffect
             //Reseteamos el delay al timelineProgress, minimo 0
             target.timelineProgress = Mathf.Max(0f, target.timelineProgress - delay);
 
-            Debug.Log(target.monster.data.MonsterName + " ha sido retrasado en la timeline " + delay + " puntos");
-
             //Notificamos que la timeline necesita refrescar sus iconos
             GameEvents.RaiseTimelineNeedsRefresh();
+
+            //Lanzamos la Action de mensaje de feedback
+            CombatLogHelper.Raise(target.monster.data.MonsterName + " es retrasado " + Mathf.RoundToInt(delay) + " puntos en el timeline", CombatLogType.Timeline);
 
             yield return new WaitForSeconds(0.3f);
         }

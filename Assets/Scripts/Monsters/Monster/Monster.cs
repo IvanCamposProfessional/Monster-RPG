@@ -14,6 +14,15 @@ public class Monster
     public int currentSpecialDefense { get; set; }
     public int level;
     public int currentSpeed { get; set; }
+    public int currentEvasion { get; set; }
+
+    //Snapshot de los stats con los que el monster entra al combate, antes de que ningun StatModifier los altere
+    public int baseAttackInCombat { get; private set; }
+    public int baseDefenseInCombat { get; private set; }
+    public int baseSpecialAttackInCombat { get; private set; }
+    public int baseSpecialDefenseInCombat { get; private set; }
+    public int baseSpeedInCombat { get; private set; }
+    public int baseEvasionInCombat { get; private set; }
 
     //Los Basic Moves que el monstruo actualmente sabe
     public List<MoveData> learnedBasicMoves;
@@ -38,11 +47,20 @@ public class Monster
         this.level = level;
         this.currentHP = currentHP;
         currentSpeed = data.BaseSpeed;
+        currentEvasion = data.BaseEvasion;
         currentAttack = data.BaseAttack;
         currentDefense = data.BaseDefense;
         currentSpecialAttack = data.BaseSpecialAttack;
         currentSpecialDefense = data.BaseSpecialDefense;
         maxHP = CalculateMaxHP();
+
+        //Guardamos el snapshot de stats de entrada a combate antes de que ningun modifier los altere
+        baseAttackInCombat = currentAttack;
+        baseDefenseInCombat = currentDefense;
+        baseSpecialAttackInCombat = currentSpecialAttack;
+        baseSpecialDefenseInCombat = currentSpecialDefense;
+        baseSpeedInCombat = currentSpeed;
+        baseEvasionInCombat = currentEvasion;
         
         //Inicializamos ambas listas de moves
         learnedBasicMoves = new List<MoveData>();
@@ -59,12 +77,17 @@ public class Monster
     public void TakeDamage(int damage)
     {
         currentHP = Mathf.Max(0, currentHP - damage);
+        GameEvents.RaiseMonsterStateChanged(this);
     }
 
     //Funcion para que el Monster reciba curacion, utilizamos Mathf.Min para que la vida nunca suba del maximoq
-    public void Heal(int amount)
+    public int Heal(int amount)
     {
+        int previousHP = currentHP;
         currentHP = Mathf.Min(maxHP, currentHP + amount);
+        GameEvents.RaiseMonsterStateChanged(this);
+        //Devolvemos la cantidad que se ha curado (current - previous) para que lo lea el Heal Effect
+        return currentHP - previousHP;
     }
 
     //Aplica un stat modifier
@@ -113,29 +136,31 @@ public class Monster
     }
 
     //Elimina un stat modifier por ID
-    public void RemoveStatModifier(string modifierId)
+    public bool RemoveStatModifier(string modifierId)
     {
         //Buscamos el stat modifier por id
         StatModifierInstance modifier = statModifiers.Find(m => m.modifierId == modifierId);
         //Si no esta el stat modifier (es null) salimos de la funcion
-        if (modifier == null) return;
+        if (modifier == null) return false;
 
         //Eliminamos el stat modifier
         modifier.OnRemove(this);
         statModifiers.Remove(modifier);
+        return true;
     }
 
     //Elimina un AlteredState por ID
-    public void RemoveAlteredState(string stateId)
+    public bool RemoveAlteredState(string stateId)
     {
         //Buscamos el altered state por id
         AlteredStateInstance state = alteredStates.Find(s => s.stateId == stateId);
         //Si no esta el altered state (es null) salimos de la funcion
-        if (state == null) return;
+        if (state == null) return false;
 
         //Eliminamos el altered state
         state.OnRemove(this);
         alteredStates.Remove(state);
+        return true;
     }
 
     //Procesa todos los stat modifiers y altered states segun el timing

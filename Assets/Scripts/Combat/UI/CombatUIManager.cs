@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CombatUIManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject MonsterPanel;
+    private GameObject CursorPanel;
 
     [SerializeField]
     private Image MonsterIcon;
@@ -15,6 +15,14 @@ public class CombatUIManager : MonoBehaviour
     private TextMeshProUGUI MonsterNameText;
     [SerializeField]
     private TextMeshProUGUI MonsterHPText;
+
+    [Header("Stats")]
+    [SerializeField] private TextMeshProUGUI AttackText;
+    [SerializeField] private TextMeshProUGUI DefenseText;
+    [SerializeField] private TextMeshProUGUI SpecialAttackText;
+    [SerializeField] private TextMeshProUGUI SpecialDefenseText;
+    [SerializeField] private TextMeshProUGUI SpeedText;
+    [SerializeField] private TextMeshProUGUI EvasionText;
 
     [Header("StatesUI")]
     //Contenedor donde instanciaremos los iconos del estado
@@ -50,7 +58,7 @@ public class CombatUIManager : MonoBehaviour
     public void ShowAllyPanel(Monster monster)
     {
         //Monstramos el panel
-        MonsterPanel.SetActive(true);
+        CursorPanel.SetActive(true);
         //Modificamos el texto del nombre del panel al del monster que se pasa desde el prefab con la data ya que es un campo no variable
         MonsterNameText.text = monster.data.MonsterName;
         //Modificamos la imagen del icono del panel al del monster que se pasa desde el prefab con la data ya que es un campo no variable
@@ -58,19 +66,33 @@ public class CombatUIManager : MonoBehaviour
         //Modificamos el texto de la HP del panel con 2 datos, el currentHP del monster ya que es variable y el BaseHP del monster
         MonsterHPText.text = "HP: " + monster.currentHP + "/" + monster.maxHP;
 
+         //Stats: mostramos inicial -> actual solo si hay diferencia (modificado por StatModifiers), si no solo el valor
+        if (AttackText != null)
+            AttackText.text = "ATK: " + FormatStat(monster.baseAttackInCombat, monster.currentAttack);
+        if (DefenseText != null)
+            DefenseText.text = "DEF: " + FormatStat(monster.baseDefenseInCombat, monster.currentDefense);
+        if (SpecialAttackText != null)
+            SpecialAttackText.text = "SP.ATK: " + FormatStat(monster.baseSpecialAttackInCombat, monster.currentSpecialAttack);
+        if (SpecialDefenseText != null)
+            SpecialDefenseText.text = "SP.DEF: " + FormatStat(monster.baseSpecialDefenseInCombat, monster.currentSpecialDefense);
+        if (SpeedText != null)
+            SpeedText.text = "SPD: " + FormatStat(monster.baseSpeedInCombat, monster.currentSpeed);
+        if (EvasionText != null)
+            EvasionText.text = "EVA: " + FormatStat(monster.baseEvasionInCombat, monster.currentEvasion);
+
         //Actualizamos los iconos de estado
         RefreshStateIcons(monster);
     }
 
     public void HideAllyPanel()
     {
-        MonsterPanel.SetActive(false);
+        CursorPanel.SetActive(false);
     }
 
     // Refresca el panel solo si el monster que se muestra es el actual
     public void RefreshIfVisible(Monster monster)
     {
-        if (MonsterPanel.activeSelf)
+        if (CursorPanel.activeSelf)
             ShowAllyPanel(monster);
     }
 
@@ -107,5 +129,15 @@ public class CombatUIManager : MonoBehaviour
             obj.GetComponent<MonsterStateIcon>().SetupStatModifier(modifier);
             activeStateIcons.Add(obj);
         }
+    }
+
+    // ─────────────────────────────────────────
+    // FORMATO DE STATS
+    // ─────────────────────────────────────────
+
+    //Devuelve "valor" si inicial y actual coinciden, o "inicial -> actual" si el StatModifier lo ha alterado
+    private string FormatStat(int initial, int current)
+    {
+        return initial == current ? current.ToString() : initial + " -> " + current;
     }
 }
