@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -10,15 +9,14 @@ public class CombatFeedbackPanel : MonoBehaviour
     [Header("Referencias UI")]
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private TextMeshProUGUI feedbackText;
+    [SerializeField] private Scrollbar scrollbarVertical;
 
     [Header("Configuracion de scroll")]
     //Umbral de posicion vertical del scroll (0 = arriba, 1 = abajo) por debajo del cual se considera que el jugador esta revisando hacia arriba
-    [SerializeField] private float autoScrollThreshold = 0.01f;
+    [SerializeField] private float autoScrollThreshold = 0.15f;
 
     //Si es true, el scroll sigue bajando automaticamente al recibir mensajes nuevos, se desactiva cuando el jugador sube manualmente, se reactiva cuando vuelve al fondo
     private bool autoScrollEnabled = true;
-
-    //Flag que indica que el scroll esta siendo movido por codigo, no por el jugador
     private bool isScrollingByCode = false;
 
     // ─────────────────────────────────────────── Colores por CombatLogType ───────────────────────────────────────────
@@ -36,6 +34,10 @@ public class CombatFeedbackPanel : MonoBehaviour
     private void Awake()
     {
         GameEvents.OnCombatLogMessage += HandleCombatLogMessage;
+
+        //Nos suscribimos al onValueChanged de la scrollbar para detectar cuando el jugador la arrastra
+        if (scrollbarVertical != null)
+            scrollbarVertical.onValueChanged.AddListener(OnScrollbarValueChanged);
  
         if (feedbackText != null)
             feedbackText.text = "";
@@ -44,13 +46,40 @@ public class CombatFeedbackPanel : MonoBehaviour
     private void OnDestroy()
     {
         GameEvents.OnCombatLogMessage -= HandleCombatLogMessage;
+
+        if (scrollbarVertical != null)
+            scrollbarVertical.onValueChanged.RemoveListener(OnScrollbarValueChanged);
     }
 
-    void Update()
+    //Llamado por ScrollInputDetector cuando el jugador usa la rueda del raton
+    public void OnPlayerScroll(float scrollDeltaY)
     {
-        //Si el jugador habia subido a revisar y vuelve al fondo, reactivamos el autoscroll 
-        //(si el autoscroll estaba deshabilitado y la posicion del scroll <= que la posicion que hemos definido para que vuelva el autoscroll)
-        if (!autoScrollEnabled && scrollRect != null && scrollRect.verticalNormalizedPosition <= autoScrollThreshold)
+        if (scrollRect == null) return;
+ 
+        //Scroll hacia arriba: pausamos el autoscroll
+        if (scrollDeltaY > 0f)
+        {
+            autoScrollEnabled = false;
+        }
+        //Scroll hacia abajo: si ya estamos cerca del fondo reactivamos el autoscroll
+        else if (scrollDeltaY < 0f && scrollRect.verticalNormalizedPosition <= autoScrollThreshold)
+        {
+            autoScrollEnabled = true;
+            StartCoroutine(ScrollToBottomNextFrame());
+        }
+    }
+
+    //Llamado cuando cambia el valor de la scrollbar vertical
+    private void OnScrollbarValueChanged(float value)
+    {
+        //Si el scroll lo mueve el codigo, ignoramos el evento
+        if (isScrollingByCode) return;
+ 
+        //Si la scrollbar sube por encima del threshold, el jugador esta revisando: pausamos el autoscroll
+        if (value > autoScrollThreshold)
+            autoScrollEnabled = false;
+        //Si la scrollbar vuelve al fondo, reactivamos el autoscroll
+        else
             autoScrollEnabled = true;
     }
 
@@ -58,6 +87,9 @@ public class CombatFeedbackPanel : MonoBehaviour
     {
         //Comprobacion de seguridad
         if (feedbackText == null) return;
+
+        //Guardamos la posicion absoluta en pixeles antes de añadir texto
+        float savedPosition = scrollRect.content.anchoredPosition.y;
 
         //Convertimos el color del tipo a formato hex para usar el rich text de TextMeshPro
         string hex = ColorUtility.ToHtmlStringRGB(GetColorForType(type));
@@ -71,22 +103,32 @@ public class CombatFeedbackPanel : MonoBehaviour
         //Si el autoscroll esta activo, bajamos al ultimo mensaje en el siguiente frame, (necesitamos esperar un frame para que el Content Size Fitter haya recalculado el tamaño)
         if (autoScrollEnabled)
             StartCoroutine(ScrollToBottomNextFrame());
+        else
+            StartCoroutine(RestoreScrollPositionNextFrame(savedPosition));
     }
 
-    //Detectamos si el jugador ha subido manualmente el scroll para pausar el autoscroll
-    public void OnScrollValueChanged(Vector2 scrollValue)
+    private IEnumerator RestoreScrollPositionNextFrame(float savedPosition)
     {
-        //Si el scroll esta por encima del umbral de fondo, el jugador esta revisando hacia arriba
-        if (scrollValue.y > autoScrollThreshold)
-            autoScrollEnabled = false;
+        isScrollingByCode = true;
+        yield return null;
+        if (scrollRect != null)
+        {
+            Vector2 pos = scrollRect.content.anchoredPosition;
+            pos.y = savedPosition;
+            scrollRect.content.anchoredPosition = pos;
+        }
+        isScrollingByCode = false;
     }
 
     //Esperamos un frame para que Unity recalcule el layout antes de hacer scroll al fondo
     private IEnumerator ScrollToBottomNextFrame()
     {
+        isScrollingByCode = true;
         yield return null;
         if (scrollRect != null)
             scrollRect.verticalNormalizedPosition = 0f;
+        yield return null;
+        isScrollingByCode = false;
     }
 
     //Devuelve el color correspondiente a cada CombatLogType
