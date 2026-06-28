@@ -1,19 +1,31 @@
 using UnityEngine;
 
-//Singleton de la HubScene. Gestiona el input global.
+//// Singleton local de la HubScene. Coordina los subsistemas del HUB y expone el flag de bloqueo de input que todos los sistemas deben respetar.
 public class HubManager : MonoBehaviour
 {
-    //Creamos la instancia del Manager
+    [SerializeField] private HubRoom _startRoom;
+
     public static HubManager Instance { get; private set; }
 
-    //Guardamos el HubUIManager;
-    [SerializeField] private HubUIManager hubUIManager;
+    // true durante transiciones, fades, diálogos o cualquier acción que bloquee al jugador
+    public bool IsInputBlocked { get; private set; }
 
     private void Awake()
     {
-        //Codigo de seguridad por si hemos duplicado la instancia
-        if(Instance != null) { Destroy(gameObject); return; }
-        //Inicializamos la instancia
+        if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
     }
+
+    private void Start()
+{
+    //Posicionamos la cámara en la habitación inicial al arrancar
+    HubCameraManager.Instance.SnapToRoom(_startRoom);
+}
+
+    // ─────────────────────────────────────────
+    // CONTROL DE INPUT
+    // ─────────────────────────────────────────
+
+    public void BlockInput()  => IsInputBlocked = true;
+    public void UnblockInput() => IsInputBlocked = false;
 }

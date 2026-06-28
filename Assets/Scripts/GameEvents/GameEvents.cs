@@ -95,22 +95,6 @@ public static class GameEvents
     public static void RaiseSummonAttempted(bool success, string monsterName) => OnSummonAttempted?.Invoke(success, monsterName);
  
     // ─────────────────────────────────────────
-    // EVENTOS DE HUB — ZONAS
-    // ─────────────────────────────────────────
- 
-    //Se invoca cuando el cursor entra en una zona del hub: nombre de zona y si esta desbloqueada
-    public static event Action<string, bool> OnZoneHoverEnter;
-    public static void RaiseZoneHoverEnter(string zoneName, bool isUnlocked) => OnZoneHoverEnter?.Invoke(zoneName, isUnlocked);
- 
-    //Se invoca cuando el cursor sale de una zona del hub
-    public static event Action OnZoneHoverExit;
-    public static void RaiseZoneHoverExit() => OnZoneHoverExit?.Invoke();
- 
-    //Se invoca cuando el jugador hace click en una zona bloqueada: titulo y mensaje
-    public static event Action<string, string> OnZoneLockedClicked;
-    public static void RaiseZoneLockedClicked(string title, string body) => OnZoneLockedClicked?.Invoke(title, body);
- 
-    // ─────────────────────────────────────────
     // EVENTOS DE RUN EVENT
     // ─────────────────────────────────────────
  
