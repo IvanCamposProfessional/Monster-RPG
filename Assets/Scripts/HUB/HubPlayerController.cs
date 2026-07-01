@@ -132,32 +132,49 @@ public class HubPlayerController : MonoBehaviour
     }
 
     // ─────────────────────────────────────────
-    // PUERTAS
+    // WALK
     // ─────────────────────────────────────────
 
-    //Camina al tile de interacción y luego activa la transición
-    public void WalkToDoor(Vector2Int interactionTile, HubDoor door, Vector2Int spawnTile)
+    // Camina al tile destino y ejecuta el callback al llegar
+    public void WalkToTile(Vector2Int targetTile, System.Action onArrival)
     {
         if (_isMoving) return;
 
-        Vector2 target = _grid.GridToWorld(interactionTile.x, interactionTile.y);
+        Vector2 target = _grid.GridToWorld(targetTile.x, targetTile.y);
         List<Vector2> path = _pathfinder.FindPath(transform.position, target);
 
         if (path == null || path.Count == 0) return;
 
         _debugPath = path;
-        StartCoroutine(MoveAlongPath(path, () => TriggerDoorTransition(door, spawnTile)));
+        StartCoroutine(MoveAlongPath(path, onArrival));
     }
+
+    // ─────────────────────────────────────────
+    // PUERTAS
+    // ─────────────────────────────────────────
 
     public void TriggerDoorTransition(HubDoor door, Vector2Int spawnTile)
     {
         if (!door.IsUnlocked())
         {
             Debug.Log("Puerta bloqueada: " + door.LockedMessage);
+            _isMoving = false;
             return;
         }
 
-        Debug.Log("Transición. Destino: " + door.DestinationRoomId + " Spawn: " + spawnTile);
+        HubTransitionManager.Instance.TransitionToRoom(door.DestinationRoomId, spawnTile, door);
+    }
+
+    //Teletransporta al player al tile indicado y reinicializa la grilla con la nueva habitación
+    public void TeleportToTile(Vector2Int tile, HubRoom room, DoorDirection facingDirection)
+    {
+        //Reinicializamos la grilla con la habitación destino
+        InitializeRoom(room);
+
+        //Forzamos el tile exacto de spawn
+        transform.position = _grid.GridToWorld(tile.x, tile.y);
+
+        //TODO: orientar el sprite del player según facingDirection
     }
 
     // ─────────────────────────────────────────

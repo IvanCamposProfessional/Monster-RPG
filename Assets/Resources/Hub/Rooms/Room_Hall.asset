@@ -13,14 +13,19 @@ MonoBehaviour:
   m_Name: Room_Hall
   m_EditorClassIdentifier: Assembly-CSharp::HubRoomData
   roomId: hall
-  cameraPosition: {x: 0, y: 7.77, z: -10}
-  gridWidth: 20
-  gridHeight: 10
-  gridOrigin: {x: -9.996, y: 2.999}
+  gridWidth: 26
+  gridHeight: 12
+  gridOrigin: {x: -12.935, y: 6.044}
   blockedTiles:
-  - {x: 9, y: 5}
-  - {x: 9, y: 6}
-  - {x: 9, y: 4}
-  - {x: 10, y: 5}
-  - {x: 10, y: 6}
-  - {x: 10, y: 4}
+  - {x: 12, y: 5}
+  - {x: 12, y: 6}
+  - {x: 12, y: 7}
+  - {x: 12, y: 8}
+  - {x: 13, y: 5}
+  - {x: 13, y: 6}
+  - {x: 13, y: 7}
+  - {x: 13, y: 8}
+  - {x: 14, y: 5}
+  - {x: 14, y: 6}
+  - {x: 14, y: 7}
+  - {x: 14, y: 8}

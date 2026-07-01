@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d13bd101ec2d9547a6057e5b2019623, type: 3}
-  m_Name: Door_EntranceToHall
+  m_Name: Door_HallToEntrance
   m_EditorClassIdentifier: Assembly-CSharp::HubDoorData
-  destinationRoomId: hall
-  entryDirection: 0
+  destinationRoomId: entrance
+  entryDirection: 1
   tilePairs:
-  - interactionTile: {x: 11, y: 11}
-    spawnTile: {x: 12, y: 0}
-  - interactionTile: {x: 12, y: 11}
-    spawnTile: {x: 13, y: 0}
+  - interactionTile: {x: 12, y: 0}
+    spawnTile: {x: 11, y: 11}
+  - interactionTile: {x: 13, y: 0}
+    spawnTile: {x: 12, y: 11}
   requiredFlag: 0
   blockedByFlag: 0
-  lockedMessage: Esta cerrada tontin
+  lockedMessage: 

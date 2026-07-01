@@ -8,7 +8,6 @@ public class HubRoom : MonoBehaviour
     public HubRoomData Data => _data;
 
     public string RoomId => _data != null ? _data.roomId : string.Empty;
-    public Vector3 CameraPosition => _data != null ? _data.cameraPosition : Vector3.zero;
 
     // ─────────────────────────────────────────
     // ACTIVACIÓN

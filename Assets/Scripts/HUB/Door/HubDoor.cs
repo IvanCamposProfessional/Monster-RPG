@@ -48,7 +48,7 @@ public class HubDoor : MonoBehaviour, IPointerClickHandler
         DoorTilePair closestPair = _data.GetClosestPairToWorld(worldClick, room.Data.gridOrigin);
         if (closestPair == null) return;
 
-        HubPlayerController.Instance.WalkToDoor(closestPair.interactionTile, this, closestPair.spawnTile);
+        HubPlayerController.Instance.WalkToTile(closestPair.interactionTile, () => HubPlayerController.Instance.TriggerDoorTransition(this, closestPair.spawnTile));
     }
 
     // ─────────────────────────────────────────

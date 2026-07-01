@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Room_Entrance
   m_EditorClassIdentifier: Assembly-CSharp::HubRoomData
   roomId: entrance
-  cameraPosition: {x: 0, y: 0, z: -10}
-  gridWidth: 18
-  gridHeight: 6
-  gridOrigin: {x: -8.999, y: -2.937}
+  gridWidth: 24
+  gridHeight: 12
+  gridOrigin: {x: -12.001, y: -5.994}
   blockedTiles:
-  - {x: 8, y: 3}
-  - {x: 8, y: 2}
-  - {x: 9, y: 3}
-  - {x: 9, y: 2}
+  - {x: 11, y: 5}
+  - {x: 11, y: 6}
+  - {x: 12, y: 5}
+  - {x: 12, y: 6}

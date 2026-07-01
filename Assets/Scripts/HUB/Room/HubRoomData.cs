@@ -7,10 +7,6 @@ public class HubRoomData : ScriptableObject
     [Header("Identidad")]
     public string roomId;
 
-    [Header("Cámara")]
-    // Posición mundial a la que se teletransporta la cámara al entrar en esta habitación
-    public Vector3 cameraPosition;
-
     [Header("Grid")]
     //Dimensiones de la grilla de esta habitación
     public int gridWidth;
