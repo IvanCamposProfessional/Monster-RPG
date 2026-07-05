@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum InteractionType { Information, Management, NPC }
+public enum InteractionType { Information, Management, NPC, Run }
 public enum ManagementType { Exchange, Runes, Summon, None }
 
 //Componente universal de interactuables del HUB.
@@ -28,6 +28,10 @@ public class HubInteractable : MonoBehaviour, IPointerClickHandler
 
     [Header("NPC")]
     public NPCData npcData;
+
+    [Header("Run")]
+    public RunTypeData runTypeData;
+    [SerializeField] private string _runSceneName = "RunScene";
 
     // ─────────────────────────────────────────
     // INICIALIZACIÓN
@@ -115,6 +119,9 @@ public class HubInteractable : MonoBehaviour, IPointerClickHandler
                 }
                 HubManager.Instance.UnblockInput();
                 break;
+            case InteractionType.Run:
+                ExecuteRun();
+                break;
         }
     }
 
@@ -136,6 +143,20 @@ public class HubInteractable : MonoBehaviour, IPointerClickHandler
         }
 
         HubManager.Instance.UnblockInput();
+    }
+
+    private void ExecuteRun()
+    {
+        if (runTypeData == null)
+        {
+            Debug.LogWarning("HubInteractable: RunTypeData no asignado en " + gameObject.name);
+            HubManager.Instance.UnblockInput();
+            return;
+        }
+
+        RunManager.Instance.SetRunType(runTypeData);
+        RunManager.Instance.StartRun();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(_runSceneName);
     }
 
     // ─────────────────────────────────────────
@@ -167,16 +188,32 @@ public class HubInteractable : MonoBehaviour, IPointerClickHandler
             worldTile + Vector2Int.right
         };
 
+        HubGrid grid = HubPlayerController.Instance.CurrentGrid;
+
         Vector2Int closest = adjacents[0];
         float minDist = float.MaxValue;
+        bool foundWalkable = false;
 
         foreach (Vector2Int tile in adjacents)
         {
+            if (!grid.IsWalkable(tile.x, tile.y)) continue;
+
             float dist = Vector2Int.Distance(tile, playerTile);
             if (dist < minDist)
             {
                 minDist = dist;
                 closest = tile;
+                foundWalkable = true;
+            }
+        }
+
+        if (!foundWalkable)
+        {
+            Debug.LogWarning("HubInteractable: ningún tile adyacente caminable en " + gameObject.name);
+            foreach (Vector2Int tile in adjacents)
+            {
+                float dist = Vector2Int.Distance(tile, playerTile);
+                if (dist < minDist) { minDist = dist; closest = tile; }
             }
         }
 

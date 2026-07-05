@@ -19,6 +19,8 @@ public class HubPlayerController : MonoBehaviour
 
     private List<Vector2> _debugPath;
 
+    public HubGrid CurrentGrid => _grid;
+
     //Devuelve el tile actual del player en coordenadas de grilla
     public Vector2Int CurrentTile => _grid.WorldToGrid(transform.position);
 

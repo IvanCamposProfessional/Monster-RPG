@@ -22,9 +22,6 @@ public class RunManager : MonoBehaviour
     //Datos del piso actualmente activos
     public RunFloorData CurrentFloor { get; private set; }
 
-    //Lista de eventos disponibles en el piso actual
-    [SerializeField] private List<EventEncounterData> eventEncounterList;
-
     [Header("Bases de datos")]
     [SerializeField] private EssenceRuneDatabase runeDatabase;
 
@@ -49,6 +46,12 @@ public class RunManager : MonoBehaviour
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    //Llamado desde HubInteractable antes de cargar la RunScene
+    public void SetRunType(RunTypeData data)
+    {
+        runType = data;
     }
 
     // ─────────────────────────────────────────
@@ -266,24 +269,17 @@ public class RunManager : MonoBehaviour
     //Selecciona el EventData elegible para el nodo del evento actual
     public EventData ResolveEvent()
     {
-        // Comprobacion de seguridad
-        if (eventEncounterList == null || eventEncounterList.Count == 0)
+        if (runType == null || runType.eventEncounterPool == null || runType.eventEncounterPool.Count == 0)
         {
-            Debug.LogWarning("RunManager: eventEncounterList no configurada");
+            Debug.LogWarning("RunManager: no hay eventEncounterPool en el RunTypeData actual");
             return null;
         }
 
-        //Buscamos el EventEncounterData que coincide con el tema de la run actual
-        EventEncounterData encounterData = eventEncounterList.Find(e => e.themeType == runType.themeType);
+        // Seleccionamos un EventEncounterData aleatorio de la pool del RunType actual
+        EventEncounterData encounterData = runType.eventEncounterPool[UnityEngine.Random.Range(0, runType.eventEncounterPool.Count)];
 
-        //Comprobacion de seguridad
-        if (encounterData == null)
-        {
-            Debug.LogWarning("RunManager: no hay EventEncounterData para el tema " + runType.themeType);
-            return null;
-        }
+        if (encounterData == null) return null;
 
-        //Delegamos la seleccion ponderada y el filtrado de Flags al EventEncounterData
         return encounterData.GetElegibleEvent(CurrentFloorIndex, GameManager.Instance.Knowledge);
     }
 

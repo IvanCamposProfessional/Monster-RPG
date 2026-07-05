@@ -62,6 +62,12 @@ public class RunTypeData : ScriptableObject
     public LootTableData bossLootTable;
     public LootTableData chestLootTable;
 
+    [Header("Encuentros")]
+    public CombatEncounterData combatEncounterData;
+
+    [Header("Eventos")]
+    public List<EventEncounterData> eventEncounterPool;
+
     //─────────────────────────────────────────
     //CONSULTAS
     //─────────────────────────────────────────
