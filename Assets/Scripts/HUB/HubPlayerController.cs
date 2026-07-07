@@ -159,7 +159,8 @@ public class HubPlayerController : MonoBehaviour
     {
         if (!door.IsUnlocked())
         {
-            Debug.Log("Puerta bloqueada: " + door.LockedMessage);
+            HUBUIManager.Instance.ShowMessage(door.LockedMessage);
+            HubManager.Instance.UnblockInput();
             _isMoving = false;
             return;
         }

@@ -99,6 +99,13 @@ public class HubInteractable : MonoBehaviour, IPointerClickHandler
 
     public void Interact()
     {
+        if (!CanInteract())
+        {
+            HUBUIManager.Instance.ShowMessage(string.Empty);
+            HubManager.Instance.UnblockInput();
+            return;
+        }
+
         switch (interactionType)
         {
             case InteractionType.Information:

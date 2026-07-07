@@ -21,10 +21,6 @@ public class NPCData : ScriptableObject
     public string npcName;
     public Sprite portrait;
 
-    [Header("Condicion de aparicion en HUB")]
-    //Flag que debe tener el jugador para que este NPC aparezca en el Hub, None = el NPC aparece siempre
-    public KnowledgeFlag requiredFlag;
-
     [Header("Dialogos en HUB")]
     //Lista de bloques de dialogo ordenados de menos a mas avanzado, el primer bloque debe tener requiredFlag vacio
     public List<NPCDialogueEntry> dialogueEntries;

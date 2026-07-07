@@ -86,5 +86,6 @@ public class NPCDialogueUI : MonoBehaviour, IPointerClickHandler
     private void Close()
     {
         panel.SetActive(false);
+        HUBUIManager.Instance.OnNPCDialogueClosed();
     }
 }

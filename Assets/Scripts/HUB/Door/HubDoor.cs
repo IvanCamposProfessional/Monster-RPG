@@ -34,7 +34,7 @@ public class HubDoor : MonoBehaviour, IPointerClickHandler
         {
             if (!IsUnlocked())
             {
-                Debug.Log("Puerta bloqueada: " + _data.lockedMessage);
+                HUBUIManager.Instance.ShowMessage(_data.lockedMessage);
                 return;
             }
 
