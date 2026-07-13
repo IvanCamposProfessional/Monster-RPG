@@ -120,11 +120,9 @@ public class HubInteractable : MonoBehaviour, IPointerClickHandler
 
             case InteractionType.NPC:
                 if (npcData != null)
-                {
-                    //TODO: abrir NPCDialogueUI
-                    Debug.Log("NPC: " + npcData.npcName);
-                }
-                HubManager.Instance.UnblockInput();
+                    HUBUIManager.Instance.OpenNPCDialogue(npcData);
+                else
+                    HubManager.Instance.UnblockInput();
                 break;
             case InteractionType.Run:
                 ExecuteRun();

@@ -3,9 +3,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.InputSystem;
 
 //Panel de dialogo para las interacciones con NPCs en el HUB, el jugador avanza las lineas haciendo click en cualquier parte del panel
-public class NPCDialogueUI : MonoBehaviour, IPointerClickHandler
+public class NPCDialogueUI : MonoBehaviour
 {
     [Header("Referencias UI")]
     [SerializeField] private GameObject panel;
@@ -25,6 +26,13 @@ public class NPCDialogueUI : MonoBehaviour, IPointerClickHandler
     {
         //El panel empieza cerrado
         panel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (!panel.activeSelf) return;
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+            AdvanceLine();
     }
 
     // ─────────────────────────────────────────
@@ -47,16 +55,6 @@ public class NPCDialogueUI : MonoBehaviour, IPointerClickHandler
 
         panel.SetActive(true);
         ShowCurrentLine();
-    }
-
-    // ─────────────────────────────────────────
-    // INPUT
-    // ─────────────────────────────────────────
-
-    //Click en cualquier parte del panel para avanzar el dialogo
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        AdvanceLine();
     }
 
     // ─────────────────────────────────────────
@@ -86,6 +84,7 @@ public class NPCDialogueUI : MonoBehaviour, IPointerClickHandler
     private void Close()
     {
         panel.SetActive(false);
-        HUBUIManager.Instance.OnNPCDialogueClosed();
+        if (HUBUIManager.Instance != null)
+            HUBUIManager.Instance.OnNPCDialogueClosed();
     }
 }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-//Gestiona el movimiento Point & Click del jugador sobre la grilla del HUB, lee el click del ratón, calcula la ruta con A* y mueve el personaje tile a tile.
-[RequireComponent(typeof(SpriteRenderer))]
 public class HubPlayerController : MonoBehaviour
 {
     [Header("Configuración")]
@@ -92,17 +90,17 @@ public class HubPlayerController : MonoBehaviour
         //Convertimos la posición del click en pantalla a posición en mundo
         Vector2 worldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
-        //Comprobamos si el click cayó sobre una puerta
+        // Comprobamos si el click cayó sobre una puerta o un interactuable
         Collider2D hit = Physics2D.OverlapPoint(worldPos);
-        if (hit != null && hit.GetComponent<HubDoor>() != null)
-            return;
+        if (hit != null && hit.GetComponent<HubDoor>() != null) return;
+        if (hit != null && hit.GetComponent<HubInteractable>() != null) return;
 
         //Calculamos la ruta desde la posición actual del jugador hasta el click
         List<Vector2> path = _pathfinder.FindPath(transform.position, worldPos);
         if (path == null || path.Count == 0) return;
 
         _debugPath = path; // guardamos para debug
-        StartCoroutine(MoveAlongPath(path));
+        StartCoroutine(MoveAlongPath(path, () => HubManager.Instance.UnblockInput()));
     }
 
     // ─────────────────────────────────────────
@@ -127,9 +125,7 @@ public class HubPlayerController : MonoBehaviour
             }
         }
 
-        HubManager.Instance.UnblockInput();
         _isMoving = false;
-
         onComplete?.Invoke();
     }
 
