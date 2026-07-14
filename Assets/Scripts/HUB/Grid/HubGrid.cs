@@ -31,6 +31,14 @@ public class HubGrid
                     _walkable[tile.x, tile.y] = false;
     }
 
+    public void SetTilesBlocked(Vector2Int[] tiles, bool blocked)
+    {
+        if (tiles == null) return;
+        foreach (Vector2Int tile in tiles)
+            if (IsInBounds(tile.x, tile.y))
+                _walkable[tile.x, tile.y] = !blocked;
+    }
+
     // ─────────────────────────────────────────
     // CONSULTAS
     // ─────────────────────────────────────────

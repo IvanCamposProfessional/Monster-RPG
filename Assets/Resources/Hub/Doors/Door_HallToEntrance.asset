@@ -16,9 +16,9 @@ MonoBehaviour:
   entryDirection: 1
   tilePairs:
   - interactionTile: {x: 12, y: 0}
-    spawnTile: {x: 11, y: 11}
+    spawnTile: {x: 11, y: 10}
   - interactionTile: {x: 13, y: 0}
-    spawnTile: {x: 12, y: 11}
+    spawnTile: {x: 12, y: 10}
   requiredFlag: 0
   blockedByFlag: 0
   lockedMessage: 

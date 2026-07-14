@@ -15,9 +15,9 @@ MonoBehaviour:
   destinationRoomId: hall
   entryDirection: 0
   tilePairs:
-  - interactionTile: {x: 11, y: 11}
+  - interactionTile: {x: 11, y: 10}
     spawnTile: {x: 12, y: 0}
-  - interactionTile: {x: 12, y: 11}
+  - interactionTile: {x: 12, y: 10}
     spawnTile: {x: 13, y: 0}
   requiredFlag: 0
   blockedByFlag: 0

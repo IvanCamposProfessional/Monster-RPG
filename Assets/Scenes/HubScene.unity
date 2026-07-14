@@ -2960,6 +2960,7 @@ MonoBehaviour:
   infoMessage: 
   managementType: 2
   npcData: {fileID: 0}
+  blockedTiles: []
   runTypeData: {fileID: 0}
   _runSceneName: RunScene
 --- !u!60 &699434152
@@ -3067,6 +3068,7 @@ MonoBehaviour:
   infoMessage: 
   managementType: 0
   npcData: {fileID: 0}
+  blockedTiles: []
   runTypeData: {fileID: 0}
   _runSceneName: RunScene
 --- !u!60 &711069295
@@ -4515,6 +4517,7 @@ MonoBehaviour:
   infoMessage: PRUEBA
   managementType: 0
   npcData: {fileID: 0}
+  blockedTiles: []
   runTypeData: {fileID: 0}
   _runSceneName: RunScene
 --- !u!61 &1100098828
@@ -4769,6 +4772,7 @@ MonoBehaviour:
   infoMessage: 
   managementType: 1
   npcData: {fileID: 0}
+  blockedTiles: []
   runTypeData: {fileID: 0}
   _runSceneName: RunScene
 --- !u!60 &1119748450
@@ -6210,6 +6214,9 @@ MonoBehaviour:
   infoMessage: 
   managementType: 0
   npcData: {fileID: 11400000, guid: d736b37cb3d1e5b419009154a69cfdce, type: 2}
+  blockedTiles:
+  - {x: 2, y: 5}
+  - {x: 2, y: 6}
   runTypeData: {fileID: 0}
   _runSceneName: RunScene
 --- !u!60 &1448235371
@@ -6847,6 +6854,9 @@ MonoBehaviour:
   infoMessage: 
   managementType: 0
   npcData: {fileID: 0}
+  blockedTiles:
+  - {x: 3, y: 9}
+  - {x: 3, y: 10}
   runTypeData: {fileID: 11400000, guid: 54b949da4fc2c51409bb2a1e66105ab1, type: 2}
   _runSceneName: RunScene
 --- !u!70 &1506767423

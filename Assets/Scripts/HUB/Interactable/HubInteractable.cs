@@ -29,6 +29,9 @@ public class HubInteractable : MonoBehaviour, IPointerClickHandler
     [Header("NPC")]
     public NPCData npcData;
 
+    [Header("Grid")]
+    public Vector2Int[] blockedTiles;
+
     [Header("Run")]
     public RunTypeData runTypeData;
     [SerializeField] private string _runSceneName = "RunScene";
@@ -63,16 +66,15 @@ public class HubInteractable : MonoBehaviour, IPointerClickHandler
 
     private void RefreshVisibility()
     {
-        //Si no tiene flag de visibilidad siempre está visible
-        if (visibilityFlag == KnowledgeFlag.None)
-        {
-            gameObject.SetActive(true);
-            return;
-        }
+        bool visible;
 
-        bool visible = GameManager.Instance != null && GameManager.Instance.Knowledge.HasFlag(visibilityFlag);
+        if (visibilityFlag == KnowledgeFlag.None)
+            visible = true;
+        else
+            visible = GameManager.Instance != null && GameManager.Instance.Knowledge.HasFlag(visibilityFlag);
 
         gameObject.SetActive(visible);
+        HubPlayerController.Instance?.SetInteractableTiles(blockedTiles, visible);
     }
 
     // ─────────────────────────────────────────

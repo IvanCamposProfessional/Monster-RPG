@@ -176,6 +176,12 @@ public class HubPlayerController : MonoBehaviour
         //TODO: orientar el sprite del player según facingDirection
     }
 
+    public void SetInteractableTiles(Vector2Int[] tiles, bool blocked)
+    {
+        if (_grid == null) return;
+        _grid.SetTilesBlocked(tiles, blocked);
+    }
+
     // ─────────────────────────────────────────
     // DEBUG — GIZMOS
     // ─────────────────────────────────────────
