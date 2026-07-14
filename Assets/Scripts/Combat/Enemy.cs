@@ -7,9 +7,7 @@ public class Enemy : MonoBehaviour
 {
     public MonsterDatabase monsterDatabase;
     public MoveDatabase moveDatabase;
-
-    //Lista de combat encounter disponible
-    public List<CombatEncounterData>  encounterDataList;
+    
     public List<Monster> party { get; private set; } = new List<Monster>();
 
     private void Awake()
@@ -32,7 +30,7 @@ public class Enemy : MonoBehaviour
         }
 
         //Buscamos el CombatEncounterData que coincide con el tema de la run
-        CombatEncounterData encounterData = encounterDataList.Find(e => e.themeType == RunCombatContext.ThemeType);
+        CombatEncounterData encounterData = RunManager.Instance.RunType.combatEncounterData;
 
         if(encounterData == null)
         {

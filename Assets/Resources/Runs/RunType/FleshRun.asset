@@ -39,3 +39,6 @@ MonoBehaviour:
   eliteLootTable: {fileID: 11400000, guid: db1aa4cb7246aa94daad8a0bf03882c9, type: 2}
   bossLootTable: {fileID: 11400000, guid: 2162a88f003821a4a8a33259e32549bd, type: 2}
   chestLootTable: {fileID: 11400000, guid: 41ec3c4272dab264ab1e4a5c21d22106, type: 2}
+  combatEncounterData: {fileID: 11400000, guid: 0cfa750c890ce8b4f997fd33c6c544ab, type: 2}
+  eventEncounterPool:
+  - {fileID: 11400000, guid: a2b49742390b1634e99acb82ef5faa0f, type: 2}

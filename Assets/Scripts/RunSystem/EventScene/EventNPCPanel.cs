@@ -2,9 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 //Subsistema de la EventEscen para eventos de tipo NPC, muestra el dialogo del evento y al terminar notifica al EventManager
-public class EventNPCPanel : MonoBehaviour, IPointerClickHandler
+public class EventNPCPanel : MonoBehaviour
 {
     [Header("Base de datos")]
     [SerializeField] private NPCDatabase npcDatabase;
@@ -17,6 +18,13 @@ public class EventNPCPanel : MonoBehaviour, IPointerClickHandler
     //Estado interno
     private EventData eventData;
     private int currentLine;
+
+    private void Update()
+    {
+        if (!gameObject.activeSelf) return;
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+            AdvanceLine();
+    }
 
     // ─────────────────────────────────────────
     // SETUP
@@ -41,16 +49,6 @@ public class EventNPCPanel : MonoBehaviour, IPointerClickHandler
         }
 
         ShowCurrentLine();
-    }
-
-    // ─────────────────────────────────────────
-    // INPUT
-    // ─────────────────────────────────────────
-
-    //Click en cualquier parte del panel avanza el dialogo
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        AdvanceLine();
     }
 
     // ─────────────────────────────────────────
