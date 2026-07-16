@@ -10,6 +10,8 @@ public class MonsterSaveData
     public int currentHP;
     public int maxHP;
 
+    public int currentExp;
+
     //Variables de gestion de la party y la reserva que deben persistir entre partidas
     public bool isLocked;
     public bool isFavorite;

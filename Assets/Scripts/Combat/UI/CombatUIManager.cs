@@ -140,4 +140,9 @@ public class CombatUIManager : MonoBehaviour
     {
         return initial == current ? current.ToString() : initial + " -> " + current;
     }
+
+    private string FormatStat(float initial, float current)
+    {
+        return initial == current ? current.ToString("0.0") : initial.ToString("0.0") + " -> " + current.ToString("0.0");
+    }
 }

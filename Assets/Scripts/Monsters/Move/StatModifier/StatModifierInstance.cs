@@ -6,6 +6,7 @@ public class StatModifierInstance
     public StatModifier data;
     public int remainingDuration;
     public int originalValue;
+    public float originalEvasionValue;
 
     //Guardamos el id de data
     public string modifierId => data.modifierId;
@@ -56,10 +57,8 @@ public class StatModifierInstance
                 monster.currentSpeed = CalculateNewValue(monster.currentSpeed);
                 break;
             case StatType.Evasion:
-                //Guardamos el valor original de la Evasion
-                originalValue = monster.currentEvasion;
-                //Calculamos el nuevo value modificado de la Evasion
-                monster.currentEvasion = CalculateNewValue(monster.currentEvasion);
+                originalEvasionValue = monster.currentEvasion;
+                monster.currentEvasion = CalculateNewEvasionValue(monster.currentEvasion);
                 break;
         }
     }
@@ -85,7 +84,7 @@ public class StatModifierInstance
                 monster.currentSpeed = originalValue;
                 break;
             case StatType.Evasion:
-                monster.currentEvasion = originalValue;
+                monster.currentEvasion = originalEvasionValue;
                 break;
         }
     }
@@ -112,5 +111,14 @@ public class StatModifierInstance
             //Devolvemos el actual value + el value de la modificacion
             return actualValue + Mathf.RoundToInt(data.value);
         }
+    }
+
+    //Funcion para calcular y devolver el New Value de Evasion, sin redondear porque Evasion es float
+    private float CalculateNewEvasionValue(float actualValue)
+    {
+        if (data.isPercentage)
+            return actualValue * (1f + data.value);
+        else
+            return actualValue + data.value;
     }
 }

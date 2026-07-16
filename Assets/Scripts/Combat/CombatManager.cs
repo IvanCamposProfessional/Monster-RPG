@@ -289,6 +289,9 @@ public class CombatManager : MonoBehaviour
                 Monster monster = MonsterSerializer.Deserialize(activeParty[i], GameManager.Instance.MonsterDatabase, GameManager.Instance.MoveDatabase, GameManager.Instance.EssenceRuneDatabase);
 
                 if(monster == null) continue; //Slot de la party vacio, no hacemos nada
+
+                //Enlazamos el Monster runtime con su MonsterSaveData de origen — necesario para permadeath y reparto de EXP tras el combate
+                monster.sourceSaveData = saveData;
                 
                 //Instanciamos el GameObject del monster
                 GameObject monsterInstance = Instantiate(monsterPrefab, AllySpawnAreas[i].transform.position, Quaternion.identity, AllySpawnAreas[i].transform.parent);
@@ -800,7 +803,7 @@ public class CombatManager : MonoBehaviour
     {
         const int minAccuracyFloor = 5;
 
-        int chanceToHit = Mathf.Clamp(move.Accuracy - target.monster.currentEvasion, minAccuracyFloor, 100);
+        int chanceToHit = Mathf.Clamp(Mathf.RoundToInt(move.Accuracy - target.monster.currentEvasion), minAccuracyFloor, 100);
 
         //Creamos un random de golpear, si es menor que el ChanceToHit devuelve true por lo que si acierta, si es mayor o igual no acierta ya que se sale del chance
         return UnityEngine.Random.Range(0, 100) < chanceToHit;

@@ -20,10 +20,11 @@ public static class MonsterSerializer
         save.monsterType = data.Type;
         //Ponemos el Level del Monster Save Data a 1
         save.level = 1;
+        save.currentExp = 0;
 
-        //HP iniciales son el valor maximo
-        save.currentHP = data.BaseHP + 1 * 5;
-        save.maxHP = data.BaseHP + 1 * 5;
+        //HP iniciales son el valor maximo, usando la formula real de escalado por nivel
+        save.currentHP = StatCalculator.CalculateHP(data.BaseHP, 1);
+        save.maxHP = StatCalculator.CalculateHP(data.BaseHP, 1);
 
         //Añadimos los Basic Moves que se aprenden en nivel 1 via LerneableMove
         foreach(LerneableMove lerneableMove in data.LerneableMoves)
@@ -40,21 +41,12 @@ public static class MonsterSerializer
     // SERIALIZAR (Monster runtime → MonsterSaveData)
     // ─────────────────────────────────────────
 
-    //Convierte un Monster en runtime a su representacion serializable para guardar
-    public static MonsterSaveData Serialize(Monster monster)
+    //Actualiza un MonsterSaveData EXISTENTE con el estado actual del Monster runtime.
+    public static MonsterSaveData Serialize(Monster monster, MonsterSaveData save)
     {
-        //Creamos el Monster Save Data que queremos guardar
-        MonsterSaveData save = new MonsterSaveData();
-        //Guardamos la ID del Monster Save Data con la del Monster que le pasamos
-        save.monsterID = monster.data.MonsterID;
-        //Guardamos el tipo del Monster para que sistemas puros puedan acceder sin consultar la base de datos
-        save.monsterType = monster.data.Type;
-        //Guardamos en el Monster Save Data el Level, la HP y la BP del Monster
         save.level = monster.level;
         save.currentHP = monster.currentHP;
         save.maxHP = monster.maxHP;
-
-        //Guardamos los IDs de los Basic Moves aprendidos
         save.learnedBasicMoveIDs = monster.learnedBasicMoves.Where(m => m != null && !string.IsNullOrEmpty(m.MoveID)).Select(m => m.MoveID).ToList();
 
         //Devolvemos el Monster Save Data que hemos creado

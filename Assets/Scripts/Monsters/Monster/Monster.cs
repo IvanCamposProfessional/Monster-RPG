@@ -5,6 +5,7 @@ using UnityEngine;
 public class Monster
 {
     public MonsterData data;
+    public MonsterSaveData sourceSaveData;
 
     public int currentHP { get; set; }
     public int maxHP { get; set; }
@@ -14,7 +15,7 @@ public class Monster
     public int currentSpecialDefense { get; set; }
     public int level;
     public int currentSpeed { get; set; }
-    public int currentEvasion { get; set; }
+    public float currentEvasion { get; set; }
 
     //Snapshot de los stats con los que el monster entra al combate, antes de que ningun StatModifier los altere
     public int baseAttackInCombat { get; private set; }
@@ -22,7 +23,7 @@ public class Monster
     public int baseSpecialAttackInCombat { get; private set; }
     public int baseSpecialDefenseInCombat { get; private set; }
     public int baseSpeedInCombat { get; private set; }
-    public int baseEvasionInCombat { get; private set; }
+    public float baseEvasionInCombat { get; private set; }
 
     //Los Basic Moves que el monstruo actualmente sabe
     public List<MoveData> learnedBasicMoves;
@@ -46,13 +47,13 @@ public class Monster
         this.data = data;
         this.level = level;
         this.currentHP = currentHP;
-        currentSpeed = data.BaseSpeed;
-        currentEvasion = data.BaseEvasion;
-        currentAttack = data.BaseAttack;
-        currentDefense = data.BaseDefense;
-        currentSpecialAttack = data.BaseSpecialAttack;
-        currentSpecialDefense = data.BaseSpecialDefense;
-        maxHP = CalculateMaxHP();
+        currentSpeed = StatCalculator.CalculateSpeed(data.BaseSpeed, level);
+        currentEvasion = StatCalculator.CalculateEvasion(data.BaseEvasion, level);
+        currentAttack = StatCalculator.CalculateCombatStat(data.BaseAttack, level);
+        currentDefense = StatCalculator.CalculateCombatStat(data.BaseDefense, level);
+        currentSpecialAttack = StatCalculator.CalculateCombatStat(data.BaseSpecialAttack, level);
+        currentSpecialDefense = StatCalculator.CalculateCombatStat(data.BaseSpecialDefense, level);
+        maxHP = StatCalculator.CalculateHP(data.BaseHP, level);
 
         //Guardamos el snapshot de stats de entrada a combate antes de que ningun modifier los altere
         baseAttackInCombat = currentAttack;
@@ -68,10 +69,6 @@ public class Monster
     }
 
     public bool IsAlive => currentHP > 0;
-
-    int CalculateMaxHP(){
-        return data.BaseHP + level * 5;
-    }
 
     //Funcion para que el Monster reciba daño, utilizamos Mathf.Max para que la vida nunca baje de 0
     public void TakeDamage(int damage)
